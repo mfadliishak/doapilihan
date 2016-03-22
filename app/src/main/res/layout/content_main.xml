@@ -1,5 +1,5 @@
 <fragment android:id="@+id/fragment"
-          android:name="doa.mfadli.com.doapilihan.MainActivityFragment"
+          android:name="com.mfadli.doapilihan.MainActivityFragment"
           xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:app="http://schemas.android.com/apk/res-auto"
           xmlns:tools="http://schemas.android.com/tools"
