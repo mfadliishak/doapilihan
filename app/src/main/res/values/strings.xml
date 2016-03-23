@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Doa Pilihan</string>
-    <string name="title_activity_main">Doa Pilihan</string>
+    <string name="title_activity_main">@string/drawer_title_home</string>
     <string name="title_activity_detail">Doa Pilihan</string>
     <string name="title_frame_transition">title_frame_transition</string>
+    <string name="drawer_title_home">Laman Utama</string>
+    <string name="drawer_title_about">About</string>
 
 </resources>

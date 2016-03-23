@@ -38,4 +38,7 @@ dependencies {
     compile 'javax.annotation:javax.annotation-api:1.2'
     compile 'io.reactivex:rxjava:1.1.2'
     compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.mikepenz:iconics-core:2.5.10@aar'
+    compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.5.0.1@aar'
 }
