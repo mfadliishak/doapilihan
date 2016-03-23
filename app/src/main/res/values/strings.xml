@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Doa Pilihan</string>
-    <string name="title_activity_main">Main Activity</string>
-    <string name="title_activity_detail">Detail Activity</string>
+    <string name="title_activity_main">Doa Pilihan</string>
+    <string name="title_activity_detail">Doa Pilihan</string>
     <string name="title_frame_transition">title_frame_transition</string>
 
 </resources>
