@@ -1,10 +1,14 @@
 package com.mfadli.doapilihan;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -57,12 +61,21 @@ public class DetailActivity extends AppCompatActivity {
      * @param doa         Parameter 2.
      * @param translation Parameter 3.
      */
-    public static void start(Context context, String title, String doa, String translation) {
+    public static void start(Context context, String title, String doa, String translation, FrameLayout titleFrame) {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(DetailActivity.EXTRA_TITLE, title);
         intent.putExtra(DetailActivity.EXTRA_DOA, doa);
         intent.putExtra(DetailActivity.EXTRA_TRANSLATION, translation);
-        context.startActivity(intent);
+
+        // Shared Element Transition only for Lollipop and above.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat options = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(
+                            (Activity) context, titleFrame, context.getString(R.string.title_frame_transition));
+            context.startActivity(intent, options.toBundle());
+        } else {
+            context.startActivity(intent);
+        }
     }
 
 }

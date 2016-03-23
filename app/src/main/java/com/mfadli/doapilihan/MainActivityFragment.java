@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.mfadli.utils.Common;
@@ -57,9 +58,10 @@ public class MainActivityFragment extends Fragment {
                 String title = mTitleList.get(position);
                 String doa = mDoaList.get(position);
                 String translation = mTranslationList.get(position);
+                FrameLayout titleFrame = (FrameLayout) view.findViewById(R.id.list_title_frame);
 
                 if (mItemClickListener != null) {
-                    mItemClickListener.onMainFragmentItemClick(title, doa, translation);
+                    mItemClickListener.onMainFragmentItemClick(title, doa, translation, titleFrame);
                 }
 
             }
@@ -163,6 +165,6 @@ public class MainActivityFragment extends Fragment {
      * Interface to communicate with MainActivity
      */
     public interface OnMainFragmentItemClickListener {
-        void onMainFragmentItemClick(String title, String doa, String translation);
+        void onMainFragmentItemClick(String title, String doa, String translation, FrameLayout titleFrame);
     }
 }

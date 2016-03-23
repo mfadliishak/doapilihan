@@ -2,23 +2,29 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="@dimen/title_frame_height"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="10dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/main_title"
+    <FrameLayout
+        android:id="@+id/list_title_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:text="text"
-        android:textSize="16dp"
-        android:textStyle="bold"/>
+        android:background="#ffaa33"
+        android:transitionName="@string/title_frame_transition">
+
+        <TextView
+            android:id="@+id/main_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|center_vertical"
+            android:text="text"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
+
+    </FrameLayout>
 
 </RelativeLayout>

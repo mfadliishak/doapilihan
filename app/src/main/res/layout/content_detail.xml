@@ -8,14 +8,18 @@
     <FrameLayout
         android:id="@+id/detail_title_frame"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#ffaa33">
+        android:layout_height="@dimen/title_frame_height"
+        android:background="#ffaa33"
+        android:transitionName="@string/title_frame_transition">
 
         <TextView
             android:id="@+id/detail_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="title"/>
+            android:gravity="center|center_vertical"
+            android:text="title"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
 
     </FrameLayout>
 
