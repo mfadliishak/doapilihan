@@ -11,7 +11,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import doa.mfadli.com.doapilihan.R;
 
 /**
  * Created by mfad on 22/03/2016.

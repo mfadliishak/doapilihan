@@ -1,0 +1,14 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailTranslationFragment">
+
+    <TextView
+        android:id="@+id/detail_translation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detail_doa"
+        android:text="translation"/>
+</FrameLayout>

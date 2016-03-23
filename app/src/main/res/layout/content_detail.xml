@@ -1,0 +1,38 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/detail_title_frame"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffaa33">
+
+        <TextView
+            android:id="@+id/detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="title"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_detail_doa"
+        android:name="com.mfadli.doapilihan.DetailDoaFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detail_title_frame"
+        android:background="#ff5"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_detail_translation"
+        android:name="com.mfadli.doapilihan.DetailTranslationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_detail_doa"
+        android:background="#aa23"/>
+</RelativeLayout>
+

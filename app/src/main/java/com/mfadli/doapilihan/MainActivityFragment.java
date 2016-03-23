@@ -20,20 +20,23 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import doa.mfadli.com.doapilihan.R;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
-
-    private List<String> mList = new ArrayList<>();
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private List<String> mTitleList = new ArrayList<>();
+    private List<String> mDoaList = new ArrayList<>();
+    private List<String> mTranslationList = new ArrayList<>();
     private MainAdapter mMainAdapter;
+    private OnMainFragmentItemClickListener mItemClickListener;
 
     @Bind(R.id.recycler_main_view)
     RecyclerView mRecyclerView;
 
     public MainActivityFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -42,17 +45,23 @@ public class MainActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
 
-        mMainAdapter = new MainAdapter(mList);
+        mMainAdapter = new MainAdapter(mTitleList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mMainAdapter);
-        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new ClickListener() {
+        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new RecyclerClickListener() {
             @Override
             public void onClick(View view, int position) {
-                String title = mList.get(position);
-                Toast.makeText(getContext(), title, Toast.LENGTH_SHORT).show();
+                String title = mTitleList.get(position);
+                String doa = mDoaList.get(position);
+                String translation = mTranslationList.get(position);
+
+                if (mItemClickListener != null) {
+                    mItemClickListener.onMainFragmentItemClick(title, doa, translation);
+                }
+
             }
 
             @Override
@@ -65,21 +74,41 @@ public class MainActivityFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnMainFragmentItemClickListener) {
+            mItemClickListener = (OnMainFragmentItemClickListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + "must implement OnMainFragmentItemClickListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mItemClickListener = null;
+    }
+
     /**
      * Read from xml for the Doa titles and update the recycler view adapter.
      */
     private void loadTitles() {
         ArrayList<String> list = Common.getArrayListFromResource(getContext(), R.array.titles);
+        mDoaList = Common.getArrayListFromResource(getContext(), R.array.doa);
+        mTranslationList = Common.getArrayListFromResource(getContext(), R.array.translations);
+
         for (String l : list) {
-            mList.add(l);
+            mTitleList.add(l);
         }
         mMainAdapter.notifyDataSetChanged();
     }
 
     /**
-     * ClickListener Interface
+     * RecyclerClickListener Interface
      */
-    public interface ClickListener {
+    public interface RecyclerClickListener {
         void onClick(View view, int position);
 
         void onLongClick(View view, int position);
@@ -90,10 +119,10 @@ public class MainActivityFragment extends Fragment {
      */
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
         private GestureDetector mGestureDetector;
-        private MainActivityFragment.ClickListener mClickListener;
+        private RecyclerClickListener mRecyclerClickListener;
 
-        public RecyclerTouchListener(Context context, RecyclerView recyclerView, ClickListener clickListener) {
-            mClickListener = clickListener;
+        public RecyclerTouchListener(Context context, RecyclerView recyclerView, RecyclerClickListener recyclerClickListener) {
+            mRecyclerClickListener = recyclerClickListener;
             mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onSingleTapUp(MotionEvent e) {
@@ -103,8 +132,8 @@ public class MainActivityFragment extends Fragment {
                 @Override
                 public void onLongPress(MotionEvent e) {
                     View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && mClickListener != null) {
-                        mClickListener.onLongClick(child, recyclerView.getChildPosition(child));
+                    if (child != null && mRecyclerClickListener != null) {
+                        mRecyclerClickListener.onLongClick(child, recyclerView.getChildPosition(child));
                     }
                 }
             });
@@ -113,8 +142,8 @@ public class MainActivityFragment extends Fragment {
         @Override
         public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
             View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && mClickListener != null && mGestureDetector.onTouchEvent(e)) {
-                mClickListener.onClick(child, rv.getChildPosition(child));
+            if (child != null && mRecyclerClickListener != null && mGestureDetector.onTouchEvent(e)) {
+                mRecyclerClickListener.onClick(child, rv.getChildPosition(child));
             }
             return false;
         }
@@ -128,5 +157,12 @@ public class MainActivityFragment extends Fragment {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
+    }
+
+    /**
+     * Interface to communicate with MainActivity
+     */
+    public interface OnMainFragmentItemClickListener {
+        void onMainFragmentItemClick(String title, String doa, String translation);
     }
 }

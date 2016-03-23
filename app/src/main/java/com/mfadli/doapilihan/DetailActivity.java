@@ -1,0 +1,68 @@
+package com.mfadli.doapilihan;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class DetailActivity extends AppCompatActivity {
+    private static final String LOG_TAG = DetailActivity.class.getSimpleName();
+    public static final String EXTRA_TITLE = "Title";
+    public static final String EXTRA_DOA = "Doa";
+    public static final String EXTRA_TRANSLATION = "Translation";
+
+    @Bind(R.id.detail_title)
+    TextView mTitle;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail);
+        ButterKnife.bind(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Get the extras
+        String title = getIntent().getExtras().getString(EXTRA_TITLE);
+        String doa = getIntent().getExtras().getString(EXTRA_DOA);
+        String translation = getIntent().getExtras().getString(EXTRA_TRANSLATION);
+
+        // Show the title
+        mTitle.setText(title);
+
+        // Create instances of doa and translation fragments
+        DetailDoaFragment doaFragment = DetailDoaFragment.newInstance(doa);
+        DetailTranslationFragment translationFragment = DetailTranslationFragment.newInstance(translation);
+
+        // Show the fragments
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_detail_doa, doaFragment)
+                .add(R.id.fragment_detail_translation, translationFragment)
+                .commit();
+    }
+
+    /**
+     * Use this factory method to create an intent of the activity with
+     * the provided parameters and start the activity.
+     *
+     * @param title       Parameter 1.
+     * @param doa         Parameter 2.
+     * @param translation Parameter 3.
+     */
+    public static void start(Context context, String title, String doa, String translation) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(DetailActivity.EXTRA_TITLE, title);
+        intent.putExtra(DetailActivity.EXTRA_DOA, doa);
+        intent.putExtra(DetailActivity.EXTRA_TRANSLATION, translation);
+        context.startActivity(intent);
+    }
+
+}

@@ -4,9 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import doa.mfadli.com.doapilihan.R;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainActivityFragment.OnMainFragmentItemClickListener {
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,4 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onMainFragmentItemClick(String title, String doa, String translation) {
+        DetailActivity.start(this, title, doa, translation);
+    }
 }
