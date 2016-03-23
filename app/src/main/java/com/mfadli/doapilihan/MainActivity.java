@@ -10,6 +10,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        getWindow().requestFeature(android.view.Window.FEATURE_CONTENT_TRANSITIONS);
+//        getWindow().requestFeature(android.view.Window.FEATURE_ACTIVITY_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
