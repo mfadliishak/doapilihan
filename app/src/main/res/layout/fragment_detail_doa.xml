@@ -1,15 +1,46 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    tools:context=".DetailDoaFragment">
+    tools:context=".fragments.DetailDoaFragment">
 
-    <TextView
-        android:id="@+id/detail_doa"
+    <FrameLayout
+        android:id="@+id/img_font_size"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/md_white_1000"
+        android:clickable="true"
+        android:elevation="2dp">
+
+        <com.mikepenz.iconics.view.IconicsImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center|center_vertical"
+            android:background="?android:attr/selectableItemBackground"
+            app:iiv_color="@color/md_grey_600"
+            app:iiv_icon="gmd-format-size"/>
+
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="doa"/>
+        android:paddingBottom="20dp"
+        android:paddingLeft="22dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/detail_doa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="doa"
+            android:textSize="18dp"/>
+
+    </FrameLayout>
 
 </RelativeLayout>

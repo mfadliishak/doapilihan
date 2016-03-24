@@ -24,35 +24,47 @@
 
     </FrameLayout>
 
-    <android.support.v7.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/detail_title_frame">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
-                android:id="@+id/fragment_detail_doa"
-                android:name="com.mfadli.doapilihan.DetailDoaFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <FrameLayout
-                android:id="@+id/fragment_detail_translation"
-                android:name="com.mfadli.doapilihan.DetailTranslationFragment"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fragment_detail_doa"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp">
 
-        </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    </android.support.v7.widget.CardView>
+                    <FrameLayout
+                        android:id="@+id/fragment_detail_doa"
+                        android:name="com.mfadli.doapilihan.DetailDoaFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
+                    <FrameLayout
+                        android:id="@+id/fragment_detail_translation"
+                        android:name="com.mfadli.doapilihan.DetailTranslationFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/fragment_detail_doa"/>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
 

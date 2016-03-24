@@ -1,11 +1,10 @@
-package com.mfadli.doapilihan;
+package com.mfadli.doapilihan.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,13 +12,17 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.mfadli.doapilihan.fragments.AboutFragment;
+import com.mfadli.doapilihan.BuildConfig;
+import com.mfadli.doapilihan.fragments.MainActivityFragment;
+import com.mfadli.doapilihan.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MainActivityFragment.OnMainFragmentItemClickListener {
+public class MainActivity extends BaseActivity implements MainActivityFragment.OnMainFragmentItemClickListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final String STATE_SELECTED_DRAWER = "state_selected_drawer";
     private int mCurrentSelectedPosition = 0;

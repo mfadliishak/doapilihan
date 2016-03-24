@@ -1,4 +1,4 @@
-package com.mfadli.doapilihan;
+package com.mfadli.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,7 +12,7 @@ import android.view.View;
 /**
  * Created by mfad on 22/03/2016.
  */
-class DividerItemDecoration extends RecyclerView.ItemDecoration {
+public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider

@@ -1,4 +1,4 @@
-package com.mfadli.doapilihan;
+package com.mfadli.doapilihan.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,16 +6,19 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.mfadli.doapilihan.R;
+import com.mfadli.doapilihan.fragments.DetailDoaFragment;
+import com.mfadli.doapilihan.fragments.DetailTranslationFragment;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends BaseActivity {
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     public static final String EXTRA_TITLE = "Title";
     public static final String EXTRA_DOA = "Doa";
@@ -26,8 +29,6 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        getWindow().requestFeature(android.view.Window.FEATURE_CONTENT_TRANSITIONS);
-//        getWindow().requestFeature(android.view.Window.FEATURE_ACTIVITY_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
@@ -90,4 +91,5 @@ public class DetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

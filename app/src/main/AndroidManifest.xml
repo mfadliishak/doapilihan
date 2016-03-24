@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -17,13 +17,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailActivity"
+            android:name=".activities.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar.Light">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.mfadli.doapilihan.MainActivity"/>
+                android:value=".activities.MainActivity"/>
         </activity>
     </application>
 

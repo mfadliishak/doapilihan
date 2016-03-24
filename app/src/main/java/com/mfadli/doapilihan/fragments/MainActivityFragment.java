@@ -1,4 +1,4 @@
-package com.mfadli.doapilihan;
+package com.mfadli.doapilihan.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.mfadli.utils.DividerItemDecoration;
+import com.mfadli.doapilihan.adapter.MainAdapter;
+import com.mfadli.doapilihan.R;
+import com.mfadli.doapilihan.activities.MainActivity;
 import com.mfadli.utils.Common;
 
 import java.util.ArrayList;

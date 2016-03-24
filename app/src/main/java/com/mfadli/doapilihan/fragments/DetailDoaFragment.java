@@ -1,4 +1,4 @@
-package com.mfadli.doapilihan;
+package com.mfadli.doapilihan.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.mfadli.doapilihan.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -65,4 +67,5 @@ public class DetailDoaFragment extends Fragment {
     private void reloadScreen() {
         mTvDoa.setText(mDoa);
     }
+
 }
