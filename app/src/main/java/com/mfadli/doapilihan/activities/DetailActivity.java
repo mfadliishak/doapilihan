@@ -57,7 +57,15 @@ public class DetailActivity extends BaseActivity {
                     .add(R.id.fragment_detail_doa, doaFragment)
                     .add(R.id.fragment_detail_translation, translationFragment)
                     .commit();
+        } else {
+            mTitle.setText(savedInstanceState.getString(EXTRA_TITLE));
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(EXTRA_TITLE, mTitle.getText().toString());
     }
 
     /**
