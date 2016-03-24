@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.mfadli.doapilihan.DoaPilihanApplication;
 import com.mfadli.doapilihan.R;
 
 import butterknife.Bind;
@@ -63,6 +64,8 @@ public class DetailDoaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail_doa, container, false);
         ButterKnife.bind(this, view);
 
+        getFontSize();
+
         reloadScreen();
 
         return view;
@@ -73,6 +76,15 @@ public class DetailDoaFragment extends Fragment {
      */
     private void reloadScreen() {
         mTvDoa.setText(mDoa);
+        mTvDoa.setTextSize(TypedValue.COMPLEX_UNIT_SP, mOriginalSize + mSelectedSize);
+    }
+
+    /**
+     * Get Selection value (Seekbar) from local save and Get original font size of Doa TextView
+     */
+    private void getFontSize() {
+        mSelectedSize = ((DoaPilihanApplication) getActivity().getApplication()).getDoaFontSize();
+        mOriginalSize = mTvDoa.getTextSize() / getResources().getDisplayMetrics().scaledDensity;
     }
 
     @OnClick(R.id.img_font_size)
@@ -86,7 +98,8 @@ public class DetailDoaFragment extends Fragment {
         final SeekBar seekBar = (SeekBar) dialogView.findViewById(R.id.dialog_seekbar_doa_font);
         final TextView tvFont = (TextView) dialogView.findViewById(R.id.dialog_font_text);
 
-        mOriginalSize = mTvDoa.getTextSize() / getResources().getDisplayMetrics().scaledDensity;
+        getFontSize();
+
         tvFont.setText("" + (int) mOriginalSize);
         seekBar.setProgress(mSelectedSize);
 
@@ -119,7 +132,7 @@ public class DetailDoaFragment extends Fragment {
         dialog.show();
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-            mSelectedSize = mCurrentProgress;
+            ((DoaPilihanApplication) getActivity().getApplication()).saveDoaFontSize(mCurrentProgress);
             dialog.dismiss();
         });
 

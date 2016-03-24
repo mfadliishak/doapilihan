@@ -32,7 +32,7 @@
         android:paddingBottom="20dp"
         android:paddingLeft="22dp"
         android:paddingRight="20dp"
-        android:paddingTop="20dp">
+        android:paddingTop="22dp">
 
         <TextView
             android:id="@+id/detail_doa"
