@@ -38,23 +38,26 @@ public class DetailActivity extends BaseActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Get the extras
-        String title = getIntent().getExtras().getString(EXTRA_TITLE);
-        String doa = getIntent().getExtras().getString(EXTRA_DOA);
-        String translation = getIntent().getExtras().getString(EXTRA_TRANSLATION);
+        if (savedInstanceState == null) {
 
-        // Show the title
-        mTitle.setText(title);
+            // Get the extras
+            String title = getIntent().getExtras().getString(EXTRA_TITLE);
+            String doa = getIntent().getExtras().getString(EXTRA_DOA);
+            String translation = getIntent().getExtras().getString(EXTRA_TRANSLATION);
 
-        // Create instances of doa and translation fragments
-        DetailDoaFragment doaFragment = DetailDoaFragment.newInstance(doa);
-        DetailTranslationFragment translationFragment = DetailTranslationFragment.newInstance(translation);
+            // Show the title
+            mTitle.setText(title);
 
-        // Show the fragments
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_detail_doa, doaFragment)
-                .add(R.id.fragment_detail_translation, translationFragment)
-                .commit();
+            // Create instances of doa and translation fragments
+            DetailDoaFragment doaFragment = DetailDoaFragment.newInstance(doa);
+            DetailTranslationFragment translationFragment = DetailTranslationFragment.newInstance(translation);
+
+            // Show the fragments
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_detail_doa, doaFragment)
+                    .add(R.id.fragment_detail_translation, translationFragment)
+                    .commit();
+        }
     }
 
     /**
