@@ -13,8 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:background="#ffaa33"
+        android:background="@color/colorTitleRow"
         android:transitionName="@string/title_frame_transition">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/title_row"/>
 
         <TextView
             android:id="@+id/main_title"
