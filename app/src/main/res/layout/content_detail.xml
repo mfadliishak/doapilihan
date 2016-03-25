@@ -22,9 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center|center_vertical"
-            android:text="title"
-            android:textSize="16dp"
-            android:textStyle="bold"/>
+            android:text="title"/>
 
     </FrameLayout>
 
@@ -56,11 +54,18 @@
                         android:layout_height="wrap_content"/>
 
                     <FrameLayout
+                        android:id="@+id/fragment_detail_reference"
+                        android:name="com.mfadli.doapilihan.DetailReferenceFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/fragment_detail_doa"/>
+
+                    <FrameLayout
                         android:id="@+id/fragment_detail_translation"
                         android:name="com.mfadli.doapilihan.DetailTranslationFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/fragment_detail_doa"/>
+                        android:layout_below="@id/fragment_detail_reference"/>
 
                 </RelativeLayout>
 

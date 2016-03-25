@@ -33,6 +33,7 @@ public class MainActivityFragment extends Fragment {
     private List<String> mTitleList = new ArrayList<>();
     private List<String> mDoaList = new ArrayList<>();
     private List<String> mTranslationList = new ArrayList<>();
+    private List<String> mReferenceList = new ArrayList<>();
     private MainAdapter mMainAdapter;
     private OnMainFragmentItemClickListener mItemClickListener;
 
@@ -72,10 +73,11 @@ public class MainActivityFragment extends Fragment {
                 String title = mTitleList.get(position);
                 String doa = mDoaList.get(position);
                 String translation = mTranslationList.get(position);
+                String reference = mReferenceList.get(position);
                 FrameLayout titleFrame = (FrameLayout) view.findViewById(R.id.list_title_frame);
 
                 if (mItemClickListener != null) {
-                    mItemClickListener.onMainFragmentItemClick(title, doa, translation, titleFrame);
+                    mItemClickListener.onMainFragmentItemClick(title, doa, translation, reference, titleFrame);
                 }
 
             }
@@ -114,6 +116,7 @@ public class MainActivityFragment extends Fragment {
         ArrayList<String> list = Common.getArrayListFromResource(getContext(), R.array.titles);
         mDoaList = Common.getArrayListFromResource(getContext(), R.array.doa);
         mTranslationList = Common.getArrayListFromResource(getContext(), R.array.translations);
+        mReferenceList = Common.getArrayListFromResource(getContext(), R.array.references);
 
         for (String l : list) {
             mTitleList.add(l);
@@ -179,6 +182,6 @@ public class MainActivityFragment extends Fragment {
      * Interface to communicate with MainActivity
      */
     public interface OnMainFragmentItemClickListener {
-        void onMainFragmentItemClick(String title, String doa, String translation, FrameLayout titleFrame);
+        void onMainFragmentItemClick(String title, String doa, String translation, String reference, FrameLayout titleFrame);
     }
 }
