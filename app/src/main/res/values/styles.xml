@@ -35,7 +35,7 @@
     </style>
 
     <style name="AppTheme.BrandedLaunch" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/brand_screen</item>
+        <item name="android:windowBackground">@drawable/green_gradient</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>

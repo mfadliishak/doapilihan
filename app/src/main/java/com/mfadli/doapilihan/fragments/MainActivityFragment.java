@@ -14,10 +14,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.mfadli.utils.DividerItemDecoration;
-import com.mfadli.doapilihan.adapter.MainAdapter;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.activities.MainActivity;
+import com.mfadli.doapilihan.adapter.MainAdapter;
 import com.mfadli.utils.Common;
 
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class MainActivityFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mMainAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new RecyclerClickListener() {
             @Override

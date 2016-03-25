@@ -37,6 +37,10 @@ public class DetailActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView tvTitle =(TextView) toolbar.findViewById(R.id.toolbar_title);
+        tvTitle.setText(R.string.app_name);
 
         if (savedInstanceState == null) {
 

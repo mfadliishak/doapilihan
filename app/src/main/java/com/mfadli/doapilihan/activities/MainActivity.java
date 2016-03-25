@@ -46,28 +46,32 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
         setUpNavDrawer();
 
         if (savedInstanceState != null) {
-            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_DRAWER);
+            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_DRAWER, 0);
+            Menu menu = mNavigationView.getMenu();
+            menu.getItem(mCurrentSelectedPosition).setChecked(true);
+            TextView tvTitle =(TextView) mToolbar.findViewById(R.id.toolbar_title);
+            tvTitle.setText(menu.getItem(mCurrentSelectedPosition).getTitle());
         } else {
+
             MainActivityFragment fragment = MainActivityFragment.newInstance();
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_content, fragment)
                     .commit();
 
-            setTitle(R.string.drawer_title_home);
+            TextView tvTitle =(TextView) mToolbar.findViewById(R.id.toolbar_title);
+            tvTitle.setText(R.string.drawer_title_home);
         }
 
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                processSelectedItem(menuItem);
-                return true;
-            }
+        mNavigationView.setNavigationItemSelectedListener(menuItem -> {
+            processSelectedItem(menuItem);
+            return true;
         });
     }
 
@@ -80,14 +84,6 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(STATE_SELECTED_DRAWER, mCurrentSelectedPosition);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_DRAWER, 0);
-        Menu menu = mNavigationView.getMenu();
-        menu.getItem(mCurrentSelectedPosition).setChecked(true);
     }
 
     @Override
@@ -159,8 +155,10 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
                 .commit();
 
         menuItem.setChecked(true);
-        mToolbar.setTitle(menuItem.getTitle());
         mDrawerLayout.closeDrawer(GravityCompat.START);
+
+        TextView tvTitle =(TextView) mToolbar.findViewById(R.id.toolbar_title);
+        tvTitle.setText(menuItem.getTitle());
     }
 
 }
