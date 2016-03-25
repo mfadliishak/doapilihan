@@ -25,6 +25,7 @@ public class DetailActivity extends BaseActivity {
     public static final String EXTRA_DOA = "Doa";
     public static final String EXTRA_TRANSLATION = "Translation";
     public static final String EXTRA_REFERENCE = "Reference";
+    public static final String EXTRA_URL = "Url";
 
     @Bind(R.id.detail_title)
     TextView mTitle;
@@ -51,6 +52,7 @@ public class DetailActivity extends BaseActivity {
             String doa = getIntent().getExtras().getString(EXTRA_DOA);
             String translation = getIntent().getExtras().getString(EXTRA_TRANSLATION);
             String reference = getIntent().getExtras().getString(EXTRA_REFERENCE);
+            String url = getIntent().getExtras().getString(EXTRA_URL);
 
             // Show the title
             mTitle.setText(title);
@@ -58,7 +60,7 @@ public class DetailActivity extends BaseActivity {
             // Create instances of doa and translation fragments
             DetailDoaFragment doaFragment = DetailDoaFragment.newInstance(doa);
             DetailTranslationFragment translationFragment = DetailTranslationFragment.newInstance(translation);
-            DetailReferenceFragment referenceFragment = DetailReferenceFragment.newInstance(reference);
+            DetailReferenceFragment referenceFragment = DetailReferenceFragment.newInstance(reference, url);
 
             // Show the fragments
             getSupportFragmentManager().beginTransaction()
@@ -85,16 +87,18 @@ public class DetailActivity extends BaseActivity {
      * @param doa         Parameter 2.
      * @param translation Parameter 3.
      * @param reference   Parameter 4.
-     * @param titleFrame  Parameter 5.
+     * @param url         Parameter 5.
+     * @param titleFrame  Parameter 6.
      */
     public static void start(Context context,
                              String title, String doa, String translation, String reference,
-                             FrameLayout titleFrame) {
+                             String url, FrameLayout titleFrame) {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(DetailActivity.EXTRA_TITLE, title);
         intent.putExtra(DetailActivity.EXTRA_DOA, doa);
         intent.putExtra(DetailActivity.EXTRA_TRANSLATION, translation);
         intent.putExtra(DetailActivity.EXTRA_REFERENCE, reference);
+        intent.putExtra(DetailActivity.EXTRA_URL, url);
 
         // Shared Element Transition only for Lollipop and above.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

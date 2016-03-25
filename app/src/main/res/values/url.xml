@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="urls">
+         
+        <item>http://quran.com/3/8</item>
+         
+        <item>http://quran.com/2/201</item>
+
+        <item>http://quran.com/7/23</item>
+
+        <item>http://quran.com/3/193</item>
+
+        <item>http://quran.com/7/10</item>
+
+        <item>http://quran.com/3/194</item>
+
+        <item>http://quran.com/59/10</item>
+
+        <item>http://quran.com/2/250</item>
+
+        <item>http://quran.com/2/286</item>
+
+        <item>http://quran.com/7/47</item>
+
+        <item>http://quran.com/3/89</item>
+
+        <item>http://quran.com/3/16</item>
+
+        <item>https://muflihun.com/muslim/35/6568</item>
+
+        <item>https://muflihun.com/muslim/33/6418</item>
+         
+    </string-array>
+     
+</resources>

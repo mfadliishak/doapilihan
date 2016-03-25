@@ -34,6 +34,7 @@ public class MainActivityFragment extends Fragment {
     private List<String> mDoaList = new ArrayList<>();
     private List<String> mTranslationList = new ArrayList<>();
     private List<String> mReferenceList = new ArrayList<>();
+    private List<String> mUrlList = new ArrayList<>();
     private MainAdapter mMainAdapter;
     private OnMainFragmentItemClickListener mItemClickListener;
 
@@ -74,10 +75,11 @@ public class MainActivityFragment extends Fragment {
                 String doa = mDoaList.get(position);
                 String translation = mTranslationList.get(position);
                 String reference = mReferenceList.get(position);
+                String url = mUrlList.get(position);
                 FrameLayout titleFrame = (FrameLayout) view.findViewById(R.id.list_title_frame);
 
                 if (mItemClickListener != null) {
-                    mItemClickListener.onMainFragmentItemClick(title, doa, translation, reference, titleFrame);
+                    mItemClickListener.onMainFragmentItemClick(title, doa, translation, reference, url, titleFrame);
                 }
 
             }
@@ -117,6 +119,7 @@ public class MainActivityFragment extends Fragment {
         mDoaList = Common.getArrayListFromResource(getContext(), R.array.doa);
         mTranslationList = Common.getArrayListFromResource(getContext(), R.array.translations);
         mReferenceList = Common.getArrayListFromResource(getContext(), R.array.references);
+        mUrlList = Common.getArrayListFromResource(getContext(), R.array.urls);
 
         for (String l : list) {
             mTitleList.add(l);
@@ -182,6 +185,7 @@ public class MainActivityFragment extends Fragment {
      * Interface to communicate with MainActivity
      */
     public interface OnMainFragmentItemClickListener {
-        void onMainFragmentItemClick(String title, String doa, String translation, String reference, FrameLayout titleFrame);
+        void onMainFragmentItemClick(String title, String doa, String translation, String reference,
+                                     String url, FrameLayout titleFrame);
     }
 }
