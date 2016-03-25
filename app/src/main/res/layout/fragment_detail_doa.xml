@@ -7,26 +7,6 @@
     tools:context=".fragments.DetailDoaFragment">
 
     <FrameLayout
-        android:id="@+id/img_font_size"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/md_white_1000"
-        android:clickable="true"
-        android:elevation="2dp">
-
-        <com.mikepenz.iconics.view.IconicsImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center|center_vertical"
-            android:background="?android:attr/selectableItemBackground"
-            app:iiv_color="@color/md_grey_600"
-            app:iiv_icon="gmd-format-size"/>
-
-    </FrameLayout>
-
-    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="20dp"

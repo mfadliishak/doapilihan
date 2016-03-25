@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.mfadli.doapilihan.fragments.DetailTranslationFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetailActivity extends BaseActivity {
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
@@ -121,4 +123,17 @@ public class DetailActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Click Font Size Icon Listener.
+     * Trigger {@link DetailDoaFragment#onClickFontSize()}
+     *
+     * @param view
+     */
+    @OnClick(R.id.img_font_size)
+    void onClickFontSize(View view) {
+        DetailDoaFragment doaFragment = (DetailDoaFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_detail_doa);
+
+        doaFragment.onClickFontSize();
+    }
 }

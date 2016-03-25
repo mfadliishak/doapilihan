@@ -15,7 +15,6 @@ import com.mfadli.doapilihan.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -87,8 +86,10 @@ public class DetailDoaFragment extends Fragment {
         mOriginalSize = mTvDoa.getTextSize() / getResources().getDisplayMetrics().scaledDensity;
     }
 
-    @OnClick(R.id.img_font_size)
-    void onClickFontSize(View view) {
+    /**
+     * Show Dialog to change font size of the doa.
+     */
+    public void onClickFontSize() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -126,8 +127,8 @@ public class DetailDoaFragment extends Fragment {
             }
         });
 
-        dialogBuilder.setPositiveButton("Confirm", null);
-        dialogBuilder.setNegativeButton("Cancel", null);
+        dialogBuilder.setPositiveButton(getResources().getString(R.string.action_confirm), null);
+        dialogBuilder.setNegativeButton(getResources().getString(R.string.action_cancel), null);
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();
 
