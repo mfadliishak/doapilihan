@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.activities.MainActivity;
 import com.mfadli.doapilihan.adapter.MainAdapter;
+import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.utils.Common;
 
 import java.util.ArrayList;
@@ -31,11 +32,7 @@ import butterknife.ButterKnife;
 public class MainActivityFragment extends Fragment {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private List<String> mTitleList = new ArrayList<>();
-    private List<String> mDoaList = new ArrayList<>();
-    private List<String> mTranslationList = new ArrayList<>();
-    private List<String> mReferenceList = new ArrayList<>();
-    private List<String> mUrlList = new ArrayList<>();
-    private List<String> mTranslationEnList = new ArrayList<>();
+    private List<DoaDetail> mDoaDetails = new ArrayList<>();
     private MainAdapter mMainAdapter;
     private OnMainFragmentItemClickListener mItemClickListener;
 
@@ -73,16 +70,11 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 String title = mTitleList.get(position);
-                String doa = mDoaList.get(position);
-                String translation = mTranslationList.get(position);
-                String translationEn = mTranslationEnList.get(position);
-                String reference = mReferenceList.get(position);
-                String url = mUrlList.get(position);
+                DoaDetail doaDetail = mDoaDetails.get(position);
                 FrameLayout titleFrame = (FrameLayout) view.findViewById(R.id.list_title_frame);
 
                 if (mItemClickListener != null) {
-                    mItemClickListener.onMainFragmentItemClick(title, doa, translation, translationEn,
-                            reference, url, titleFrame);
+                    mItemClickListener.onMainFragmentItemClick(doaDetail, titleFrame);
                 }
 
             }
@@ -119,15 +111,22 @@ public class MainActivityFragment extends Fragment {
      */
     private void loadTitles() {
         ArrayList<String> list = Common.getArrayListFromResource(getContext(), R.array.titles);
-        mDoaList = Common.getArrayListFromResource(getContext(), R.array.doa);
-        mTranslationList = Common.getArrayListFromResource(getContext(), R.array.translations);
-        mTranslationEnList = Common.getArrayListFromResource(getContext(), R.array.translations_en);
-        mReferenceList = Common.getArrayListFromResource(getContext(), R.array.references);
-        mUrlList = Common.getArrayListFromResource(getContext(), R.array.urls);
+        ArrayList<String> doaList = Common.getArrayListFromResource(getContext(), R.array.doa);
+        ArrayList<String> translationList = Common.getArrayListFromResource(getContext(), R.array.translations);
+        ArrayList<String> translationEnList = Common.getArrayListFromResource(getContext(), R.array.translations_en);
+        ArrayList<String> referenceList = Common.getArrayListFromResource(getContext(), R.array.references);
+        ArrayList<String> urlList = Common.getArrayListFromResource(getContext(), R.array.urls);
 
-        for (String l : list) {
-            mTitleList.add(l);
+        for (int i = 0; i < list.size(); i++) {
+            mTitleList.add(list.get(i));
+
+            DoaDetail doa = new DoaDetail(
+                    list.get(i), doaList.get(i), referenceList.get(i),
+                    translationList.get(i), translationEnList.get(i), urlList.get(i));
+
+            mDoaDetails.add(doa);
         }
+
         mMainAdapter.notifyDataSetChanged();
     }
 
@@ -189,7 +188,6 @@ public class MainActivityFragment extends Fragment {
      * Interface to communicate with MainActivity
      */
     public interface OnMainFragmentItemClickListener {
-        void onMainFragmentItemClick(String title, String doa, String translation, String translationEn,
-                                     String reference, String url, FrameLayout titleFrame);
+        void onMainFragmentItemClick(DoaDetail doaDetail, FrameLayout titleFrame);
     }
 }

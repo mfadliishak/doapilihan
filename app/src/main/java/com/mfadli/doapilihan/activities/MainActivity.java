@@ -18,6 +18,7 @@ import com.mfadli.doapilihan.fragments.AboutFragment;
 import com.mfadli.doapilihan.BuildConfig;
 import com.mfadli.doapilihan.fragments.MainActivityFragment;
 import com.mfadli.doapilihan.R;
+import com.mfadli.doapilihan.model.DoaDetail;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
@@ -87,9 +88,8 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     }
 
     @Override
-    public void onMainFragmentItemClick(String title, String doa, String translation, String translationEn,
-                                        String reference, String url, FrameLayout titleFrame) {
-        DetailActivity.start(this, title, doa, translation, translationEn, reference, url, titleFrame);
+    public void onMainFragmentItemClick(DoaDetail doaDetail, FrameLayout titleFrame) {
+        DetailActivity.start(this, doaDetail, titleFrame);
     }
 
     /**

@@ -17,6 +17,7 @@ import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.fragments.DetailDoaFragment;
 import com.mfadli.doapilihan.fragments.DetailReferenceFragment;
 import com.mfadli.doapilihan.fragments.DetailTranslationFragment;
+import com.mfadli.doapilihan.model.DoaDetail;
 import com.mikepenz.iconics.view.IconicsImageView;
 
 import butterknife.Bind;
@@ -27,10 +28,6 @@ public class DetailActivity extends BaseActivity {
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     public static final String EXTRA_TITLE = "Title";
     public static final String EXTRA_DOA = "Doa";
-    public static final String EXTRA_TRANSLATION = "Translation";
-    public static final String EXTRA_TRANSLATION_EN = "TranslationEn";
-    public static final String EXTRA_REFERENCE = "Reference";
-    public static final String EXTRA_URL = "Url";
 
     @Bind(R.id.detail_title)
     TextView mTitle;
@@ -55,20 +52,15 @@ public class DetailActivity extends BaseActivity {
         if (savedInstanceState == null) {
 
             // Get the extras
-            String title = getIntent().getExtras().getString(EXTRA_TITLE);
-            String doa = getIntent().getExtras().getString(EXTRA_DOA);
-            String translation = getIntent().getExtras().getString(EXTRA_TRANSLATION);
-            String translationEn = getIntent().getExtras().getString(EXTRA_TRANSLATION_EN);
-            String reference = getIntent().getExtras().getString(EXTRA_REFERENCE);
-            String url = getIntent().getExtras().getString(EXTRA_URL);
+            DoaDetail doaDetail = getIntent().getExtras().getParcelable(EXTRA_DOA);
 
             // Show the title
-            mTitle.setText(title);
+            mTitle.setText(doaDetail.getTitle());
 
             // Create instances of doa and translation fragments
-            DetailDoaFragment doaFragment = DetailDoaFragment.newInstance(doa);
-            DetailTranslationFragment translationFragment = DetailTranslationFragment.newInstance(translation, translationEn);
-            DetailReferenceFragment referenceFragment = DetailReferenceFragment.newInstance(reference, url);
+            DetailDoaFragment doaFragment = DetailDoaFragment.newInstance(doaDetail.getDoa());
+            DetailTranslationFragment translationFragment = DetailTranslationFragment.newInstance(doaDetail.getTranslation(), doaDetail.getTranslationEn());
+            DetailReferenceFragment referenceFragment = DetailReferenceFragment.newInstance(doaDetail.getReference(), doaDetail.getUrl());
 
             // Show the fragments
             getSupportFragmentManager().beginTransaction()
@@ -95,24 +87,12 @@ public class DetailActivity extends BaseActivity {
      * Use this factory method to create an intent of the activity with
      * the provided parameters and start the activity.
      *
-     * @param title         Parameter 1.
-     * @param doa           Parameter 2.
-     * @param translation   Parameter 3.
-     * @param translationEn Parameter 4.
-     * @param reference     Parameter 5.
-     * @param url           Parameter 6.
+     * @param doaDetail     Parameter 1.
      * @param titleFrame    Parameter 7.
      */
-    public static void start(Context context,
-                             String title, String doa, String translation, String translationEn,
-                             String reference, String url, FrameLayout titleFrame) {
+    public static void start(Context context, DoaDetail doaDetail, FrameLayout titleFrame) {
         Intent intent = new Intent(context, DetailActivity.class);
-        intent.putExtra(DetailActivity.EXTRA_TITLE, title);
-        intent.putExtra(DetailActivity.EXTRA_DOA, doa);
-        intent.putExtra(DetailActivity.EXTRA_TRANSLATION, translation);
-        intent.putExtra(DetailActivity.EXTRA_TRANSLATION_EN, translationEn);
-        intent.putExtra(DetailActivity.EXTRA_REFERENCE, reference);
-        intent.putExtra(DetailActivity.EXTRA_URL, url);
+        intent.putExtra(DetailActivity.EXTRA_DOA, doaDetail);
 
         // Shared Element Transition only for Lollipop and above.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
