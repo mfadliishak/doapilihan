@@ -87,9 +87,9 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     }
 
     @Override
-    public void onMainFragmentItemClick(String title, String doa, String translation, String reference,
-                                        String url, FrameLayout titleFrame) {
-        DetailActivity.start(this, title, doa, translation, reference, url, titleFrame);
+    public void onMainFragmentItemClick(String title, String doa, String translation, String translationEn,
+                                        String reference, String url, FrameLayout titleFrame) {
+        DetailActivity.start(this, title, doa, translation, translationEn, reference, url, titleFrame);
     }
 
     /**

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mfadli.doapilihan.DoaPilihanApplication;
 import com.mfadli.doapilihan.R;
 
 import butterknife.Bind;
@@ -20,10 +21,14 @@ import butterknife.ButterKnife;
 public class DetailTranslationFragment extends Fragment {
     private static final String LOG_TAG = DetailTranslationFragment.class.getSimpleName();
     private static final String ARG_TRANSLATION = "Translation";
+    private static final String ARG_TRANSLATION_EN = "TranslationEn";
     private String mTranslation;
+    private String mTranslationEn;
 
     @Bind(R.id.detail_translation)
     TextView mTvTranslation;
+    @Bind(R.id.detail_translation_en)
+    TextView mTvTranslationEn;
 
     public DetailTranslationFragment() {
         // Required empty public constructor
@@ -33,13 +38,15 @@ public class DetailTranslationFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param translation Parameter 1.
+     * @param translation   Parameter 1.
+     * @param translationEn Parameter 2.
      * @return A new instance of fragment DetailTranslationFragment.
      */
-    public static DetailTranslationFragment newInstance(String translation) {
+    public static DetailTranslationFragment newInstance(String translation, String translationEn) {
         DetailTranslationFragment fragment = new DetailTranslationFragment();
         Bundle args = new Bundle();
         args.putString(ARG_TRANSLATION, translation);
+        args.putString(ARG_TRANSLATION_EN, translationEn);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,6 +56,7 @@ public class DetailTranslationFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mTranslation = getArguments().getString(ARG_TRANSLATION);
+            mTranslationEn = getArguments().getString(ARG_TRANSLATION_EN);
         }
     }
 
@@ -68,6 +76,31 @@ public class DetailTranslationFragment extends Fragment {
      */
     private void reloadScreen() {
         mTvTranslation.setText(mTranslation);
+        mTvTranslationEn.setText(mTranslationEn);
+
+        if (((DoaPilihanApplication) getActivity().getApplication()).isEnglishTranslation()) {
+            mTvTranslation.setVisibility(View.INVISIBLE);
+            mTvTranslationEn.setVisibility(View.VISIBLE);
+        }
+        else {
+            mTvTranslation.setVisibility(View.VISIBLE);
+            mTvTranslationEn.setVisibility(View.INVISIBLE);
+        }
     }
 
+    /**
+     * Change Translation malay <-> english
+     */
+    public void onClickTranslate(boolean isEnglish) {
+
+        if (isEnglish) {
+            mTvTranslation.setVisibility(View.INVISIBLE);
+            mTvTranslationEn.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            mTvTranslation.setVisibility(View.VISIBLE);
+            mTvTranslationEn.setVisibility(View.INVISIBLE);
+        }
+    }
 }
