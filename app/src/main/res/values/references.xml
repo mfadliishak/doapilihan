@@ -1,35 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="references">
-         
-        <item>[8: آل عمران]</item>
-         
-        <item>[البقرة :201]</item>
-
-        <item>[الأعراف :23]</item>
-
-        <item>[آل عمران :193]</item>
-
-        <item>[الكهف :10]</item>
-
-        <item>[آل عمران :194]</item>
-
-        <item>[الحشر :10]</item>
-
-        <item>[البقرة :250]</item>
-
-        <item>[البقرة :286]</item>
-
-        <item>[الأعراف :47]</item>
-
-        <item>[الأعراف :89]</item>
-
-        <item>[آل عمران :16]</item>
-
-        <item>[H/R Muslim :2722]</item>
-
-        <item>[H/R Muslim :2655]</item>
-         
-    </string-array>
-     
-</resources>

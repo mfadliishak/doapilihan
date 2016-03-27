@@ -18,10 +18,6 @@ import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.activities.MainActivity;
 import com.mfadli.doapilihan.adapter.MainAdapter;
 import com.mfadli.doapilihan.model.DoaDetail;
-import com.mfadli.utils.Common;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,8 +27,6 @@ import butterknife.ButterKnife;
  */
 public class MainActivityFragment extends Fragment {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private List<String> mTitleList = new ArrayList<>();
-    private List<DoaDetail> mDoaDetails = new ArrayList<>();
     private MainAdapter mMainAdapter;
     private OnMainFragmentItemClickListener mItemClickListener;
 
@@ -60,7 +54,7 @@ public class MainActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
 
-        mMainAdapter = new MainAdapter(mTitleList);
+        mMainAdapter = new MainAdapter();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -69,8 +63,7 @@ public class MainActivityFragment extends Fragment {
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new RecyclerClickListener() {
             @Override
             public void onClick(View view, int position) {
-                String title = mTitleList.get(position);
-                DoaDetail doaDetail = mDoaDetails.get(position);
+                DoaDetail doaDetail = mMainAdapter.getItem(position);
                 FrameLayout titleFrame = (FrameLayout) view.findViewById(R.id.list_title_frame);
 
                 if (mItemClickListener != null) {
@@ -84,7 +77,6 @@ public class MainActivityFragment extends Fragment {
                 Toast.makeText(getContext(), "long click", Toast.LENGTH_SHORT).show();
             }
         }));
-        loadTitles();
 
         return view;
     }
@@ -104,30 +96,6 @@ public class MainActivityFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mItemClickListener = null;
-    }
-
-    /**
-     * Read from xml for the Doa titles and update the recycler view adapter.
-     */
-    private void loadTitles() {
-        ArrayList<String> list = Common.getArrayListFromResource(getContext(), R.array.titles);
-        ArrayList<String> doaList = Common.getArrayListFromResource(getContext(), R.array.doa);
-        ArrayList<String> translationList = Common.getArrayListFromResource(getContext(), R.array.translations);
-        ArrayList<String> translationEnList = Common.getArrayListFromResource(getContext(), R.array.translations_en);
-        ArrayList<String> referenceList = Common.getArrayListFromResource(getContext(), R.array.references);
-        ArrayList<String> urlList = Common.getArrayListFromResource(getContext(), R.array.urls);
-
-        for (int i = 0; i < list.size(); i++) {
-            mTitleList.add(list.get(i));
-
-            DoaDetail doa = new DoaDetail(
-                    list.get(i), doaList.get(i), referenceList.get(i),
-                    translationList.get(i), translationEnList.get(i), urlList.get(i));
-
-            mDoaDetails.add(doa);
-        }
-
-        mMainAdapter.notifyDataSetChanged();
     }
 
     /**

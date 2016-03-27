@@ -1,4 +1,4 @@
-package doa.mfadli.com.doapilihan;
+package com.mfadli.doapilihan;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

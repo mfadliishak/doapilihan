@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mfadli.doapilihan.R;
+import com.mfadli.doapilihan.data.repo.DoaDataRepo;
+import com.mfadli.doapilihan.model.DoaDetail;
 
 import java.util.List;
 
@@ -19,10 +21,11 @@ import butterknife.ButterKnife;
  */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
-    private List<String> mList;
+    private List<DoaDetail> mList;
 
-    public MainAdapter(List<String> list) {
-        mList = list;
+    public MainAdapter() {
+        DoaDataRepo doaDataRepo = new DoaDataRepo();
+        mList = doaDataRepo.getAllDoa();
     }
 
     @Override
@@ -34,8 +37,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String title = mList.get(position);
-        holder.tvTitle.setText(title);
+        DoaDetail doaDetail = mList.get(position);
+        holder.tvTitle.setText(doaDetail.getTitle().replace("\\n", "\n"));
     }
 
     @Override
@@ -53,4 +56,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             ButterKnife.bind(this, itemView);
         }
     }
+
+    /**
+     * Direct access to DoaDetail by giving position/index value.
+     *
+     * @param position int Index/Position
+     * @return {@link DoaDetail}
+     */
+    public DoaDetail getItem(int position) {
+        return mList.get(position);
+    }
+
 }

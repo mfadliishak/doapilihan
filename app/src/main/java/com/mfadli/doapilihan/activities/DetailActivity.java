@@ -55,7 +55,7 @@ public class DetailActivity extends BaseActivity {
             DoaDetail doaDetail = getIntent().getExtras().getParcelable(EXTRA_DOA);
 
             // Show the title
-            mTitle.setText(doaDetail.getTitle());
+            mTitle.setText(doaDetail.getTitle().replace("\\n", "\n"));
 
             // Create instances of doa and translation fragments
             DetailDoaFragment doaFragment = DetailDoaFragment.newInstance(doaDetail.getDoa());
