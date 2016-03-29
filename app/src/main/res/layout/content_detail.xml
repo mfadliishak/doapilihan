@@ -9,13 +9,42 @@
         android:id="@+id/detail_title_frame"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_frame_height"
-        android:elevation="4dp"
-        android:transitionName="@string/title_frame_transition">
+        android:elevation="4dp">
 
-        <ImageView
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/title_row"/>
+            android:layout_gravity="center|center_horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:src="@drawable/title_row"/>
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/detail_left_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="40dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                app:iiv_color="@color/colorDetailIconEnabled"
+                app:iiv_icon="faw-chevron-left"/>
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/detail_right_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="40dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                app:iiv_color="@color/colorDetailIconEnabled"
+                app:iiv_icon="faw-chevron-right"/>
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/detail_title"

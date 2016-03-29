@@ -17,7 +17,10 @@ import android.widget.Toast;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.activities.MainActivity;
 import com.mfadli.doapilihan.adapter.MainAdapter;
+import com.mfadli.doapilihan.data.repo.DoaDataRepo;
 import com.mfadli.doapilihan.model.DoaDetail;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,7 +57,20 @@ public class MainActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
 
-        mMainAdapter = new MainAdapter();
+        DoaDataRepo doaDataRepo = new DoaDataRepo();
+        List<DoaDetail> doaDetails = doaDataRepo.getAllDoa();
+        configureRecyclerView(doaDetails);
+
+        return view;
+    }
+
+    /**
+     * Setup RecyclerView, related adapter and Touch Listener
+     *
+     * @param doaDetails List<DoaDetail>
+     */
+    private void configureRecyclerView(List<DoaDetail> doaDetails) {
+        mMainAdapter = new MainAdapter(doaDetails);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -63,11 +79,10 @@ public class MainActivityFragment extends Fragment {
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new RecyclerClickListener() {
             @Override
             public void onClick(View view, int position) {
-                DoaDetail doaDetail = mMainAdapter.getItem(position);
-                FrameLayout titleFrame = (FrameLayout) view.findViewById(R.id.list_title_frame);
+                FrameLayout titleFrame = (FrameLayout) view.findViewById(R.id.detail_title_frame);
 
                 if (mItemClickListener != null) {
-                    mItemClickListener.onMainFragmentItemClick(doaDetail, titleFrame);
+                    mItemClickListener.onMainFragmentItemClick(position, titleFrame);
                 }
 
             }
@@ -77,8 +92,6 @@ public class MainActivityFragment extends Fragment {
                 Toast.makeText(getContext(), "long click", Toast.LENGTH_SHORT).show();
             }
         }));
-
-        return view;
     }
 
     @Override
@@ -153,9 +166,18 @@ public class MainActivityFragment extends Fragment {
     }
 
     /**
+     * Convinient function to scroll RecycleView to position specified.
+     *
+     * @param position int
+     */
+    public void scrollToPosition(int position) {
+        mRecyclerView.scrollToPosition(position);
+    }
+
+    /**
      * Interface to communicate with MainActivity
      */
     public interface OnMainFragmentItemClickListener {
-        void onMainFragmentItemClick(DoaDetail doaDetail, FrameLayout titleFrame);
+        void onMainFragmentItemClick(int position, FrameLayout titleFrame);
     }
 }

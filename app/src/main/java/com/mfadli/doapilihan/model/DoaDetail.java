@@ -110,4 +110,16 @@ public class DoaDetail implements Parcelable {
         dest.writeString(mTranslationEn);
         dest.writeString(mUrl);
     }
+
+    @Override
+    public String toString() {
+        return "DoaDetail{" +
+                "mTitle='" + mTitle + '\'' +
+                ", mDoa='" + mDoa + '\'' +
+                ", mReference='" + mReference + '\'' +
+                ", mTranslation='" + mTranslation + '\'' +
+                ", mTranslationEn='" + mTranslationEn + '\'' +
+                ", mUrl='" + mUrl + '\'' +
+                '}';
+    }
 }

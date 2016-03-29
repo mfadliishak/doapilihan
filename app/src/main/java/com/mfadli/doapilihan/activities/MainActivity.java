@@ -14,11 +14,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.mfadli.doapilihan.fragments.AboutFragment;
 import com.mfadli.doapilihan.BuildConfig;
-import com.mfadli.doapilihan.fragments.MainActivityFragment;
 import com.mfadli.doapilihan.R;
-import com.mfadli.doapilihan.model.DoaDetail;
+import com.mfadli.doapilihan.fragments.AboutFragment;
+import com.mfadli.doapilihan.fragments.MainActivityFragment;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
@@ -29,6 +28,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final String STATE_SELECTED_DRAWER = "state_selected_drawer";
     private int mCurrentSelectedPosition = 0;
+    private Bundle mReenterState;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -39,8 +39,6 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        getWindow().requestFeature(android.view.Window.FEATURE_CONTENT_TRANSITIONS);
-//        getWindow().requestFeature(android.view.Window.FEATURE_ACTIVITY_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -56,7 +54,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_DRAWER, 0);
             Menu menu = mNavigationView.getMenu();
             menu.getItem(mCurrentSelectedPosition).setChecked(true);
-            TextView tvTitle =(TextView) mToolbar.findViewById(R.id.toolbar_title);
+            TextView tvTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
             tvTitle.setText(menu.getItem(mCurrentSelectedPosition).getTitle());
         } else {
 
@@ -66,7 +64,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
                     .add(R.id.main_content, fragment)
                     .commit();
 
-            TextView tvTitle =(TextView) mToolbar.findViewById(R.id.toolbar_title);
+            TextView tvTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
             tvTitle.setText(R.string.drawer_title_home);
         }
 
@@ -88,8 +86,22 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     }
 
     @Override
-    public void onMainFragmentItemClick(DoaDetail doaDetail, FrameLayout titleFrame) {
-        DetailActivity.start(this, doaDetail, titleFrame);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        mReenterState = new Bundle(data.getExtras());
+        int originalPosition = mReenterState.getInt(DetailActivity.EXTRA_ORIGINAL_POSITION);
+        int currentPosition = mReenterState.getInt(DetailActivity.EXTRA_CURRENT_POSITION);
+
+        if (originalPosition != currentPosition) {
+            ((MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.main_content))
+                    .scrollToPosition(currentPosition);
+        }
+    }
+
+    @Override
+    public void onMainFragmentItemClick(int position, FrameLayout titleFrame) {
+        DetailActivity.start(this, position, titleFrame);
     }
 
     /**
@@ -158,7 +170,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
         menuItem.setChecked(true);
         mDrawerLayout.closeDrawer(GravityCompat.START);
 
-        TextView tvTitle =(TextView) mToolbar.findViewById(R.id.toolbar_title);
+        TextView tvTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
         tvTitle.setText(menuItem.getTitle());
     }
 

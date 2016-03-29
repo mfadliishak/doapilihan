@@ -30,4 +30,15 @@ public class Common {
         return new ArrayList<>(stringList);
     }
 
+    /**
+     * Removing extra back slash symbol in breakline. That Extra symbol was added
+     * when reading from SQLite.
+     *
+     * @param toTrim String which to be trimmed
+     * @return String trimmed
+     */
+    public static String trimBreakLine(String toTrim) {
+        return toTrim.replace("\\n", "\n");
+    }
+
 }

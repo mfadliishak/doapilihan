@@ -1,15 +1,17 @@
 package com.mfadli.doapilihan.adapter;
 
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mfadli.doapilihan.R;
-import com.mfadli.doapilihan.data.repo.DoaDataRepo;
 import com.mfadli.doapilihan.model.DoaDetail;
+import com.mfadli.utils.Common;
 
 import java.util.List;
 
@@ -21,11 +23,11 @@ import butterknife.ButterKnife;
  */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
+    private static final String LOG_TAG = MainAdapter.class.getSimpleName();
     private List<DoaDetail> mList;
 
-    public MainAdapter() {
-        DoaDataRepo doaDataRepo = new DoaDataRepo();
-        mList = doaDataRepo.getAllDoa();
+    public MainAdapter(List<DoaDetail> doaDetailList) {
+        mList = doaDetailList;
     }
 
     @Override
@@ -38,7 +40,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         DoaDetail doaDetail = mList.get(position);
-        holder.tvTitle.setText(doaDetail.getTitle().replace("\\n", "\n"));
+        final String title = Common.trimBreakLine(doaDetail.getTitle());
+        holder.mTvTitle.setText(title);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.mFrameLayout.setTransitionName(title);
+        }
+        holder.mFrameLayout.setTag(title);
     }
 
     @Override
@@ -49,7 +56,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         @Nullable
         @Bind(R.id.main_title)
-        TextView tvTitle;
+        TextView mTvTitle;
+        @Bind(R.id.detail_title_frame)
+        FrameLayout mFrameLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -66,5 +75,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     public DoaDetail getItem(int position) {
         return mList.get(position);
     }
+
 
 }

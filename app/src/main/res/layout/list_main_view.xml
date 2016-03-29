@@ -9,11 +9,10 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/list_title_frame"
+        android:id="@+id/detail_title_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:transitionName="@string/title_frame_transition">
+        android:layout_alignParentTop="true">
 
         <ImageView
             android:layout_width="match_parent"
