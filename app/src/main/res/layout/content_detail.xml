@@ -16,12 +16,14 @@
             android:layout_height="match_parent"
             android:layout_gravity="center|center_horizontal">
 
+            <!-- Title Border -->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:src="@drawable/title_row"/>
 
+            <!-- Left Navigation Icon -->
             <com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/detail_left_icon"
                 android:layout_width="25dp"
@@ -33,6 +35,7 @@
                 app:iiv_color="@color/colorDetailIconEnabled"
                 app:iiv_icon="faw-chevron-left"/>
 
+            <!-- Right Navigation Icon -->
             <com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/detail_right_icon"
                 android:layout_width="25dp"
@@ -46,6 +49,7 @@
 
         </FrameLayout>
 
+        <!-- Doa Title -->
         <TextView
             android:id="@+id/detail_title"
             android:layout_width="match_parent"
@@ -76,10 +80,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <!-- Font Size Icon -->
                     <FrameLayout
                         android:id="@+id/img_font_size"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="@dimen/icon_frame_size"
+                        android:layout_height="@dimen/icon_frame_size"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
                         android:background="@color/md_white_1000"
@@ -87,8 +92,8 @@
                         android:elevation="2dp">
 
                         <com.mikepenz.iconics.view.IconicsImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
                             android:layout_gravity="center|center_vertical"
                             android:background="?android:attr/selectableItemBackground"
                             app:iiv_color="@color/md_grey_600"
@@ -96,11 +101,34 @@
 
                     </FrameLayout>
 
+                    <!-- Line Spacing Icon -->
+                    <FrameLayout
+                        android:id="@+id/img_line_spacing"
+                        android:layout_width="@dimen/icon_frame_size"
+                        android:layout_height="@dimen/icon_frame_size"
+                        android:layout_marginLeft="37dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/md_white_1000"
+                        android:clickable="true"
+                        android:elevation="2dp">
+
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:id="@+id/img_line_spacing_icon"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            android:layout_gravity="center|center_vertical"
+                            android:background="?android:attr/selectableItemBackground"
+                            app:iiv_color="@color/md_grey_600"
+                            app:iiv_icon="gmd-format-line-spacing"/>
+
+                    </FrameLayout>
+
+                    <!-- Translate Icon -->
                     <FrameLayout
                         android:id="@+id/img_translate"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginLeft="35dp"
+                        android:layout_width="@dimen/icon_frame_size"
+                        android:layout_height="@dimen/icon_frame_size"
+                        android:layout_marginLeft="69dp"
                         android:layout_marginTop="5dp"
                         android:background="@color/md_white_1000"
                         android:clickable="true"
@@ -108,21 +136,23 @@
 
                         <com.mikepenz.iconics.view.IconicsImageView
                             android:id="@+id/img_translate_icon"
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
                             android:layout_gravity="center|center_vertical"
                             android:background="?android:attr/selectableItemBackground"
-                            app:iiv_color="@color/md_grey_400"
+                            app:iiv_color="@color/colorTranslationDisabled"
                             app:iiv_icon="faw-language"/>
 
                     </FrameLayout>
 
+                    <!-- Arabic Doa Fragment Container -->
                     <FrameLayout
                         android:id="@+id/fragment_detail_doa"
                         android:name="com.mfadli.doapilihan.DetailDoaFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
+                    <!-- Reference Fragment Container -->
                     <FrameLayout
                         android:id="@+id/fragment_detail_reference"
                         android:name="com.mfadli.doapilihan.DetailReferenceFragment"
@@ -130,6 +160,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/fragment_detail_doa"/>
 
+                    <!-- Translation Fragment Container -->
                     <FrameLayout
                         android:id="@+id/fragment_detail_translation"
                         android:name="com.mfadli.doapilihan.DetailTranslationFragment"

@@ -81,8 +81,7 @@ public class DetailTranslationFragment extends Fragment {
         if (((DoaPilihanApplication) getActivity().getApplication()).isEnglishTranslation()) {
             mTvTranslation.setVisibility(View.INVISIBLE);
             mTvTranslationEn.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             mTvTranslation.setVisibility(View.VISIBLE);
             mTvTranslationEn.setVisibility(View.INVISIBLE);
         }
@@ -97,10 +96,10 @@ public class DetailTranslationFragment extends Fragment {
             mTvTranslation.setVisibility(View.INVISIBLE);
             mTvTranslationEn.setVisibility(View.VISIBLE);
 
-        }
-        else {
+        } else {
             mTvTranslation.setVisibility(View.VISIBLE);
             mTvTranslationEn.setVisibility(View.INVISIBLE);
         }
     }
+
 }

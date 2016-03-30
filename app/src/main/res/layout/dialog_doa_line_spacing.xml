@@ -6,15 +6,15 @@
     android:padding="20dp">
 
     <TextView
-        android:id="@+id/dialog_font_title"
+        android:id="@+id/dialog_line_spacing_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_doa_font_label"/>
+        android:text="@string/dialog_doa_line_spacing_label"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_font_title">
+        android:layout_below="@id/dialog_line_spacing_title">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -23,19 +23,19 @@
             android:orientation="horizontal">
 
             <SeekBar
-                android:id="@+id/dialog_seekbar_doa_font"
+                android:id="@+id/dialog_seekbar_doa_line_spacing"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:max="52"
+                android:max="185"
                 />
 
             <TextView
-                android:id="@+id/dialog_font_text"
+                android:id="@+id/dialog_line_spacing_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_toRightOf="@id/dialog_seekbar_doa_font"
+                android:layout_toRightOf="@id/dialog_seekbar_doa_line_spacing"
                 android:text="0"/>
         </LinearLayout>
 

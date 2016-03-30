@@ -117,9 +117,9 @@ public class DetailFragment extends Fragment {
      */
     private void resetTranslateIcon(boolean isEnglish) {
         if (isEnglish) {
-            mImgTranslate.setColor(getResources().getColor(R.color.md_grey_600));
+            mImgTranslate.setColor(getResources().getColor(R.color.colorTranslationEnabled));
         } else {
-            mImgTranslate.setColor(getResources().getColor(R.color.md_grey_400));
+            mImgTranslate.setColor(getResources().getColor(R.color.colorTranslationDisabled));
         }
     }
 
@@ -138,10 +138,24 @@ public class DetailFragment extends Fragment {
     }
 
     /**
+     * Click Line Spacing Icon Listener.
+     * Trigger {@link DetailDoaFragment#onClickLineSpacing()}
+     *
+     * @see android.view.View.OnClickListener
+     */
+    @OnClick(R.id.img_line_spacing)
+    void onClickLineSpacing(View view) {
+        DetailDoaFragment fragment = (DetailDoaFragment) getChildFragmentManager()
+                .findFragmentById(R.id.fragment_detail_doa);
+
+        fragment.onClickLineSpacing();
+    }
+
+    /**
      * Click Translate Icon Listener.
      * Trigger {@link DetailDoaFragment#onClickFontSize()}
      *
-     * @param view
+     * @see android.view.View.OnClickListener
      */
     @OnClick(R.id.img_translate)
     void onClickTranslate(View view) {

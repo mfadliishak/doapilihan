@@ -16,6 +16,7 @@ public class DoaPilihanApplication extends Application {
     private static final String LOG_TAG = DoaPilihanApplication.class.getSimpleName();
     private static final String DOA_FONT_SIZE_PREF = "DoaFontSize";
     private static final String TRANSLATION_EN_PREF = "TranslationEn";
+    private static final String DOA_LINE_SPACING_SIZE_PREF = "LineSpacingSize";
 
     private static Context sContext;
     private static DBHelper sDBHelper;
@@ -58,6 +59,26 @@ public class DoaPilihanApplication extends Application {
     public void saveDoaFontSize(int size) {
         SharedPreferences.Editor editor = getPreferences().edit();
         editor.putInt(DOA_FONT_SIZE_PREF, size);
+        editor.commit();
+    }
+
+    /**
+     * Read Doa Line Spacing Size from local storage.
+     *
+     * @return int Line Spacing Size
+     */
+    public int getDoaLineSpacingSize() {
+        return getPreferences().getInt(DOA_LINE_SPACING_SIZE_PREF, 0);
+    }
+
+    /**
+     * Save Doa Line Spacing Size selection into local storage.
+     *
+     * @param size int Line Spacing Size
+     */
+    public void saveDoaLineSpacingSize(int size) {
+        SharedPreferences.Editor editor = getPreferences().edit();
+        editor.putInt(DOA_LINE_SPACING_SIZE_PREF, size);
         editor.commit();
     }
 

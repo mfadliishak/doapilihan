@@ -115,6 +115,12 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
     }
 
     @Override
+    public void onBackPressed() {
+        finishWithResult();
+        super.onBackPressed();
+    }
+
+    @Override
     public void onDetailFragmentLeftClick() {
         mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
     }

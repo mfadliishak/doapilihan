@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.mfadli.doapilihan.DoaPilihanApplication;
 import com.mfadli.doapilihan.R;
+import com.mfadli.doapilihan.event.GeneralEvent;
+import com.mfadli.doapilihan.event.RxBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -26,6 +29,10 @@ public class DetailDoaFragment extends Fragment {
     private int mSelectedSize = 0;
     private float mOriginalSize = 0.0f;
     private int mCurrentProgress = 0;
+    private int mSelectedLineSpacingSize = 0;
+    private float mOriginalLineSpacingSize = 0;
+    private RxBus mRxBus;
+    private CompositeSubscription mSubscription;
 
     @Bind(R.id.detail_doa)
     TextView mTvDoa;
@@ -55,6 +62,7 @@ public class DetailDoaFragment extends Fragment {
         if (getArguments() != null) {
             mDoa = getArguments().getString(ARG_DOA);
         }
+        mRxBus = ((DoaPilihanApplication) DoaPilihanApplication.getContext()).getRxBusSingleton();
     }
 
     @Override
@@ -64,10 +72,56 @@ public class DetailDoaFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         getFontSize();
+        getLineSpacingSize();
 
         reloadScreen();
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mSubscription = new CompositeSubscription();
+
+        // subscribe to SuccessSaveFontSize
+        mSubscription
+                .add(mRxBus.toObserverable()
+                        .subscribe(event -> {
+                            if (event instanceof GeneralEvent.SuccessSaveFontSize) {
+                                GeneralEvent.SuccessSaveFontSize ev = (GeneralEvent.SuccessSaveFontSize) event;
+                                resetFontSize(ev.getOriginalSize());
+                            } else if (event instanceof GeneralEvent.SuccessSaveLineSpacingSize) {
+                                GeneralEvent.SuccessSaveLineSpacingSize ev = (GeneralEvent.SuccessSaveLineSpacingSize) event;
+                                resetLineSpacingSize(ev.getOriginalSize());
+                            }
+                        }));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mSubscription.unsubscribe();
+    }
+
+    /**
+     * Callback for {@link GeneralEvent.SuccessSaveFontSize}
+     *
+     * @param originalSize float
+     */
+    private void resetFontSize(float originalSize) {
+        getFontSize();
+        mTvDoa.setTextSize(TypedValue.COMPLEX_UNIT_SP, originalSize);
+    }
+
+    /**
+     * Callback for {@link GeneralEvent.SuccessSaveLineSpacingSize}
+     *
+     * @param originalSize float
+     */
+    private void resetLineSpacingSize(float originalSize) {
+        getLineSpacingSize();
+        mTvDoa.setLineSpacing(originalSize, 1.0f);
     }
 
     /**
@@ -76,6 +130,7 @@ public class DetailDoaFragment extends Fragment {
     private void reloadScreen() {
         mTvDoa.setText(mDoa);
         mTvDoa.setTextSize(TypedValue.COMPLEX_UNIT_SP, mOriginalSize + mSelectedSize);
+        mTvDoa.setLineSpacing(mOriginalLineSpacingSize + mSelectedLineSpacingSize, 1.0f);
     }
 
     /**
@@ -84,6 +139,14 @@ public class DetailDoaFragment extends Fragment {
     private void getFontSize() {
         mSelectedSize = ((DoaPilihanApplication) getActivity().getApplication()).getDoaFontSize();
         mOriginalSize = mTvDoa.getTextSize() / getResources().getDisplayMetrics().scaledDensity;
+    }
+
+    /**
+     * Get Selection value (Seekbar) from local save and Get original line spacing of Doa TextView
+     */
+    private void getLineSpacingSize() {
+        mSelectedLineSpacingSize = ((DoaPilihanApplication) getActivity().getApplication()).getDoaLineSpacingSize();
+        mOriginalLineSpacingSize = mTvDoa.getLineSpacingExtra();
     }
 
     /**
@@ -107,13 +170,16 @@ public class DetailDoaFragment extends Fragment {
         mCurrentProgress = mSelectedSize;
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            float calculatedSize = 0.0f;
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mCurrentProgress = progress;
+                calculatedSize = mOriginalSize + (mCurrentProgress - mSelectedSize);
 
-                tvFont.setText("" + (int) (mOriginalSize + (mCurrentProgress - mSelectedSize)));
+                tvFont.setText("" + (int) calculatedSize);
 
-                mTvDoa.setTextSize(TypedValue.COMPLEX_UNIT_SP, mOriginalSize + (mCurrentProgress - mSelectedSize));
+                mTvDoa.setTextSize(TypedValue.COMPLEX_UNIT_SP, calculatedSize);
             }
 
             @Override
@@ -134,6 +200,13 @@ public class DetailDoaFragment extends Fragment {
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             ((DoaPilihanApplication) getActivity().getApplication()).saveDoaFontSize(mCurrentProgress);
+
+            // Broadcast SuccessSaveFontSize
+            if (mRxBus.hasObservers()) {
+                getFontSize();
+                mRxBus.send(new GeneralEvent.SuccessSaveFontSize(mOriginalSize));
+            }
+
             dialog.dismiss();
         });
 
@@ -146,4 +219,74 @@ public class DetailDoaFragment extends Fragment {
             mTvDoa.setTextSize(TypedValue.COMPLEX_UNIT_SP, mOriginalSize);
         });
     }
+
+    /**
+     * Show Dialog to change line spacing of the doa.
+     */
+    public void onClickLineSpacing() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        final View dialogView = inflater.inflate(R.layout.dialog_doa_line_spacing, null);
+        dialogBuilder.setView(dialogView);
+
+        final SeekBar seekBar = (SeekBar) dialogView.findViewById(R.id.dialog_seekbar_doa_line_spacing);
+        final TextView tvFont = (TextView) dialogView.findViewById(R.id.dialog_line_spacing_text);
+
+        getLineSpacingSize();
+
+        tvFont.setText("" + (int) mOriginalLineSpacingSize);
+        seekBar.setProgress(mSelectedLineSpacingSize);
+
+        mCurrentProgress = mSelectedLineSpacingSize;
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            float calculatedSize = 0.0f;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mCurrentProgress = progress;
+                calculatedSize = mOriginalLineSpacingSize + (mCurrentProgress - mSelectedLineSpacingSize);
+
+                tvFont.setText("" + (int) calculatedSize);
+                mTvDoa.setLineSpacing(calculatedSize, 1.0f);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        dialogBuilder.setPositiveButton(getResources().getString(R.string.action_confirm), null);
+        dialogBuilder.setNegativeButton(getResources().getString(R.string.action_cancel), null);
+        AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            ((DoaPilihanApplication) getActivity().getApplication()).saveDoaLineSpacingSize(mCurrentProgress);
+
+            // Broadcast SuccessSaveFontSize
+            if (mRxBus.hasObservers()) {
+                getLineSpacingSize();
+                mRxBus.send(new GeneralEvent.SuccessSaveLineSpacingSize(mOriginalLineSpacingSize));
+            }
+
+            dialog.dismiss();
+        });
+
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(v -> {
+            mTvDoa.setLineSpacing(mOriginalLineSpacingSize, 1.0f);
+            dialog.dismiss();
+        });
+
+        dialog.setOnCancelListener(dialog1 -> {
+            mTvDoa.setLineSpacing(mOriginalLineSpacingSize, 1.0f);
+        });
+    }
+
 }

@@ -5,4 +5,6 @@
     <color name="colorAccent">@color/md_deep_purple_A200</color>
     <color name="colorTitleRow">#ffaa33</color>
     <color name="colorDetailIconEnabled">@color/md_light_green_A400</color>
+    <color name="colorTranslationEnabled">@color/md_light_green_700</color>
+    <color name="colorTranslationDisabled">@color/md_grey_400</color>
 </resources>
