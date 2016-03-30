@@ -66,9 +66,7 @@ public class DetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.content_detail, null);
         ButterKnife.bind(this, view);
 
-        if (savedInstanceState != null) {
-            mDoaDetail = savedInstanceState.getParcelable(ARG_DOA_DETAIL);
-        } else {
+        if (getChildFragmentManager().findFragmentById(R.id.fragment_detail_doa) == null) {
             DetailDoaFragment doaFragment = DetailDoaFragment.newInstance(mDoaDetail.getDoa());
             DetailTranslationFragment translationFragment = DetailTranslationFragment.newInstance(mDoaDetail.getTranslation(), mDoaDetail.getTranslationEn());
             DetailReferenceFragment referenceFragment = DetailReferenceFragment.newInstance(mDoaDetail.getReference(), mDoaDetail.getUrl());
