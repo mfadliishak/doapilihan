@@ -180,6 +180,38 @@ public class DetailFragment extends Fragment {
     }
 
     /**
+     * Disable Left Navigation Icon and make it invisible if true is given.
+     * Used when first page off ViewPager is loaded.
+     *
+     * @param disable boolean
+     */
+    public void disableLeftIcon(boolean disable) {
+        mLeftIcon.setEnabled(!disable);
+
+        if (disable) {
+            mLeftIcon.setVisibility(View.INVISIBLE);
+        } else {
+            mLeftIcon.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Disable Right Navigation Icon and make it invisible if true is given.
+     * Used when last page of ViewPager is loaded.
+     *
+     * @param disable boolean
+     */
+    public void disableRightIcon(boolean disable) {
+        mRightIcon.setEnabled(!disable);
+
+        if (disable) {
+            mRightIcon.setVisibility(View.INVISIBLE);
+        } else {
+            mRightIcon.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
      * Interface to communicate with DetailActivity
      */
     public interface OnDetailFragmentListener {

@@ -63,9 +63,22 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(mCurrentPosition);
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
+            boolean callHappened;
+
             @Override
             public void onPageSelected(int position) {
                 mCurrentPosition = position;
+                callHappened = false;
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // If First Page and Last page, callback to disable left/right icon
+                if ((position == 0 || position == mPagerAdapter.getCount() - 1) && !callHappened) {
+                    callHappened = true;
+                    triggerLastAndFirstPage();
+                }
             }
         });
 
@@ -121,5 +134,33 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
         data.putExtra(EXTRA_ORIGINAL_POSITION, mOriginalPosition);
         data.putExtra(EXTRA_CURRENT_POSITION, mCurrentPosition);
         setResult(RESULT_OK, data);
+    }
+
+    /**
+     * Get the current fragment in ViewPager and disable left/right navigation Icon
+     * if the current page is first or last page.
+     */
+    private void triggerLastAndFirstPage() {
+        DetailFragment fragment = getFragmentByPosition(mCurrentPosition);
+
+        if (fragment != null) {
+            if (mCurrentPosition == 0) {
+                fragment.disableLeftIcon(true);
+            } else if (mCurrentPosition == mPagerAdapter.getCount() - 1) {
+                fragment.disableRightIcon(true);
+            }
+
+        }
+    }
+
+    /**
+     * Get Fragment inside ViewPager by page index.
+     *
+     * @param pos int position/index of ViewPager
+     * @return DetailFragment
+     */
+    private DetailFragment getFragmentByPosition(int pos) {
+        String tag = "android:switcher:" + mViewPager.getId() + ":" + pos;
+        return (DetailFragment) getSupportFragmentManager().findFragmentByTag(tag);
     }
 }
