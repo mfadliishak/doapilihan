@@ -11,4 +11,38 @@
     <string name="dialog_doa_font_label">Font Size</string>
     <string name="dialog_doa_font_type_label">Font Type</string>
 
+
+    <string name="library_name_1">Butter Knife</string>
+    <string name="library_url_1">http://jakewharton.github.io/butterknife/</string>
+
+    <string name="library_name_2">Android-Iconics</string>
+    <string name="library_url_2">https://github.com/mikepenz/Android-Iconics</string>
+
+    <string name="library_name_3">Calligraphy</string>
+    <string name="library_url_3">https://github.com/chrisjenx/Calligraphy</string>
+
+    <string name="library_name_4">RxAndroid</string>
+    <string name="library_url_4">https://github.com/ReactiveX/RxAndroid</string>
+
+
+    <string name="reference_name_1">Tanzil.net</string>
+    <string name="reference_url_1">http://tanzil.net/</string>
+
+    <string name="reference_name_2">Quran.com</string>
+    <string name="reference_url_2">http://quran.com/</string>
+
+    <string name="reference_name_3">Islam in Quran</string>
+    <string name="reference_url_3">http://www.islaminquran.com/</string>
+
+    <string name="reference_name_4">Muslihun.com</string>
+    <string name="reference_url_4">https://muflihun.com/</string>
+
+    <string name="reference_name_5">Sunnah.com</string>
+    <string name="reference_url_5">http://sunnah.com/</string>
+
+    <string name="reference_name_6">QaalaRasulAllah.com</string>
+    <string name="reference_url_6">http://qaalarasulallah.com/</string>
+    <string name="email_helpdesk">Doa Pilihan HelpDesk</string>
+    <string name="email_intent_title">Send with</string>
+
 </resources>
