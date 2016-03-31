@@ -78,24 +78,16 @@ public class DetailTranslationFragment extends Fragment {
         mTvTranslation.setText(mTranslation);
         mTvTranslationEn.setText(mTranslationEn);
 
-        if (((DoaPilihanApplication) getActivity().getApplication()).isEnglishTranslation()) {
-            mTvTranslation.setVisibility(View.INVISIBLE);
-            mTvTranslationEn.setVisibility(View.VISIBLE);
-        } else {
-            mTvTranslation.setVisibility(View.VISIBLE);
-            mTvTranslationEn.setVisibility(View.INVISIBLE);
-        }
+        changeTranslationVisibility(((DoaPilihanApplication) getActivity().getApplication()).isEnglishTranslation());
     }
 
     /**
      * Change Translation malay <-> english
      */
-    public void onClickTranslate(boolean isEnglish) {
-
+    public void changeTranslationVisibility(boolean isEnglish) {
         if (isEnglish) {
             mTvTranslation.setVisibility(View.INVISIBLE);
             mTvTranslationEn.setVisibility(View.VISIBLE);
-
         } else {
             mTvTranslation.setVisibility(View.VISIBLE);
             mTvTranslationEn.setVisibility(View.INVISIBLE);

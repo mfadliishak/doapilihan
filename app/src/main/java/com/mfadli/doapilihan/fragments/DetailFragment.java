@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.mfadli.doapilihan.DoaPilihanApplication;
 import com.mfadli.doapilihan.R;
+import com.mfadli.doapilihan.event.GeneralEvent;
+import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.utils.Common;
 import com.mikepenz.iconics.view.IconicsImageView;
@@ -19,6 +21,7 @@ import com.mikepenz.iconics.view.IconicsImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by mfad on 29/03/2016.
@@ -29,6 +32,8 @@ public class DetailFragment extends Fragment {
     private static final String LOG_TAG = DetailFragment.class.getSimpleName();
     private DoaDetail mDoaDetail;
     private OnDetailFragmentListener mListener;
+    private RxBus mRxBus;
+    private CompositeSubscription mSubscription;
 
     @Bind(R.id.detail_title)
     TextView mTitle;
@@ -58,6 +63,7 @@ public class DetailFragment extends Fragment {
         if (getArguments() != null) {
             mDoaDetail = getArguments().getParcelable(ARG_DOA_DETAIL);
         }
+        mRxBus = ((DoaPilihanApplication) DoaPilihanApplication.getContext()).getRxBusSingleton();
     }
 
     @Nullable
@@ -110,6 +116,43 @@ public class DetailFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mSubscription = new CompositeSubscription();
+
+        // subscribe to SuccessSaveFontSize
+        mSubscription
+                .add(mRxBus.toObserverable()
+                        .subscribe(event -> {
+                            if (event instanceof GeneralEvent.SuccessSaveTranslation) {
+                                GeneralEvent.SuccessSaveTranslation ev = (GeneralEvent.SuccessSaveTranslation) event;
+                                onSuccessSaveTranslation(ev.isEnglish());
+                            }
+                        }));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mSubscription.unsubscribe();
+    }
+
+    /**
+     * Callback for {@link GeneralEvent.SuccessSaveTranslation}.
+     * Change Translation Icon and visibility.
+     *
+     * @param isEnglish boolean
+     */
+    private void onSuccessSaveTranslation(boolean isEnglish) {
+        DetailTranslationFragment fragment = (DetailTranslationFragment) getChildFragmentManager()
+                .findFragmentById(R.id.fragment_detail_translation);
+
+        fragment.changeTranslationVisibility(isEnglish);
+
+        resetTranslateIcon(isEnglish);
+    }
+
     /**
      * Reset Translate Icon to appropriate color.
      *
@@ -121,74 +164,6 @@ public class DetailFragment extends Fragment {
         } else {
             mImgTranslate.setColor(getResources().getColor(R.color.colorTranslationDisabled));
         }
-    }
-
-    /**
-     * Click Font Size Icon Listener.
-     * Trigger {@link DetailDoaFragment#onClickFontSize()}
-     *
-     * @param view
-     */
-    @OnClick(R.id.img_font_size)
-    void onClickFontSize(View view) {
-        DetailDoaFragment fragment = (DetailDoaFragment) getChildFragmentManager()
-                .findFragmentById(R.id.fragment_detail_doa);
-
-        fragment.onClickFontSize();
-    }
-
-    /**
-     * Click Line Spacing Icon Listener.
-     * Trigger {@link DetailDoaFragment#onClickLineSpacing()}
-     *
-     * @see android.view.View.OnClickListener
-     */
-    @OnClick(R.id.img_line_spacing)
-    void onClickLineSpacing(View view) {
-        DetailDoaFragment fragment = (DetailDoaFragment) getChildFragmentManager()
-                .findFragmentById(R.id.fragment_detail_doa);
-
-        fragment.onClickLineSpacing();
-    }
-
-    /**
-     * Click Translate Icon Listener.
-     * Trigger {@link DetailDoaFragment#onClickFontSize()}
-     *
-     * @see android.view.View.OnClickListener
-     */
-    @OnClick(R.id.img_translate)
-    void onClickTranslate(View view) {
-        DoaPilihanApplication app = (DoaPilihanApplication) DoaPilihanApplication.getContext();
-        boolean isEnglish = !app.isEnglishTranslation();
-        app.saveEnglishTranslation(isEnglish);
-
-        DetailTranslationFragment fragment = (DetailTranslationFragment) getChildFragmentManager()
-                .findFragmentById(R.id.fragment_detail_translation);
-
-        fragment.onClickTranslate(isEnglish);
-
-        resetTranslateIcon(isEnglish);
-    }
-
-    /**
-     * Click Listener when Left Navigation Icon is clicked
-     *
-     * @see android.view.View.OnClickListener
-     */
-    @OnClick(R.id.detail_left_icon)
-    void onClickLeftIcon(View view) {
-        mListener.onDetailFragmentLeftClick();
-    }
-
-    /**
-     * Click Listener when Right Navigation Icon is clicked
-     *
-     * @see android.view.View.OnClickListener
-     */
-    @OnClick(R.id.detail_right_icon)
-    void onClickRightIcon(View view) {
-        mListener.onDetailFragmentRightClick();
     }
 
     /**
@@ -221,6 +196,71 @@ public class DetailFragment extends Fragment {
         } else {
             mRightIcon.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * Click Font Size Icon Listener.
+     * Trigger {@link DetailDoaFragment#onClickFontSize()}
+     *
+     * @see View.OnClickListener
+     */
+    @OnClick(R.id.img_font_size)
+    void onClickFontSize(View view) {
+        DetailDoaFragment fragment = (DetailDoaFragment) getChildFragmentManager()
+                .findFragmentById(R.id.fragment_detail_doa);
+
+        fragment.onClickFontSize();
+    }
+
+    /**
+     * Click Line Spacing Icon Listener.
+     * Trigger {@link DetailDoaFragment#onClickLineSpacing()}
+     *
+     * @see View.OnClickListener
+     */
+    @OnClick(R.id.img_line_spacing)
+    void onClickLineSpacing(View view) {
+        DetailDoaFragment fragment = (DetailDoaFragment) getChildFragmentManager()
+                .findFragmentById(R.id.fragment_detail_doa);
+
+        fragment.onClickLineSpacing();
+    }
+
+    /**
+     * Click Translate Icon Listener.
+     * Trigger {@link DetailDoaFragment#onClickFontSize()}
+     *
+     * @see View.OnClickListener
+     */
+    @OnClick(R.id.img_translate)
+    void onClickTranslate(View view) {
+        DoaPilihanApplication app = (DoaPilihanApplication) DoaPilihanApplication.getContext();
+        boolean isEnglish = !app.isEnglishTranslation();
+        app.saveEnglishTranslation(isEnglish);
+
+        if (mRxBus.hasObservers()) {
+            mRxBus.send(new GeneralEvent.SuccessSaveTranslation(isEnglish));
+        }
+    }
+
+    /**
+     * Click Listener when Left Navigation Icon is clicked
+     *
+     * @see View.OnClickListener
+     */
+    @OnClick(R.id.detail_left_icon)
+    void onClickLeftIcon(View view) {
+        mListener.onDetailFragmentLeftClick();
+    }
+
+    /**
+     * Click Listener when Right Navigation Icon is clicked
+     *
+     * @see View.OnClickListener
+     */
+    @OnClick(R.id.detail_right_icon)
+    void onClickRightIcon(View view) {
+        mListener.onDetailFragmentRightClick();
     }
 
     /**

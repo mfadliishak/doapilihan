@@ -38,4 +38,19 @@ public class GeneralEvent {
             return mOriginalSize;
         }
     }
+
+    /**
+     * When Translation is clicked and successfully saved to SharedPreference.
+     */
+    public static class SuccessSaveTranslation {
+        boolean mIsEnglish;
+
+        public SuccessSaveTranslation(boolean isEnglish) {
+            mIsEnglish = isEnglish;
+        }
+
+        public boolean isEnglish() {
+            return mIsEnglish;
+        }
+    }
 }
