@@ -8,6 +8,10 @@ import android.preference.PreferenceManager;
 import com.mfadli.doapilihan.data.DBHelper;
 import com.mfadli.doapilihan.data.DBManager;
 import com.mfadli.doapilihan.event.RxBus;
+import com.mfadli.doapilihan.model.Font;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mfad on 24/03/2016.
@@ -17,6 +21,7 @@ public class DoaPilihanApplication extends Application {
     private static final String DOA_FONT_SIZE_PREF = "DoaFontSize";
     private static final String TRANSLATION_EN_PREF = "TranslationEn";
     private static final String DOA_LINE_SPACING_SIZE_PREF = "LineSpacingSize";
+    private static final String DOA_FONT_TYPE_PREF = "DoaFontType";
 
     private static Context sContext;
     private static DBHelper sDBHelper;
@@ -92,6 +97,26 @@ public class DoaPilihanApplication extends Application {
     }
 
     /**
+     * Read Doa Font Type from local storage.
+     *
+     * @return int Font Type
+     */
+    public int getDoaFontType() {
+        return getPreferences().getInt(DOA_FONT_TYPE_PREF, 0);
+    }
+
+    /**
+     * Save Doa Font Type selection into local storage.
+     *
+     * @param type int Font Type
+     */
+    public void saveDoaFontType(int type) {
+        SharedPreferences.Editor editor = getPreferences().edit();
+        editor.putInt(DOA_FONT_TYPE_PREF, type);
+        editor.commit();
+    }
+
+    /**
      * Read if english translation button is clicked.
      *
      * @return boolean
@@ -109,5 +134,22 @@ public class DoaPilihanApplication extends Application {
         SharedPreferences.Editor editor = getPreferences().edit();
         editor.putBoolean(TRANSLATION_EN_PREF, isEnglishTranslation);
         editor.commit();
+    }
+
+    /**
+     * Hack to get Font lists
+     *
+     * @return List<Font>
+     */
+    public List<Font> getFonts() {
+        List<Font> list = new ArrayList<>();
+        list.add(new Font("Normal", ""));
+        list.add(new Font("A_Nefel_Botan", "fonts/A_Nefel_Botan.ttf"));
+        list.add(new Font("PakType_Naqsh_2.2_volt", "fonts/PakType_Naqsh_2.2_volt.ttf"));
+        list.add(new Font("Thabit", "fonts/Thabit.ttf"));
+        list.add(new Font("Diwanltr", "fonts/Diwanltr.ttf"));
+        list.add(new Font("Frsspbl", "fonts/Frsspbl.ttf"));
+
+        return list;
     }
 }

@@ -4,19 +4,25 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mfadli.doapilihan.DoaPilihanApplication;
 import com.mfadli.doapilihan.R;
+import com.mfadli.doapilihan.adapter.FontListArrayAdapter;
 import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.model.DoaDetail;
+import com.mfadli.doapilihan.model.Font;
 import com.mfadli.utils.Common;
 import com.mikepenz.iconics.view.IconicsImageView;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -241,6 +247,33 @@ public class DetailFragment extends Fragment {
         if (mRxBus.hasObservers()) {
             mRxBus.send(new GeneralEvent.SuccessSaveTranslation(isEnglish));
         }
+    }
+
+    /**
+     * Click Font Type Icon Listener.
+     * Show list of available fonts.
+     *
+     * @see View.OnClickListener
+     */
+    @OnClick(R.id.img_font_type)
+    void onClickFontType(View view) {
+
+        List<Font> fontList = ((DoaPilihanApplication) DoaPilihanApplication.getContext()).getFonts();
+
+        ArrayAdapter<Font> adapter = new FontListArrayAdapter(getContext(), fontList);
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        dialogBuilder.setTitle(R.string.dialog_doa_font_type_label);
+        dialogBuilder.setNegativeButton(R.string.action_cancel, null);
+        dialogBuilder.setAdapter(adapter, (dialog, which) -> {
+
+            ((DoaPilihanApplication) DoaPilihanApplication.getContext()).saveDoaFontType(which);
+
+            if (mRxBus.hasObservers()) {
+                mRxBus.send(new GeneralEvent.SuccessSaveFontType(fontList.get(which)));
+            }
+        });
+        dialogBuilder.create().show();
     }
 
     /**

@@ -14,6 +14,8 @@ import com.mfadli.doapilihan.DoaPilihanApplication;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
+import com.mfadli.doapilihan.model.Font;
+import com.mfadli.utils.Common;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -94,6 +96,9 @@ public class DetailDoaFragment extends Fragment {
                             } else if (event instanceof GeneralEvent.SuccessSaveLineSpacingSize) {
                                 GeneralEvent.SuccessSaveLineSpacingSize ev = (GeneralEvent.SuccessSaveLineSpacingSize) event;
                                 resetLineSpacingSize(ev.getOriginalSize());
+                            } else if (event instanceof GeneralEvent.SuccessSaveFontType) {
+                                GeneralEvent.SuccessSaveFontType ev = (GeneralEvent.SuccessSaveFontType) event;
+                                resetFontType(ev.getFont());
                             }
                         }));
     }
@@ -125,10 +130,24 @@ public class DetailDoaFragment extends Fragment {
     }
 
     /**
+     * Callback for {@link GeneralEvent.SuccessSaveFontType}
+     *
+     * @param font {@link Font}
+     */
+    private void resetFontType(Font font) {
+        mTvDoa.setText(Common.convertStringToFont(mDoa, font.getPath()));
+    }
+
+    /**
      * Handy function to set back Doa TextView
      */
     private void reloadScreen() {
-        mTvDoa.setText(mDoa);
+        DoaPilihanApplication app = (DoaPilihanApplication) DoaPilihanApplication.getContext();
+        int fontType = app.getDoaFontType();
+        Font font = app.getFonts().get(fontType);
+
+        resetFontType(font);
+
         mTvDoa.setTextSize(TypedValue.COMPLEX_UNIT_SP, mOriginalSize + mSelectedSize);
         mTvDoa.setLineSpacing(mOriginalLineSpacingSize + mSelectedLineSpacingSize, 1.0f);
     }
@@ -157,6 +176,7 @@ public class DetailDoaFragment extends Fragment {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = LayoutInflater.from(getContext());
         final View dialogView = inflater.inflate(R.layout.dialog_doa_font, null);
+        dialogBuilder.setTitle(R.string.dialog_doa_font_label);
         dialogBuilder.setView(dialogView);
 
         final SeekBar seekBar = (SeekBar) dialogView.findViewById(R.id.dialog_seekbar_doa_font);
@@ -227,6 +247,7 @@ public class DetailDoaFragment extends Fragment {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = LayoutInflater.from(getContext());
         final View dialogView = inflater.inflate(R.layout.dialog_doa_line_spacing, null);
+        dialogBuilder.setTitle(R.string.dialog_doa_line_spacing_label);
         dialogBuilder.setView(dialogView);
 
         final SeekBar seekBar = (SeekBar) dialogView.findViewById(R.id.dialog_seekbar_doa_line_spacing);

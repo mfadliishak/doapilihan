@@ -9,5 +9,6 @@
     <string name="action_cancel">Cancel</string>
     <string name="dialog_doa_line_spacing_label">Line Spacing</string>
     <string name="dialog_doa_font_label">Font Size</string>
+    <string name="dialog_doa_font_type_label">Font Type</string>
 
 </resources>

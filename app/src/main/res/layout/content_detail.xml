@@ -123,12 +123,34 @@
 
                     </FrameLayout>
 
+                    <!-- Line Spacing Icon -->
+                    <FrameLayout
+                        android:id="@+id/img_font_type"
+                        android:layout_width="@dimen/icon_frame_size"
+                        android:layout_height="@dimen/icon_frame_size"
+                        android:layout_marginLeft="69dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/md_white_1000"
+                        android:clickable="true"
+                        android:elevation="2dp">
+
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:id="@+id/img_font_type_icon"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            android:layout_gravity="center|center_vertical"
+                            android:background="?android:attr/selectableItemBackground"
+                            app:iiv_color="@color/md_grey_600"
+                            app:iiv_icon="faw-font"/>
+
+                    </FrameLayout>
+
                     <!-- Translate Icon -->
                     <FrameLayout
                         android:id="@+id/img_translate"
                         android:layout_width="@dimen/icon_frame_size"
                         android:layout_height="@dimen/icon_frame_size"
-                        android:layout_marginLeft="69dp"
+                        android:layout_marginLeft="101dp"
                         android:layout_marginTop="5dp"
                         android:background="@color/md_white_1000"
                         android:clickable="true"

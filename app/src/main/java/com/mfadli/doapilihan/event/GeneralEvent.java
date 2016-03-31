@@ -1,5 +1,7 @@
 package com.mfadli.doapilihan.event;
 
+import com.mfadli.doapilihan.model.Font;
+
 /**
  * Created by mfad on 30/03/2016.
  * Container class for all General Events.
@@ -51,6 +53,21 @@ public class GeneralEvent {
 
         public boolean isEnglish() {
             return mIsEnglish;
+        }
+    }
+
+    /**
+     * Success save Font Type selection to SharedPreference.
+     */
+    public static class SuccessSaveFontType {
+        Font mFont;
+
+        public SuccessSaveFontType(Font font) {
+            mFont = font;
+        }
+
+        public Font getFont() {
+            return mFont;
         }
     }
 }

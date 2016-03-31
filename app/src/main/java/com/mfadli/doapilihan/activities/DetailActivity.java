@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DetailActivity extends BaseActivity implements DetailFragment.OnDetailFragmentListener {
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
@@ -95,6 +96,11 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(DetailActivity.EXTRA_DOA, position);
         ((MainActivity) context).startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
