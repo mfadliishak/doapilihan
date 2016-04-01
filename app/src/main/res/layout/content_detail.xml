@@ -5,64 +5,169 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/detail_title_frame"
+    <RelativeLayout
+        android:id="@+id/detail_title_action_box"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_frame_height"
-        android:elevation="4dp">
+        android:layout_height="90dp"
+        android:background="@color/md_white_1000"
+        android:elevation="2dp">
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|center_horizontal">
+            android:id="@+id/detail_title_frame"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_frame_height">
 
-            <!-- Title Border -->
-            <ImageView
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:src="@drawable/title_row"/>
+                android:layout_gravity="center|center_horizontal">
 
-            <!-- Left Navigation Icon -->
-            <com.mikepenz.iconics.view.IconicsImageView
-                android:id="@+id/detail_left_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="40dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                app:iiv_color="@color/colorDetailIconEnabled"
-                app:iiv_icon="faw-chevron-left"/>
+                <!-- Title Border -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/title_row"/>
 
-            <!-- Right Navigation Icon -->
-            <com.mikepenz.iconics.view.IconicsImageView
-                android:id="@+id/detail_right_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="40dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                app:iiv_color="@color/colorDetailIconEnabled"
-                app:iiv_icon="faw-chevron-right"/>
+                <!-- Left Navigation Icon -->
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/detail_left_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginLeft="40dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    app:iiv_color="@color/colorDetailIconEnabled"
+                    app:iiv_icon="faw-chevron-left"/>
+
+                <!-- Right Navigation Icon -->
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/detail_right_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="40dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    app:iiv_color="@color/colorDetailIconEnabled"
+                    app:iiv_icon="faw-chevron-right"/>
+
+            </FrameLayout>
+
+            <!-- Doa Title -->
+            <TextView
+                android:id="@+id/detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|center_vertical"
+                android:text="title"/>
 
         </FrameLayout>
 
-        <!-- Doa Title -->
-        <TextView
-            android:id="@+id/detail_title"
+        <!-- Buttons -->
+        <RelativeLayout
+            android:id="@+id/detail_buttons_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center|center_vertical"
-            android:text="title"/>
+            android:layout_below="@id/detail_title_frame"
+            android:gravity="center_horizontal">
 
-    </FrameLayout>
+                <!-- Font Size Icon -->
+                <FrameLayout
+                    android:id="@+id/img_font_size"
+                    android:layout_width="@dimen/icon_frame_size"
+                    android:layout_height="@dimen/icon_frame_size"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/md_white_1000"
+                    android:clickable="true"
+                    android:elevation="2dp">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="?android:attr/selectableItemBackground"
+                        app:iiv_color="@color/md_grey_600"
+                        app:iiv_icon="gmd-format-size"/>
+
+                </FrameLayout>
+
+                <!-- Line Spacing Icon -->
+                <FrameLayout
+                    android:id="@+id/img_line_spacing"
+                    android:layout_width="@dimen/icon_frame_size"
+                    android:layout_height="@dimen/icon_frame_size"
+                    android:layout_marginLeft="37dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/md_white_1000"
+                    android:clickable="true"
+                    android:elevation="2dp">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:id="@+id/img_line_spacing_icon"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="?android:attr/selectableItemBackground"
+                        app:iiv_color="@color/md_grey_600"
+                        app:iiv_icon="gmd-format-line-spacing"/>
+
+                </FrameLayout>
+
+                <!-- Line Spacing Icon -->
+                <FrameLayout
+                    android:id="@+id/img_font_type"
+                    android:layout_width="@dimen/icon_frame_size"
+                    android:layout_height="@dimen/icon_frame_size"
+                    android:layout_marginLeft="69dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/md_white_1000"
+                    android:clickable="true"
+                    android:elevation="2dp">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:id="@+id/img_font_type_icon"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="?android:attr/selectableItemBackground"
+                        app:iiv_color="@color/md_grey_600"
+                        app:iiv_icon="faw-font"/>
+
+                </FrameLayout>
+
+                <!-- Translate Icon -->
+                <FrameLayout
+                    android:id="@+id/img_translate"
+                    android:layout_width="@dimen/icon_frame_size"
+                    android:layout_height="@dimen/icon_frame_size"
+                    android:layout_marginLeft="101dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/md_white_1000"
+                    android:clickable="true"
+                    android:elevation="2dp">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:id="@+id/img_translate_icon"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_gravity="center|center_vertical"
+                        android:background="?android:attr/selectableItemBackground"
+                        app:iiv_color="@color/colorTranslationDisabled"
+                        app:iiv_icon="faw-language"/>
+
+                </FrameLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/detail_title_frame">
+        android:layout_below="@id/detail_title_action_box">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,98 +179,11 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
-                    <!-- Font Size Icon -->
-                    <FrameLayout
-                        android:id="@+id/img_font_size"
-                        android:layout_width="@dimen/icon_frame_size"
-                        android:layout_height="@dimen/icon_frame_size"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/md_white_1000"
-                        android:clickable="true"
-                        android:elevation="2dp">
-
-                        <com.mikepenz.iconics.view.IconicsImageView
-                            android:layout_width="@dimen/icon_size"
-                            android:layout_height="@dimen/icon_size"
-                            android:layout_gravity="center|center_vertical"
-                            android:background="?android:attr/selectableItemBackground"
-                            app:iiv_color="@color/md_grey_600"
-                            app:iiv_icon="gmd-format-size"/>
-
-                    </FrameLayout>
-
-                    <!-- Line Spacing Icon -->
-                    <FrameLayout
-                        android:id="@+id/img_line_spacing"
-                        android:layout_width="@dimen/icon_frame_size"
-                        android:layout_height="@dimen/icon_frame_size"
-                        android:layout_marginLeft="37dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/md_white_1000"
-                        android:clickable="true"
-                        android:elevation="2dp">
-
-                        <com.mikepenz.iconics.view.IconicsImageView
-                            android:id="@+id/img_line_spacing_icon"
-                            android:layout_width="@dimen/icon_size"
-                            android:layout_height="@dimen/icon_size"
-                            android:layout_gravity="center|center_vertical"
-                            android:background="?android:attr/selectableItemBackground"
-                            app:iiv_color="@color/md_grey_600"
-                            app:iiv_icon="gmd-format-line-spacing"/>
-
-                    </FrameLayout>
-
-                    <!-- Line Spacing Icon -->
-                    <FrameLayout
-                        android:id="@+id/img_font_type"
-                        android:layout_width="@dimen/icon_frame_size"
-                        android:layout_height="@dimen/icon_frame_size"
-                        android:layout_marginLeft="69dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/md_white_1000"
-                        android:clickable="true"
-                        android:elevation="2dp">
-
-                        <com.mikepenz.iconics.view.IconicsImageView
-                            android:id="@+id/img_font_type_icon"
-                            android:layout_width="@dimen/icon_size"
-                            android:layout_height="@dimen/icon_size"
-                            android:layout_gravity="center|center_vertical"
-                            android:background="?android:attr/selectableItemBackground"
-                            app:iiv_color="@color/md_grey_600"
-                            app:iiv_icon="faw-font"/>
-
-                    </FrameLayout>
-
-                    <!-- Translate Icon -->
-                    <FrameLayout
-                        android:id="@+id/img_translate"
-                        android:layout_width="@dimen/icon_frame_size"
-                        android:layout_height="@dimen/icon_frame_size"
-                        android:layout_marginLeft="101dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/md_white_1000"
-                        android:clickable="true"
-                        android:elevation="2dp">
-
-                        <com.mikepenz.iconics.view.IconicsImageView
-                            android:id="@+id/img_translate_icon"
-                            android:layout_width="@dimen/icon_size"
-                            android:layout_height="@dimen/icon_size"
-                            android:layout_gravity="center|center_vertical"
-                            android:background="?android:attr/selectableItemBackground"
-                            app:iiv_color="@color/colorTranslationDisabled"
-                            app:iiv_icon="faw-language"/>
-
-                    </FrameLayout>
 
                     <!-- Arabic Doa Fragment Container -->
                     <FrameLayout

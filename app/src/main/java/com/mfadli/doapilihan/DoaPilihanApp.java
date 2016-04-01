@@ -181,7 +181,6 @@ public class DoaPilihanApp extends Application {
         list.add(new Font("A_Nefel_Botan", "fonts/A_Nefel_Botan.ttf"));
         list.add(new Font("PakType_Naqsh_2.2_volt", "fonts/PakType_Naqsh_2.2_volt.ttf"));
         list.add(new Font("Thabit", "fonts/Thabit.ttf"));
-        list.add(new Font("Diwanltr", "fonts/Diwanltr.ttf"));
         list.add(new Font("Frsspbl", "fonts/Frsspbl.ttf"));
 
         return list;
