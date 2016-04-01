@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.mfadli.doapilihan.DoaPilihanApplication;
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.data.repo.DoaDataRepo;
 
 import java.io.BufferedReader;
@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String MIGRATION_FOLDER = "migration/";
 
     public DBHelper() {
-        super(DoaPilihanApplication.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
+        super(DoaPilihanApp.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
             for (int i = oldVersion; i < newVersion; ++i) {
                 String migrationName = String.format("from_%d_to_%d.sql", i, (i + 1));
                 Log.d(LOG_TAG, "Looking for migration file: " + migrationName);
-                readAndExecuteSQLScript(db, DoaPilihanApplication.getContext(), migrationName);
+                readAndExecuteSQLScript(db, DoaPilihanApp.getContext(), migrationName);
             }
         } catch (Exception exception) {
             Log.e(LOG_TAG, "Exception running upgrade script:", exception);

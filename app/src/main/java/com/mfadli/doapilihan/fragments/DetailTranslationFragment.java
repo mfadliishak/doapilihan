@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mfadli.doapilihan.DoaPilihanApplication;
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 
 import butterknife.Bind;
@@ -78,7 +78,7 @@ public class DetailTranslationFragment extends Fragment {
         mTvTranslation.setText(mTranslation);
         mTvTranslationEn.setText(mTranslationEn);
 
-        changeTranslationVisibility(((DoaPilihanApplication) getActivity().getApplication()).isEnglishTranslation());
+        changeTranslationVisibility(((DoaPilihanApp) getActivity().getApplication()).isEnglishTranslation());
     }
 
     /**

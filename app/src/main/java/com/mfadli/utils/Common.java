@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 
-import com.mfadli.doapilihan.DoaPilihanApplication;
+import com.mfadli.doapilihan.DoaPilihanApp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +61,7 @@ public class Common {
 
         if (font.length() > 0) {
             CalligraphyTypefaceSpan typefaceSpan = new CalligraphyTypefaceSpan(
-                    TypefaceUtils.load(DoaPilihanApplication.getContext().getAssets(), font));
+                    TypefaceUtils.load(DoaPilihanApp.getContext().getAssets(), font));
 
             sBuilder.setSpan(typefaceSpan, 0, sBuilder.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

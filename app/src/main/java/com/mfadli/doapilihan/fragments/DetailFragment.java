@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.mfadli.doapilihan.DoaPilihanApplication;
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.adapter.FontListArrayAdapter;
 import com.mfadli.doapilihan.event.GeneralEvent;
@@ -69,7 +69,7 @@ public class DetailFragment extends Fragment {
         if (getArguments() != null) {
             mDoaDetail = getArguments().getParcelable(ARG_DOA_DETAIL);
         }
-        mRxBus = ((DoaPilihanApplication) DoaPilihanApplication.getContext()).getRxBusSingleton();
+        mRxBus = ((DoaPilihanApp) DoaPilihanApp.getContext()).getRxBusSingleton();
     }
 
     @Nullable
@@ -93,7 +93,7 @@ public class DetailFragment extends Fragment {
         mTitle.setText(Common.trimBreakLine(mDoaDetail.getTitle()));
 
         // Color the translation icon accordingly
-        DoaPilihanApplication app = (DoaPilihanApplication) DoaPilihanApplication.getContext();
+        DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
         resetTranslateIcon(app.isEnglishTranslation());
 
         return view;
@@ -240,7 +240,7 @@ public class DetailFragment extends Fragment {
      */
     @OnClick(R.id.img_translate)
     void onClickTranslate(View view) {
-        DoaPilihanApplication app = (DoaPilihanApplication) DoaPilihanApplication.getContext();
+        DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
         boolean isEnglish = !app.isEnglishTranslation();
         app.saveEnglishTranslation(isEnglish);
 
@@ -258,7 +258,7 @@ public class DetailFragment extends Fragment {
     @OnClick(R.id.img_font_type)
     void onClickFontType(View view) {
 
-        List<Font> fontList = ((DoaPilihanApplication) DoaPilihanApplication.getContext()).getFonts();
+        List<Font> fontList = ((DoaPilihanApp) DoaPilihanApp.getContext()).getFonts();
 
         ArrayAdapter<Font> adapter = new FontListArrayAdapter(getContext(), fontList);
 
@@ -267,7 +267,7 @@ public class DetailFragment extends Fragment {
         dialogBuilder.setNegativeButton(R.string.action_cancel, null);
         dialogBuilder.setAdapter(adapter, (dialog, which) -> {
 
-            ((DoaPilihanApplication) DoaPilihanApplication.getContext()).saveDoaFontType(which);
+            ((DoaPilihanApp) DoaPilihanApp.getContext()).saveDoaFontType(which);
 
             if (mRxBus.hasObservers()) {
                 mRxBus.send(new GeneralEvent.SuccessSaveFontType(fontList.get(which)));

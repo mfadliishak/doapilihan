@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.mfadli.doapilihan.DoaPilihanApplication;
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
@@ -64,7 +64,7 @@ public class DetailDoaFragment extends Fragment {
         if (getArguments() != null) {
             mDoa = getArguments().getString(ARG_DOA);
         }
-        mRxBus = ((DoaPilihanApplication) DoaPilihanApplication.getContext()).getRxBusSingleton();
+        mRxBus = ((DoaPilihanApp) DoaPilihanApp.getContext()).getRxBusSingleton();
     }
 
     @Override
@@ -142,7 +142,7 @@ public class DetailDoaFragment extends Fragment {
      * Handy function to set back Doa TextView
      */
     private void reloadScreen() {
-        DoaPilihanApplication app = (DoaPilihanApplication) DoaPilihanApplication.getContext();
+        DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
         int fontType = app.getDoaFontType();
         Font font = app.getFonts().get(fontType);
 
@@ -156,7 +156,7 @@ public class DetailDoaFragment extends Fragment {
      * Get Selection value (Seekbar) from local save and Get original font size of Doa TextView
      */
     private void getFontSize() {
-        mSelectedSize = ((DoaPilihanApplication) getActivity().getApplication()).getDoaFontSize();
+        mSelectedSize = ((DoaPilihanApp) getActivity().getApplication()).getDoaFontSize();
         mOriginalSize = mTvDoa.getTextSize() / getResources().getDisplayMetrics().scaledDensity;
     }
 
@@ -164,7 +164,7 @@ public class DetailDoaFragment extends Fragment {
      * Get Selection value (Seekbar) from local save and Get original line spacing of Doa TextView
      */
     private void getLineSpacingSize() {
-        mSelectedLineSpacingSize = ((DoaPilihanApplication) getActivity().getApplication()).getDoaLineSpacingSize();
+        mSelectedLineSpacingSize = ((DoaPilihanApp) getActivity().getApplication()).getDoaLineSpacingSize();
         mOriginalLineSpacingSize = mTvDoa.getLineSpacingExtra();
     }
 
@@ -219,7 +219,7 @@ public class DetailDoaFragment extends Fragment {
         dialog.show();
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-            ((DoaPilihanApplication) getActivity().getApplication()).saveDoaFontSize(mCurrentProgress);
+            ((DoaPilihanApp) getActivity().getApplication()).saveDoaFontSize(mCurrentProgress);
 
             // Broadcast SuccessSaveFontSize
             if (mRxBus.hasObservers()) {
@@ -289,7 +289,7 @@ public class DetailDoaFragment extends Fragment {
         dialog.show();
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-            ((DoaPilihanApplication) getActivity().getApplication()).saveDoaLineSpacingSize(mCurrentProgress);
+            ((DoaPilihanApp) getActivity().getApplication()).saveDoaLineSpacingSize(mCurrentProgress);
 
             // Broadcast SuccessSaveFontSize
             if (mRxBus.hasObservers()) {

@@ -16,8 +16,8 @@ import java.util.List;
 /**
  * Created by mfad on 24/03/2016.
  */
-public class DoaPilihanApplication extends Application {
-    private static final String LOG_TAG = DoaPilihanApplication.class.getSimpleName();
+public class DoaPilihanApp extends Application {
+    private static final String LOG_TAG = DoaPilihanApp.class.getSimpleName();
     private static final String DOA_FONT_SIZE_PREF = "DoaFontSize";
     private static final String TRANSLATION_EN_PREF = "TranslationEn";
     private static final String DOA_LINE_SPACING_SIZE_PREF = "LineSpacingSize";
