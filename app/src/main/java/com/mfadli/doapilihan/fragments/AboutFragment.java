@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.mfadli.doapilihan.BuildConfig;
 import com.mfadli.doapilihan.R;
+import com.mfadli.utils.Analytic;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,6 +49,10 @@ public class AboutFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState == null) {
+            Analytic.sendScreen("About");
+        }
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.model.Font;
+import com.mfadli.utils.Analytic;
 import com.mfadli.utils.Common;
 
 import butterknife.Bind;
@@ -220,6 +221,7 @@ public class DetailDoaFragment extends Fragment {
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             ((DoaPilihanApp) getActivity().getApplication()).saveDoaFontSize(mCurrentProgress);
+            Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_doa_font_label), "", (long) mOriginalSize);
 
             // Broadcast SuccessSaveFontSize
             if (mRxBus.hasObservers()) {
@@ -290,6 +292,7 @@ public class DetailDoaFragment extends Fragment {
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             ((DoaPilihanApp) getActivity().getApplication()).saveDoaLineSpacingSize(mCurrentProgress);
+            Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_doa_line_spacing_label), "", (long) mOriginalLineSpacingSize);
 
             // Broadcast SuccessSaveFontSize
             if (mRxBus.hasObservers()) {

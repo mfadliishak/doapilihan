@@ -19,6 +19,7 @@ import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.doapilihan.model.Font;
+import com.mfadli.utils.Analytic;
 import com.mfadli.utils.Common;
 import com.mikepenz.iconics.view.IconicsImageView;
 
@@ -247,6 +248,8 @@ public class DetailFragment extends Fragment {
         if (mRxBus.hasObservers()) {
             mRxBus.send(new GeneralEvent.SuccessSaveTranslation(isEnglish));
         }
+        Analytic.sendEvent(Analytic.EVENT_BUTTON, "Translate", isEnglish ? "English" : "Bahasa");
+
     }
 
     /**
@@ -268,6 +271,7 @@ public class DetailFragment extends Fragment {
         dialogBuilder.setAdapter(adapter, (dialog, which) -> {
 
             ((DoaPilihanApp) DoaPilihanApp.getContext()).saveDoaFontType(which);
+            Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_doa_font_type_label), fontList.get(which).getName());
 
             if (mRxBus.hasObservers()) {
                 mRxBus.send(new GeneralEvent.SuccessSaveFontType(fontList.get(which)));

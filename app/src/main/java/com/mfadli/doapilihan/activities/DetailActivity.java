@@ -14,6 +14,7 @@ import com.mfadli.doapilihan.adapter.DetailPagerAdapter;
 import com.mfadli.doapilihan.data.repo.DoaDataRepo;
 import com.mfadli.doapilihan.fragments.DetailFragment;
 import com.mfadli.doapilihan.model.DoaDetail;
+import com.mfadli.utils.Analytic;
 
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
             mCurrentPosition = savedInstanceState.getInt(EXTRA_CURRENT_POSITION);
         } else {
             mCurrentPosition = mOriginalPosition;
+            Analytic.sendScreen("Doa Selection~" + doaList.get(mCurrentPosition).getTitle());
         }
 
         mPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager(), doaList);
@@ -71,6 +73,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
             public void onPageSelected(int position) {
                 mCurrentPosition = position;
                 callHappened = false;
+                Analytic.sendScreen("Detail View Pager~" + doaList.get(mCurrentPosition).getTitle());
             }
 
             @Override
@@ -82,6 +85,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
                 }
             }
         });
+
 
     }
 

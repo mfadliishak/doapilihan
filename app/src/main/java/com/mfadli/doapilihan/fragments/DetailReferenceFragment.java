@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mfadli.doapilihan.R;
+import com.mfadli.utils.Analytic;
 
 import java.text.Bidi;
 
@@ -95,6 +96,8 @@ public class DetailReferenceFragment extends Fragment {
      */
     @OnClick(R.id.detail_reference_frame)
     void onClickReference(View view) {
+        Analytic.sendEvent(Analytic.EVENT_BUTTON, "Reference", mReference);
+
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mUrl));
         startActivity(intent);
     }
