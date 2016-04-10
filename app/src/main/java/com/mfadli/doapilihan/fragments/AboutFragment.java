@@ -8,11 +8,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mfadli.doapilihan.BuildConfig;
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.utils.Analytic;
+import com.mfadli.utils.Common;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,6 +32,8 @@ public class AboutFragment extends Fragment {
 
     @Bind(R.id.about_version)
     TextView mVersion;
+    @Bind(R.id.fragment_about)
+    RelativeLayout mLayout;
 
     public AboutFragment() {
         // Required empty public constructor
@@ -40,7 +45,6 @@ public class AboutFragment extends Fragment {
      *
      * @return A new instance of fragment AboutFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static AboutFragment newInstance() {
         AboutFragment fragment = new AboutFragment();
         return fragment;
@@ -63,7 +67,22 @@ public class AboutFragment extends Fragment {
 
         mVersion.setText("Version " + BuildConfig.VERSION_NAME);
 
+        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
+
         return view;
+    }
+
+    /**
+     * To add or remove bottom padding for the ads banner.
+     *
+     * @param display boolean True to display ads.
+     */
+    private void shouldShowAds(boolean display) {
+        if (display) {
+            mLayout.setPadding(0, 0, 0, Common.dpToPixel(50));
+        } else {
+            mLayout.setPadding(0, 0, 0, 0);
+        }
     }
 
     /**

@@ -70,4 +70,30 @@ public class Common {
 
         return sBuilder;
     }
+
+    /**
+     * Convert pixel to DP
+     *
+     * @param sizeInPx float
+     * @return int Size in Pixel
+     */
+    public static int pixelToDp(float sizeInPx) {
+        float scale = DoaPilihanApp.getContext().getResources().getDisplayMetrics().density;
+        int size = (int) (sizeInPx * scale + 0.5f);
+
+        return size;
+    }
+
+    /**
+     * Convert DP to pixel
+     *
+     * @param sizeInDp float
+     * @return int Size in DP
+     */
+    public static int dpToPixel(float sizeInDp) {
+        float scale = DoaPilihanApp.getContext().getResources().getDisplayMetrics().density;
+        int size = (int) (sizeInDp * scale + 0.5f);
+
+        return size;
+    }
 }

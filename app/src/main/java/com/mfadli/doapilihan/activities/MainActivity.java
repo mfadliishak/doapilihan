@@ -12,11 +12,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.mfadli.doapilihan.BuildConfig;
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.fragments.AboutFragment;
+import com.mfadli.doapilihan.fragments.AdsSettingFragment;
 import com.mfadli.doapilihan.fragments.MainActivityFragment;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -24,7 +29,8 @@ import com.mikepenz.iconics.IconicsDrawable;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements MainActivityFragment.OnMainFragmentItemClickListener {
+public class MainActivity extends BaseActivity implements MainActivityFragment.OnMainFragmentItemClickListener,
+        AdsSettingFragment.OnAdsSettingFragmentListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final String STATE_SELECTED_DRAWER = "state_selected_drawer";
     private int mCurrentSelectedPosition = 0;
@@ -72,6 +78,8 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
             processSelectedItem(menuItem);
             return true;
         });
+
+        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
     }
 
     public static void start(Context context) {
@@ -102,6 +110,49 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     @Override
     public void onMainFragmentItemClick(int position, FrameLayout titleFrame) {
         DetailActivity.start(this, position, titleFrame);
+    }
+
+    @Override
+    public void onClickShowAds() {
+        // Need to restart activity
+        Intent intent = new Intent(this, SplashActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+
+        System.exit(0);
+    }
+
+    @Override
+    public void onClickHideAds() {
+        shouldShowAds(false);
+    }
+
+    /**
+     * To add or remove the actual ads view container and disable/enable the ads.
+     *
+     * @param display boolean True to display ads.
+     */
+    private void shouldShowAds(boolean display) {
+
+        if (display) {
+//            AdRequest adRequest = new AdRequest.Builder()
+//                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+//                    .addTestDevice("ABC1234567890ABC1234567890")
+//                    .build();
+
+            AdView mAdView = (AdView) findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+        } else {
+            RelativeLayout adsContainer = (RelativeLayout) findViewById(R.id.main_layout);
+
+            AdView adMobAds = (AdView) this.findViewById(R.id.adView);
+            adsContainer.removeView(adMobAds);
+
+        }
+
     }
 
     /**
@@ -142,8 +193,12 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
                 position = 0;
                 fragmentClass = MainActivityFragment.class;
                 break;
-            case R.id.navigation_item_about:
+            case R.id.navigation_item_ads_setting:
                 position = 1;
+                fragmentClass = AdsSettingFragment.class;
+                break;
+            case R.id.navigation_item_about:
+                position = 2;
                 fragmentClass = AboutFragment.class;
                 break;
             default:

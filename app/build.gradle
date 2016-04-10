@@ -44,4 +44,5 @@ dependencies {
     compile 'com.mikepenz:fontawesome-typeface:4.5.0.1@aar'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.google.android.gms:play-services-analytics:8.3.0'
+    compile 'com.google.android.gms:play-services-ads:8.3.0'
 }

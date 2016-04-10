@@ -1,9 +1,11 @@
 <resources>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="app_name">Doa Pilihan</string>
     <string name="title_activity_main">@string/drawer_title_home</string>
     <string name="title_activity_detail">Doa Pilihan</string>
     <string name="title_frame_transition">title_frame_transition</string>
-    <string name="drawer_title_home">Laman Utama</string>
+    <string name="drawer_title_home">Home</string>
+    <string name="drawer_title_ads_setting">Ads Setting</string>
     <string name="drawer_title_about">About</string>
     <string name="action_confirm">Confirm</string>
     <string name="action_cancel">Cancel</string>
@@ -31,18 +33,21 @@
     <string name="reference_name_2">Quran.com</string>
     <string name="reference_url_2">http://quran.com/</string>
 
-    <string name="reference_name_3">Islam in Quran</string>
-    <string name="reference_url_3">http://www.islaminquran.com/</string>
+    <string name="reference_name_3">Muslihun.com</string>
+    <string name="reference_url_3">https://muflihun.com/</string>
 
-    <string name="reference_name_4">Muslihun.com</string>
-    <string name="reference_url_4">https://muflihun.com/</string>
+    <string name="reference_name_4">Sunnah.com</string>
+    <string name="reference_url_4">http://sunnah.com/</string>
 
-    <string name="reference_name_5">Sunnah.com</string>
-    <string name="reference_url_5">http://sunnah.com/</string>
+    <string name="reference_name_5">QaalaRasulAllah.com</string>
+    <string name="reference_url_5">http://qaalarasulallah.com/</string>
 
-    <string name="reference_name_6">QaalaRasulAllah.com</string>
-    <string name="reference_url_6">http://qaalarasulallah.com/</string>
+    <string name="reference_name_6">Islam in Quran</string>
+    <string name="reference_url_6">http://www.islaminquran.com/</string>
+
     <string name="email_helpdesk">Doa Pilihan HelpDesk</string>
     <string name="email_intent_title">Send with</string>
+    
+    <string name="ads_setting_text">Anda boleh mematikan Iklan dengan menekan butang dibawah.\n\nIklan akan kembali apabila anda tutup dan membuka semula aplikasi ini.\n\nUntuk kekal mematikan iklan, anda boleh naik taraf applikasi ini bagi membantu pembaikan dan pembaharuan aplikasi ini yang akan dilakukan dari masa ke semasa.\n\nTerima kasih kerana menggunakan applikasi \'Doa Pilihan\'. Semoga Allah memberkati usaha kita dan dimakbulkan doa yang dipohon.</string>
 
 </resources>

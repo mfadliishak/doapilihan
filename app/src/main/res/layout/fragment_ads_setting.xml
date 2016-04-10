@@ -1,11 +1,11 @@
 <RelativeLayout
-    android:id="@+id/fragment_about"
+    android:id="@+id/fragment_ads_setting"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.AboutFragment">
+    tools:context=".fragments.AdsSettingFragment">
 
-    <include layout="@layout/content_about"/>
+    <include layout="@layout/content_ads_setting"/>
 
 </RelativeLayout>

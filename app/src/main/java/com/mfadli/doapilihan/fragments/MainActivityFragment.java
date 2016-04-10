@@ -12,13 +12,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.activities.MainActivity;
 import com.mfadli.doapilihan.adapter.MainAdapter;
 import com.mfadli.doapilihan.data.repo.DoaDataRepo;
 import com.mfadli.doapilihan.model.DoaDetail;
+import com.mfadli.utils.Common;
 
 import java.util.List;
 
@@ -35,6 +38,8 @@ public class MainActivityFragment extends Fragment {
 
     @Bind(R.id.recycler_main_view)
     RecyclerView mRecyclerView;
+    @Bind(R.id.fragment_main)
+    RelativeLayout mLayout;
 
     public MainActivityFragment() {
         // Required empty public constructor
@@ -52,6 +57,11 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
@@ -60,6 +70,8 @@ public class MainActivityFragment extends Fragment {
         DoaDataRepo doaDataRepo = new DoaDataRepo();
         List<DoaDetail> doaDetails = doaDataRepo.getAllDoa();
         configureRecyclerView(doaDetails);
+
+        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
 
         return view;
     }
@@ -109,6 +121,19 @@ public class MainActivityFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mItemClickListener = null;
+    }
+
+    /**
+     * To add or remove bottom padding for the ads banner.
+     *
+     * @param display boolean True to display ads.
+     */
+    private void shouldShowAds(boolean display) {
+        if (display) {
+            mLayout.setPadding(0, 0, 0, Common.dpToPixel(50));
+        } else {
+            mLayout.setPadding(0, 0, 0, 0);
+        }
     }
 
     /**

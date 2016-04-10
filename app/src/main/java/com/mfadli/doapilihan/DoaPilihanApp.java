@@ -26,6 +26,7 @@ public class DoaPilihanApp extends Application {
     private static final String TRANSLATION_EN_PREF = "TranslationEn";
     private static final String DOA_LINE_SPACING_SIZE_PREF = "LineSpacingSize";
     private static final String DOA_FONT_TYPE_PREF = "DoaFontType";
+    private static final String SHOULD_SHOW_ADS_PREF = "ShouldShowAds";
 
     private static Context sContext;
     private static DBHelper sDBHelper;
@@ -50,6 +51,17 @@ public class DoaPilihanApp extends Application {
         sContext = getApplicationContext();
         sDBHelper = new DBHelper();
         DBManager.initializeInstance(sDBHelper);
+        checkAds();
+    }
+
+    /**
+     * First run will check if ads is turned off. Turn in back on.
+     */
+    private void checkAds() {
+        boolean showAds = shouldShowAds();
+        if (!showAds) {
+            saveShouldShowAds(true);
+        }
     }
 
     public static Context getContext() {
@@ -184,5 +196,25 @@ public class DoaPilihanApp extends Application {
         list.add(new Font("Frsspbl", "fonts/Frsspbl.ttf"));
 
         return list;
+    }
+
+    /**
+     * Save ads to show selection into local storage.
+     *
+     * @param display boolean Is To show ads selected
+     */
+    public void saveShouldShowAds(boolean display) {
+        SharedPreferences.Editor editor = getPreferences().edit();
+        editor.putBoolean(SHOULD_SHOW_ADS_PREF, display);
+        editor.commit();
+    }
+
+    /**
+     * Read is showing ads from local storage.
+     *
+     * @return boolean
+     */
+    public boolean shouldShowAds() {
+        return getPreferences().getBoolean(SHOULD_SHOW_ADS_PREF, true);
     }
 }
