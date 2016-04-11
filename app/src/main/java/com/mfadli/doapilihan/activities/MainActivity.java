@@ -11,11 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.mfadli.doapilihan.BuildConfig;
 import com.mfadli.doapilihan.DoaPilihanApp;
@@ -114,13 +116,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
 
     @Override
     public void onClickShowAds() {
-        // Need to restart activity
-        Intent intent = new Intent(this, SplashActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-
-        System.exit(0);
+        shouldShowAds(true);
     }
 
     @Override
@@ -141,7 +137,22 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
 //                    .addTestDevice("ABC1234567890ABC1234567890")
 //                    .build();
 
-            AdView mAdView = (AdView) findViewById(R.id.adView);
+            RelativeLayout adsContainer = (RelativeLayout) findViewById(R.id.main_layout);
+
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+            com.google.android.gms.ads.AdView mAdView = new com.google.android.gms.ads.AdView(this);
+            mAdView.setId(R.id.adView);
+            mAdView.setAdSize(AdSize.BANNER);
+            mAdView.setAdUnitId(getString(R.string.banner_ad_unit_id));
+            mAdView.setLayoutParams(lp);
+
+            adsContainer.addView(mAdView);
+
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
 
