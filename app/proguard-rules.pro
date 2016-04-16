@@ -52,3 +52,6 @@
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
+
+# secure-preferences
+-keep class com.tozny.crypto.android.AesCbcWithIntegrity$PrngFixes$* { *; }

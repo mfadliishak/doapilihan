@@ -8,6 +8,17 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    def propsFile = rootProject.file('env.properties')
+    def passwd = ""
+    def salt = ""
+
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        passwd = props['secure_preference_password']
+        salt = props['secure_preference_salt']
+    }
+
     defaultConfig {
         applicationId "com.mfadli.doapilihan"
         minSdkVersion 16
@@ -16,9 +27,15 @@ android {
         versionName version
     }
     buildTypes {
+        debug {
+            resValue 'string', 'passwd', passwd.toString()
+            resValue 'string', 'salt', salt.toString()
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue 'string', 'passwd', passwd.toString()
+            resValue 'string', 'salt', salt.toString()
         }
     }
     compileOptions {
@@ -45,4 +62,5 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.google.android.gms:play-services-analytics:8.3.0'
     compile 'com.google.android.gms:play-services-ads:8.3.0'
+    compile 'com.scottyab:secure-preferences-lib:0.1.4'
 }

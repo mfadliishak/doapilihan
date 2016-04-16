@@ -3,7 +3,6 @@ package com.mfadli.doapilihan;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -11,7 +10,10 @@ import com.mfadli.doapilihan.data.DBHelper;
 import com.mfadli.doapilihan.data.DBManager;
 import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.model.Font;
+import com.securepreferences.SecurePreferences;
+import com.tozny.crypto.android.AesCbcWithIntegrity;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +32,7 @@ public class DoaPilihanApp extends Application {
 
     private static Context sContext;
     private static DBHelper sDBHelper;
+    private static SecurePreferences mSecurePreferences;
     private RxBus mRxBus = null;
     HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 
@@ -51,6 +54,16 @@ public class DoaPilihanApp extends Application {
         sContext = getApplicationContext();
         sDBHelper = new DBHelper();
         DBManager.initializeInstance(sDBHelper);
+
+        AesCbcWithIntegrity.SecretKeys myKeys = null;
+        try {
+            myKeys = AesCbcWithIntegrity
+                    .generateKeyFromPassword(getString(R.string.passwd), getString(R.string.salt), 500);
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+        mSecurePreferences = new SecurePreferences(getContext(), myKeys, "com.mfadli.doapilihan.pref");
+
         checkAds();
     }
 
@@ -99,7 +112,8 @@ public class DoaPilihanApp extends Application {
      * @return {@link SharedPreferences}
      */
     public SharedPreferences getPreferences() {
-        return PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        return PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return mSecurePreferences;
     }
 
     /**
@@ -215,6 +229,6 @@ public class DoaPilihanApp extends Application {
      * @return boolean
      */
     public boolean shouldShowAds() {
-        return getPreferences().getBoolean(SHOULD_SHOW_ADS_PREF, true);
+        return false;//getPreferences().getBoolean(SHOULD_SHOW_ADS_PREF, true);
     }
 }
