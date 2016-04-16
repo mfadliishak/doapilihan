@@ -139,13 +139,19 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
 
             RelativeLayout adsContainer = (RelativeLayout) findViewById(R.id.main_layout);
 
+            // Remove existing, to manually create a new one
+            if (this.findViewById(R.id.adView) != null) {
+                AdView adMobAds = (AdView) this.findViewById(R.id.adView);
+                adsContainer.removeView(adMobAds);
+            }
+
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-            com.google.android.gms.ads.AdView mAdView = new com.google.android.gms.ads.AdView(this);
+            AdView mAdView = new AdView(this);
             mAdView.setId(R.id.adView);
             mAdView.setAdSize(AdSize.BANNER);
             mAdView.setAdUnitId(getString(R.string.banner_ad_unit_id));
@@ -153,8 +159,12 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
 
             adsContainer.addView(mAdView);
 
-            AdRequest adRequest = new AdRequest.Builder().build();
+            AdRequest adRequest = new AdRequest
+                    .Builder()
+                    .addTestDevice("AABA3F9975AC4BBE5AB069468B4BFD7D")
+                    .build();
             mAdView.loadAd(adRequest);
+
 
         } else {
             RelativeLayout adsContainer = (RelativeLayout) findViewById(R.id.main_layout);
