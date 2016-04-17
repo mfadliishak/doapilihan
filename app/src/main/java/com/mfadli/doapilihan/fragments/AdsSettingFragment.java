@@ -1,35 +1,56 @@
 package com.mfadli.doapilihan.fragments;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
+import com.mfadli.doapilihan.event.GeneralEvent;
+import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.utils.Analytic;
 import com.mfadli.utils.Common;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by mfad on 10/04/2016.
  */
 public class AdsSettingFragment extends Fragment {
     private static final String LOG_TAG = AdsSettingFragment.class.getSimpleName();
+    private static final String ARG_PRICE = "Price";
     private OnAdsSettingFragmentListener mListener;
+    private RxBus mRxBus;
+    private CompositeSubscription mSubscription;
 
     @Bind(R.id.fragment_ads_setting)
     RelativeLayout mLayout;
     @Bind(R.id.ads_switch)
     Switch mSwitch;
+    @Bind(R.id.button_upgrade)
+    Button mBtnUpgrade;
+    @Bind(R.id.button_restore)
+    Button mBtnRestore;
+    @Bind(R.id.cardview_ads_manual)
+    CardView mCardManual;
+    @Bind(R.id.cardview_ads_upgrade)
+    CardView mCardUpgrade;
+    @Bind(R.id.cardview_ads_premium)
+    CardView mCardPremium;
 
     public AdsSettingFragment() {
         // Required empty public constructor
@@ -53,6 +74,7 @@ public class AdsSettingFragment extends Fragment {
         if (savedInstanceState == null) {
             Analytic.sendScreen("AdsSetting");
         }
+        mRxBus = ((DoaPilihanApp) DoaPilihanApp.getContext()).getRxBusSingleton();
     }
 
     @Override
@@ -61,9 +83,32 @@ public class AdsSettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ads_setting, container, false);
         ButterKnife.bind(this, view);
 
-        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
+        premiumUser(((DoaPilihanApp) DoaPilihanApp.getContext()).isPremium());
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mSubscription = new CompositeSubscription();
+
+        // subscribe to SuccessSaveFontSize
+        mSubscription
+                .add(mRxBus.toObserverable()
+                        .subscribe(event -> {
+                            if (event instanceof GeneralEvent.SuccessPurchased) {
+                                GeneralEvent.SuccessPurchased ev = (GeneralEvent.SuccessPurchased) event;
+                                if (ev.isSuccess())
+                                    premiumUser(ev.isPremium());
+                            }
+                        }));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mSubscription.unsubscribe();
     }
 
     @Override
@@ -81,6 +126,38 @@ public class AdsSettingFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    /**
+     * If premium user, remove ads and show thanks card view.
+     *
+     * @param isPremium boolean
+     */
+    private void premiumUser(boolean isPremium) {
+
+        if (isPremium) {
+            DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
+
+            mCardManual.setVisibility(View.GONE);
+            mCardUpgrade.setVisibility(View.GONE);
+            mCardPremium.setVisibility(View.VISIBLE);
+
+            TextView tvArabic = (TextView) mCardPremium.findViewById(R.id.text_ads_upgraded_arabic_1);
+            tvArabic.setText(Common.convertStringToFont(tvArabic.getText().toString(), app.getPremiumThanksFont().getPath()));
+
+            TextView tvArabic2 = (TextView) mCardPremium.findViewById(R.id.text_ads_upgraded_arabic_2);
+            tvArabic2.setText(Common.convertStringToFont(tvArabic2.getText().toString(), app.getPremiumThanksFont().getPath()));
+
+        } else {
+            mCardPremium.setVisibility(View.GONE);
+            mCardManual.setVisibility(View.VISIBLE);
+            mCardUpgrade.setVisibility(View.VISIBLE);
+
+            shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
+
+            mBtnUpgrade.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+            mBtnRestore.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+        }
     }
 
     /**
@@ -114,11 +191,35 @@ public class AdsSettingFragment extends Fragment {
     }
 
     /**
+     * Click Callback when pressing Upgrade Button
+     *
+     * @see android.view.View.OnClickListener
+     */
+    @OnClick(R.id.button_upgrade)
+    void onClickUpgrade(View view) {
+        mListener.onClickUpgrade();
+    }
+
+    /**
+     * Click Callback when pressing Restore Button
+     *
+     * @see android.view.View.OnClickListener
+     */
+    @OnClick(R.id.button_restore)
+    void onClickRestore(View view) {
+        mListener.onClickRestore();
+    }
+
+    /**
      * Callback interface to communicate with Main Activity
      */
     public interface OnAdsSettingFragmentListener {
         void onClickShowAds();
 
         void onClickHideAds();
+
+        void onClickUpgrade();
+
+        void onClickRestore();
     }
 }

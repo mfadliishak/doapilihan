@@ -20,6 +20,8 @@ import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.activities.MainActivity;
 import com.mfadli.doapilihan.adapter.MainAdapter;
 import com.mfadli.doapilihan.data.repo.DoaDataRepo;
+import com.mfadli.doapilihan.event.GeneralEvent;
+import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.utils.Common;
 
@@ -27,6 +29,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -35,6 +38,8 @@ public class MainActivityFragment extends Fragment {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private MainAdapter mMainAdapter;
     private OnMainFragmentItemClickListener mItemClickListener;
+    private RxBus mRxBus;
+    private CompositeSubscription mSubscription;
 
     @Bind(R.id.recycler_main_view)
     RecyclerView mRecyclerView;
@@ -59,6 +64,7 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRxBus = ((DoaPilihanApp) DoaPilihanApp.getContext()).getRxBusSingleton();
     }
 
     @Override
@@ -71,9 +77,29 @@ public class MainActivityFragment extends Fragment {
         List<DoaDetail> doaDetails = doaDataRepo.getAllDoa();
         configureRecyclerView(doaDetails);
 
-        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mSubscription = new CompositeSubscription();
+
+        // subscribe to SuccessSaveFontSize
+        mSubscription
+                .add(mRxBus.toObserverable()
+                        .subscribe(event -> {
+                            if (event instanceof GeneralEvent.SuccessIabSetup) {
+                                GeneralEvent.SuccessIabSetup ev = (GeneralEvent.SuccessIabSetup) event;
+                                shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
+                            }
+                        }));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mSubscription.unsubscribe();
     }
 
     /**

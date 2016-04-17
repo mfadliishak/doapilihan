@@ -9,10 +9,11 @@
         android:id="@+id/detail_font_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center|center_vertical"
-        android:textSize="25sp"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم"/>
+        android:layout_marginTop="10dp"
+        android:gravity="center|center_vertical"
+        android:text="بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم"
+        android:textColor="@color/md_black_1000"
+        android:textSize="25sp"/>
 
 </RelativeLayout>

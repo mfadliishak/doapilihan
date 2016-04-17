@@ -70,4 +70,40 @@ public class GeneralEvent {
             return mFont;
         }
     }
+
+    /**
+     * Success Purchased Premium Item
+     */
+    public static class SuccessPurchased {
+        boolean mSuccess;
+        boolean mPremium;
+
+        public SuccessPurchased(boolean success, boolean isPremium) {
+            mSuccess = success;
+            mPremium = isPremium;
+        }
+
+        public boolean isSuccess() {
+            return mSuccess;
+        }
+
+        public boolean isPremium() {
+            return mPremium;
+        }
+    }
+
+    /**
+     * IAB setup is success event
+     */
+    public static class SuccessIabSetup {
+        boolean mPremium;
+
+        public SuccessIabSetup(boolean premium) {
+            mPremium = premium;
+        }
+
+        public boolean isPremium() {
+            return mPremium;
+        }
+    }
 }

@@ -9,14 +9,18 @@ android {
     buildToolsVersion "23.0.2"
 
     def propsFile = rootProject.file('env.properties')
+    def license = ""
     def passwd = ""
     def salt = ""
+    def skuPremium1 = ""
 
     if (propsFile.exists()) {
         def props = new Properties()
         props.load(new FileInputStream(propsFile))
+        license = props['google_play_Base64_license']
         passwd = props['secure_preference_password']
         salt = props['secure_preference_salt']
+        skuPremium1 = props['sku_premium_1']
     }
 
     defaultConfig {
@@ -28,14 +32,19 @@ android {
     }
     buildTypes {
         debug {
+            resValue 'string', 'license', license.toString()
             resValue 'string', 'passwd', passwd.toString()
             resValue 'string', 'salt', salt.toString()
+            resValue 'string', 'skuPremium1', skuPremium1.toString()
         }
         release {
-            minifyEnabled true
+            debuggable true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue 'string', 'license', license.toString()
             resValue 'string', 'passwd', passwd.toString()
             resValue 'string', 'salt', salt.toString()
+            resValue 'string', 'skuPremium1', skuPremium1.toString()
         }
     }
     compileOptions {

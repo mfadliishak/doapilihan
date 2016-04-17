@@ -29,6 +29,8 @@ public class DoaPilihanApp extends Application {
     private static final String DOA_LINE_SPACING_SIZE_PREF = "LineSpacingSize";
     private static final String DOA_FONT_TYPE_PREF = "DoaFontType";
     private static final String SHOULD_SHOW_ADS_PREF = "ShouldShowAds";
+    private static final String PREMIUM_PREF = "PremiumPref";
+    private static List<Font> sFontList = new ArrayList<>();
 
     private static Context sContext;
     private static DBHelper sDBHelper;
@@ -72,7 +74,9 @@ public class DoaPilihanApp extends Application {
      */
     private void checkAds() {
         boolean showAds = shouldShowAds();
-        if (!showAds) {
+        boolean isPremium = isPremium();
+
+        if (!isPremium && !showAds) {
             saveShouldShowAds(true);
         }
     }
@@ -202,14 +206,46 @@ public class DoaPilihanApp extends Application {
      * @return List<Font>
      */
     public List<Font> getFonts() {
-        List<Font> list = new ArrayList<>();
-        list.add(new Font("Normal", ""));
-        list.add(new Font("A_Nefel_Botan", "fonts/A_Nefel_Botan.ttf"));
-        list.add(new Font("PakType_Naqsh_2.2_volt", "fonts/PakType_Naqsh_2.2_volt.ttf"));
-        list.add(new Font("Thabit", "fonts/Thabit.ttf"));
-        list.add(new Font("Frsspbl", "fonts/Frsspbl.ttf"));
+        sFontList.clear();
+        sFontList.add(new Font("Normal", ""));
+        sFontList.add(new Font("A_Nefel_Botan", "fonts/A_Nefel_Botan.ttf"));
+        sFontList.add(new Font("PakType_Naqsh_2.2_volt", "fonts/PakType_Naqsh_2.2_volt.ttf"));
 
-        return list;
+        if (isPremium()) {
+            sFontList.add(new Font("Thabit", "fonts/Thabit.ttf"));
+            sFontList.add(new Font("Frsspbl", "fonts/Frsspbl.ttf"));
+        }
+
+        return sFontList;
+    }
+
+    /**
+     * Premium Font for thanks
+     *
+     * @return Font
+     */
+    public Font getPremiumThanksFont() {
+        return new Font("DIWANBNT", "fonts/DIWANBNT.ttf");
+    }
+
+    /**
+     * Save Premium to local storage.
+     *
+     * @param isPremium boolean
+     */
+    public void savePremium(boolean isPremium) {
+        SharedPreferences.Editor editor = getPreferences().edit();
+        editor.putBoolean(PREMIUM_PREF, isPremium);
+        editor.commit();
+    }
+
+    /**
+     * Read if premium user.
+     *
+     * @return boolean
+     */
+    public boolean isPremium() {
+        return getPreferences().getBoolean(PREMIUM_PREF, false);
     }
 
     /**
@@ -225,10 +261,11 @@ public class DoaPilihanApp extends Application {
 
     /**
      * Read is showing ads from local storage.
+     * If premium user, return false.
      *
      * @return boolean
      */
     public boolean shouldShowAds() {
-        return false;//getPreferences().getBoolean(SHOULD_SHOW_ADS_PREF, true);
+        return isPremium() ? false : getPreferences().getBoolean(SHOULD_SHOW_ADS_PREF, true);
     }
 }
