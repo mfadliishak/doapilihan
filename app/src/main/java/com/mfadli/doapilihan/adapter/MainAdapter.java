@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mfadli.doapilihan.R;
+import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.utils.Common;
 
@@ -25,9 +27,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private static final String LOG_TAG = MainAdapter.class.getSimpleName();
     private List<DoaDetail> mList;
+    private BGPattern mBGPattern;
 
-    public MainAdapter(List<DoaDetail> doaDetailList) {
+    public MainAdapter(List<DoaDetail> doaDetailList, BGPattern bgPattern) {
         mList = doaDetailList;
+        mBGPattern = bgPattern;
     }
 
     @Override
@@ -46,11 +50,24 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             holder.mFrameLayout.setTransitionName(title);
         }
         holder.mFrameLayout.setTag(title);
+        holder.mImageView.setImageResource(mBGPattern.getDrawable());
     }
 
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+    /**
+     * Set BGPattern and refresh the view.
+     *
+     * @param bgPattern {@link BGPattern}
+     */
+    public void setBgPattern(BGPattern bgPattern) {
+        if (mBGPattern != bgPattern) {
+            mBGPattern = bgPattern;
+            notifyDataSetChanged();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -59,6 +76,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         TextView mTvTitle;
         @Bind(R.id.detail_title_frame)
         FrameLayout mFrameLayout;
+        @Bind(R.id.detail_pattern)
+        ImageView mImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);

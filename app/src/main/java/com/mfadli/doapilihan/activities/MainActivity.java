@@ -25,7 +25,6 @@ import com.mfadli.doapilihan.BuildConfig;
 import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.event.GeneralEvent;
-import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.fragments.AboutFragment;
 import com.mfadli.doapilihan.fragments.AdsSettingFragment;
 import com.mfadli.doapilihan.fragments.MainActivityFragment;
@@ -52,7 +51,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     public static final int IAB_PURCHASE_FAILED_PAYLOAD_PROBLEM = 102;
 
     private int mCurrentSelectedPosition = 0;
-    private RxBus mRxBus;
+
     private Bundle mReenterState;
     private static IabHelper mHelper;
     private boolean mIsPremium = false;
@@ -172,7 +171,6 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
         ButterKnife.bind(this);
 
         mDestroyed = false;
-        mRxBus = ((DoaPilihanApp) DoaPilihanApp.getContext()).getRxBusSingleton();
 
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
@@ -269,6 +267,10 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
             ((MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.main_content))
                     .scrollToPosition(currentPosition);
         }
+
+        // refresh list layout
+        ((MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.main_content))
+                .refresh();
     }
 
     @Override

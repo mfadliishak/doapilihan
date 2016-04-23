@@ -1,5 +1,6 @@
 package com.mfadli.doapilihan.event;
 
+import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.Font;
 
 /**
@@ -104,6 +105,21 @@ public class GeneralEvent {
 
         public boolean isPremium() {
             return mPremium;
+        }
+    }
+
+    /**
+     * Success saving BGPattern to SharedPreferences.
+     */
+    public static class SuccessSaveBGPattern {
+        BGPattern mBgPattern;
+
+        public SuccessSaveBGPattern(BGPattern bgPattern) {
+            mBgPattern = bgPattern;
+        }
+
+        public BGPattern getBgPattern() {
+            return mBgPattern;
         }
     }
 }

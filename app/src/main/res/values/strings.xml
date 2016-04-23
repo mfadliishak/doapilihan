@@ -12,6 +12,7 @@
     <string name="dialog_doa_line_spacing_label">Line Spacing</string>
     <string name="dialog_doa_font_label">Font Size</string>
     <string name="dialog_doa_font_type_label">Font Type</string>
+    <string name="dialog_pattern_list_label">Pattern List</string>
 
 
     <string name="library_name_1">Butter Knife</string>

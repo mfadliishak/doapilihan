@@ -4,15 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/action_doa"
+        android:id="@+id/action_change_background"
         android:orderInCategory="100"
-        android:title="Setting Doa"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_translation"
-        android:orderInCategory="100"
-        android:title="Setting Terjemahan"
+        android:title="Pattern"
         app:showAsAction="never"/>
 
 </menu>

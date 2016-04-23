@@ -1,6 +1,10 @@
 package com.mfadli.doapilihan.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mfadli.doapilihan.DoaPilihanApp;
@@ -17,6 +22,7 @@ import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.adapter.FontListArrayAdapter;
 import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
+import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.doapilihan.model.Font;
 import com.mfadli.utils.Analytic;
@@ -52,6 +58,8 @@ public class DetailFragment extends Fragment {
     com.mikepenz.iconics.view.IconicsImageView mLeftIcon;
     @Bind(R.id.detail_right_icon)
     com.mikepenz.iconics.view.IconicsImageView mRightIcon;
+    @Bind(R.id.detail_background)
+    ImageView mBackground;
 
     public DetailFragment() {
     }
@@ -97,6 +105,8 @@ public class DetailFragment extends Fragment {
         DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
         resetTranslateIcon(app.isEnglishTranslation());
 
+        configureBackground(app.getBgPattern());
+
         return view;
     }
 
@@ -135,6 +145,9 @@ public class DetailFragment extends Fragment {
                             if (event instanceof GeneralEvent.SuccessSaveTranslation) {
                                 GeneralEvent.SuccessSaveTranslation ev = (GeneralEvent.SuccessSaveTranslation) event;
                                 onSuccessSaveTranslation(ev.isEnglish());
+                            } else if (event instanceof GeneralEvent.SuccessSaveBGPattern) {
+                                GeneralEvent.SuccessSaveBGPattern ev = (GeneralEvent.SuccessSaveBGPattern) event;
+                                configureBackground(ev.getBgPattern());
                             }
                         }));
     }
@@ -143,6 +156,19 @@ public class DetailFragment extends Fragment {
     public void onStop() {
         super.onStop();
         mSubscription.unsubscribe();
+    }
+
+    /**
+     * Change Background to selected pattern.
+     *
+     * @param bgPattern {@link BGPattern}
+     */
+    private void configureBackground(BGPattern bgPattern) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), bgPattern.getDrawable());
+        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+        bitmapDrawable.setTileModeY(Shader.TileMode.REPEAT);
+
+        mBackground.setBackground(bitmapDrawable);
     }
 
     /**

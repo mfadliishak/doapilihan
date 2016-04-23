@@ -22,6 +22,7 @@ import com.mfadli.doapilihan.adapter.MainAdapter;
 import com.mfadli.doapilihan.data.repo.DoaDataRepo;
 import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
+import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.utils.Common;
 
@@ -73,9 +74,11 @@ public class MainActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
 
+        DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
+
         DoaDataRepo doaDataRepo = new DoaDataRepo();
         List<DoaDetail> doaDetails = doaDataRepo.getAllDoa();
-        configureRecyclerView(doaDetails);
+        configureRecyclerView(doaDetails, app.getBgPattern());
 
         return view;
     }
@@ -92,6 +95,9 @@ public class MainActivityFragment extends Fragment {
                             if (event instanceof GeneralEvent.SuccessIabSetup) {
                                 GeneralEvent.SuccessIabSetup ev = (GeneralEvent.SuccessIabSetup) event;
                                 shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
+                            } else if (event instanceof GeneralEvent.SuccessSaveBGPattern) {
+                                GeneralEvent.SuccessSaveBGPattern ev = (GeneralEvent.SuccessSaveBGPattern) event;
+                                mMainAdapter.setBgPattern(ev.getBgPattern());
                             }
                         }));
     }
@@ -107,8 +113,8 @@ public class MainActivityFragment extends Fragment {
      *
      * @param doaDetails List<DoaDetail>
      */
-    private void configureRecyclerView(List<DoaDetail> doaDetails) {
-        mMainAdapter = new MainAdapter(doaDetails);
+    private void configureRecyclerView(List<DoaDetail> doaDetails, BGPattern bgPatterns) {
+        mMainAdapter = new MainAdapter(doaDetails, bgPatterns);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -223,6 +229,14 @@ public class MainActivityFragment extends Fragment {
      */
     public void scrollToPosition(int position) {
         mRecyclerView.scrollToPosition(position);
+    }
+
+    /**
+     * Refresh the list layout if BGPattern is changed.
+     */
+    public void refresh() {
+        DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
+        mMainAdapter.setBgPattern(app.getBgPattern());
     }
 
     /**

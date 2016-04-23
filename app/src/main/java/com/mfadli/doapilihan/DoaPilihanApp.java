@@ -9,6 +9,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.mfadli.doapilihan.data.DBHelper;
 import com.mfadli.doapilihan.data.DBManager;
 import com.mfadli.doapilihan.event.RxBus;
+import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.Font;
 import com.securepreferences.SecurePreferences;
 import com.tozny.crypto.android.AesCbcWithIntegrity;
@@ -30,7 +31,9 @@ public class DoaPilihanApp extends Application {
     private static final String DOA_FONT_TYPE_PREF = "DoaFontType";
     private static final String SHOULD_SHOW_ADS_PREF = "ShouldShowAds";
     private static final String PREMIUM_PREF = "PremiumPref";
+    private static final String BG_PATTERN_PREF = "BGPatternPref";
     private static List<Font> sFontList = new ArrayList<>();
+    private static List<BGPattern> sBgPatternList = new ArrayList<>();
 
     private static Context sContext;
     private static DBHelper sDBHelper;
@@ -181,6 +184,27 @@ public class DoaPilihanApp extends Application {
     }
 
     /**
+     * Read BG Pattern index from local storage and return the BGPattern object.
+     *
+     * @return BGPattern
+     */
+    public BGPattern getBgPattern() {
+        int index = getPreferences().getInt(BG_PATTERN_PREF, 2);
+        return getBgPatterns().get(index);
+    }
+
+    /**
+     * Save BGPattern selection into local storage.
+     *
+     * @param pattern int BGPattern index selected.
+     */
+    public void saveBgPattern(int pattern) {
+        SharedPreferences.Editor editor = getPreferences().edit();
+        editor.putInt(BG_PATTERN_PREF, pattern);
+        editor.commit();
+    }
+
+    /**
      * Read if english translation button is clicked.
      *
      * @return boolean
@@ -217,6 +241,26 @@ public class DoaPilihanApp extends Application {
         }
 
         return sFontList;
+    }
+
+    /**
+     * Hack to get Pattern Lists
+     *
+     * @return list<BGPattern>
+     */
+    public List<BGPattern> getBgPatterns() {
+        sBgPatternList.clear();
+        sBgPatternList.add(new BGPattern("Normal", R.drawable.bg_0, R.drawable.d_bg_0));
+        sBgPatternList.add(new BGPattern("BG 1", R.drawable.bg_1, R.drawable.bg_1));
+        sBgPatternList.add(new BGPattern("BG 2", R.drawable.bg_2, R.drawable.bg_2));
+
+        if (isPremium()) {
+            sBgPatternList.add(new BGPattern("BG 3", R.drawable.bg_3, R.drawable.bg_3));
+            sBgPatternList.add(new BGPattern("BG 4", R.drawable.bg_4, R.drawable.bg_4));
+            sBgPatternList.add(new BGPattern("BG 5", R.drawable.bg_5, R.drawable.bg_5));
+        }
+
+        return sBgPatternList;
     }
 
     /**

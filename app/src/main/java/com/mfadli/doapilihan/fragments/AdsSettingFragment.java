@@ -1,7 +1,11 @@
 package com.mfadli.doapilihan.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -10,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -18,6 +23,7 @@ import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
+import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.utils.Analytic;
 import com.mfadli.utils.Common;
 
@@ -51,6 +57,8 @@ public class AdsSettingFragment extends Fragment {
     CardView mCardUpgrade;
     @Bind(R.id.cardview_ads_premium)
     CardView mCardPremium;
+    @Bind(R.id.ads_background)
+    ImageView mBackground;
 
     public AdsSettingFragment() {
         // Required empty public constructor
@@ -83,7 +91,11 @@ public class AdsSettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ads_setting, container, false);
         ButterKnife.bind(this, view);
 
-        premiumUser(((DoaPilihanApp) DoaPilihanApp.getContext()).isPremium());
+        DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
+
+        premiumUser(app.isPremium());
+
+        configureBackground(app.getBgPattern());
 
         return view;
     }
@@ -101,6 +113,9 @@ public class AdsSettingFragment extends Fragment {
                                 GeneralEvent.SuccessPurchased ev = (GeneralEvent.SuccessPurchased) event;
                                 if (ev.isSuccess())
                                     premiumUser(ev.isPremium());
+                            } else if (event instanceof GeneralEvent.SuccessSaveBGPattern) {
+                                GeneralEvent.SuccessSaveBGPattern ev = (GeneralEvent.SuccessSaveBGPattern) event;
+                                configureBackground(ev.getBgPattern());
                             }
                         }));
     }
@@ -126,6 +141,19 @@ public class AdsSettingFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    /**
+     * Change Background to selected pattern.
+     *
+     * @param bgPattern {@link BGPattern}
+     */
+    private void configureBackground(BGPattern bgPattern) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), bgPattern.getDrawable());
+        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+        bitmapDrawable.setTileModeY(Shader.TileMode.REPEAT);
+
+        mBackground.setBackground(bitmapDrawable);
     }
 
     /**
