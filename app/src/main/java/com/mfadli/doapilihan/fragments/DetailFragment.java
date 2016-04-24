@@ -90,7 +90,7 @@ public class DetailFragment extends Fragment {
         if (getChildFragmentManager().findFragmentById(R.id.fragment_detail_doa) == null) {
             DetailDoaFragment doaFragment = DetailDoaFragment.newInstance(mDoaDetail.getDoa());
             DetailTranslationFragment translationFragment = DetailTranslationFragment.newInstance(mDoaDetail.getTranslation(), mDoaDetail.getTranslationEn());
-            DetailReferenceFragment referenceFragment = DetailReferenceFragment.newInstance(mDoaDetail.getReference(), mDoaDetail.getUrl());
+            DetailReferenceFragment referenceFragment = DetailReferenceFragment.newInstance(mDoaDetail.getReference(), mDoaDetail.getUrl(), mDoaDetail.getType());
 
             getChildFragmentManager().beginTransaction()
                     .add(R.id.fragment_detail_doa, doaFragment)

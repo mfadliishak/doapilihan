@@ -1,5 +1,6 @@
 package com.mfadli.doapilihan.adapter;
 
+import android.content.Context;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -28,10 +29,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private static final String LOG_TAG = MainAdapter.class.getSimpleName();
     private List<DoaDetail> mList;
     private BGPattern mBGPattern;
+    private Context mContext;
 
-    public MainAdapter(List<DoaDetail> doaDetailList, BGPattern bgPattern) {
+    public MainAdapter(Context context, List<DoaDetail> doaDetailList, BGPattern bgPattern) {
         mList = doaDetailList;
         mBGPattern = bgPattern;
+        mContext = context;
     }
 
     @Override
@@ -51,6 +54,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         }
         holder.mFrameLayout.setTag(title);
         holder.mImageView.setImageResource(mBGPattern.getDrawable());
+
+        // Change the Source Type Tag color.
+        if (mList.get(position).getType() == DoaDetail.SOURCE_TYPE_HADITH) {
+            holder.mTvType.setBackground(mContext.getResources().getDrawable(R.drawable.rounded_corner_h));
+            holder.mTvType.setText("H");
+        } else if (mList.get(position).getType() == DoaDetail.SOURCE_TYPE_QURAN) {
+            holder.mTvType.setBackground(mContext.getResources().getDrawable(R.drawable.rounded_corner_q));
+            holder.mTvType.setText("Q");
+        }
+
     }
 
     @Override
@@ -78,6 +91,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         FrameLayout mFrameLayout;
         @Bind(R.id.detail_pattern)
         ImageView mImageView;
+        @Bind(R.id.main_type)
+        TextView mTvType;
 
         public ViewHolder(View itemView) {
             super(itemView);

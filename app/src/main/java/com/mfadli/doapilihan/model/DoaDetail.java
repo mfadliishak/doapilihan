@@ -7,7 +7,12 @@ import android.os.Parcelable;
  * Created by mfad on 26/03/2016.
  */
 public class DoaDetail implements Parcelable {
+    public static final int SOURCE_TYPE_QURAN = 1;
+    public static final int SOURCE_TYPE_HADITH = 2;
+    public static final int SOURCE_TYPE_OTHER = 3;
+
     private String mTitle;
+    private int mType;
     private String mDoa;
     private String mReference;
     private String mTranslation;
@@ -18,13 +23,18 @@ public class DoaDetail implements Parcelable {
 
     }
 
-    public DoaDetail(String title, String doa, String reference, String translation, String translationEn, String url) {
+    public DoaDetail(int type, String title, String doa, String reference, String translation, String translationEn, String url) {
+        this.mType = type;
         this.mTitle = title;
         this.mDoa = doa;
         this.mReference = reference;
         this.mTranslation = translation;
         this.mTranslationEn = translationEn;
         this.mUrl = url;
+    }
+
+    public void setType(int type) {
+        mType = type;
     }
 
     public void setTitle(String title) {
@@ -49,6 +59,10 @@ public class DoaDetail implements Parcelable {
 
     public void setUrl(String url) {
         mUrl = url;
+    }
+
+    public int getType() {
+        return mType;
     }
 
     public String getTitle() {
@@ -76,6 +90,7 @@ public class DoaDetail implements Parcelable {
     }
 
     protected DoaDetail(Parcel in) {
+        mType = in.readInt();
         mTitle = in.readString();
         mDoa = in.readString();
         mReference = in.readString();
@@ -103,6 +118,7 @@ public class DoaDetail implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mType);
         dest.writeString(mTitle);
         dest.writeString(mDoa);
         dest.writeString(mReference);
@@ -114,6 +130,7 @@ public class DoaDetail implements Parcelable {
     @Override
     public String toString() {
         return "DoaDetail{" +
+                "mType='" + mType + '\'' +
                 "mTitle='" + mTitle + '\'' +
                 ", mDoa='" + mDoa + '\'' +
                 ", mReference='" + mReference + '\'' +

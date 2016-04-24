@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_frame_height"
+    android:layout_margin="3dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:focusable="true"
-    android:layout_margin="3dp"
     android:elevation="3dp"
+    android:focusable="true"
 
     android:orientation="vertical">
 
@@ -21,26 +21,42 @@
             android:id="@+id/detail_pattern"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:alpha="0.3"
             android:scaleType="centerCrop"
-            android:src="@drawable/bg_1"
-            android:alpha="0.3"/>
+            android:src="@drawable/bg_1"/>
 
+        <!-- Title Box -->
         <FrameLayout
             android:layout_width="300dp"
             android:layout_height="45dp"
-            android:background="@color/md_white_1000"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:background="@color/md_white_1000">
 
             <TextView
                 android:id="@+id/main_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_gravity="center|center_vertical|center_horizontal"
+                android:layout_margin="5dp"
+                android:gravity="center"
                 android:text="text\ntextss"
-                android:layout_margin="5dp"/>
+                android:textColor="@color/md_black_1000"/>
 
         </FrameLayout>
+
+        <!-- Source Type -->
+        <TextView
+            android:id="@+id/main_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_vertical|center_horizontal"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/rounded_corner_h"
+            android:gravity="center"
+            android:text="H"
+            android:textColor="@color/md_white_1000"
+            android:textSize="12sp"/>
 
     </FrameLayout>
 

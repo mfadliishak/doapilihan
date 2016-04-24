@@ -22,7 +22,7 @@
         <FrameLayout
             android:id="@+id/detail_title_frame"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/title_frame_height">
+            android:layout_height="@dimen/detail_title_frame_height">
 
             <FrameLayout
                 android:layout_width="wrap_content"

@@ -11,25 +11,34 @@
     tools:context=".fragments.DetailReferenceFragment">
 
     <FrameLayout
-        android:id="@+id/detail_reference_frame"
+        android:id="@+id/detail_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground">
+        android:background="@drawable/rounded_corner_h">
 
-        <TextView
-            android:id="@+id/detail_reference"
+        <FrameLayout
+            android:id="@+id/detail_reference_frame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:gravity="end"
-            android:text="reference"/>
+            android:background="?android:attr/selectableItemBackground">
 
-        <com.mikepenz.iconics.view.IconicsImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginTop="3dp"
-            app:iiv_color="@color/md_grey_600"
-            app:iiv_icon="faw-link"/>
+            <TextView
+                android:id="@+id/detail_reference"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:gravity="end"
+                android:text="reference"
+                android:textColor="@color/md_white_1000"/>
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="3dp"
+                app:iiv_color="@color/md_white_1000"
+                app:iiv_icon="faw-link"/>
+
+        </FrameLayout>
 
     </FrameLayout>
 

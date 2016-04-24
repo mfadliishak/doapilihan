@@ -46,6 +46,7 @@ public class DoaDataRepo {
             do {
                 DoaDetail doa = new DoaDetail();
                 doa.setTitle(cursor.getString(cursor.getColumnIndex(DoaData.KEY_TITLE)));
+                doa.setType((cursor.getInt(cursor.getColumnIndex(DoaData.KEY_TYPE))));
                 doa.setReference(cursor.getString(cursor.getColumnIndex(DoaData.KEY_REFERENCE)));
                 doa.setUrl(cursor.getString(cursor.getColumnIndex(DoaData.KEY_URL)));
                 doa.setTranslation(cursor.getString(cursor.getColumnIndex(DoaData.KEY_TRANSLATION)));

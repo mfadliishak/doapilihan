@@ -114,7 +114,7 @@ public class MainActivityFragment extends Fragment {
      * @param doaDetails List<DoaDetail>
      */
     private void configureRecyclerView(List<DoaDetail> doaDetails, BGPattern bgPatterns) {
-        mMainAdapter = new MainAdapter(doaDetails, bgPatterns);
+        mMainAdapter = new MainAdapter(getContext(), doaDetails, bgPatterns);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
