@@ -16,6 +16,7 @@ import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.utils.Common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -23,19 +24,25 @@ import butterknife.ButterKnife;
 
 /**
  * Created by mfad on 22/03/2016.
+ *
+ * Animate filter is from https://github.com/Wrdlbrnft/Searchable-RecyclerView-Demo
+ *
  */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
-
     private static final String LOG_TAG = MainAdapter.class.getSimpleName();
-    private List<DoaDetail> mList;
+
+    private final LayoutInflater mInflater;
+    private final List<DoaDetail> mList;
     private BGPattern mBGPattern;
     private Context mContext;
 
     public MainAdapter(Context context, List<DoaDetail> doaDetailList, BGPattern bgPattern) {
-        mList = doaDetailList;
+        mList = new ArrayList<>(doaDetailList);
+        mInflater = LayoutInflater.from(context);
         mBGPattern = bgPattern;
         mContext = context;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,29 +53,68 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        DoaDetail doaDetail = mList.get(position);
-        final String title = Common.trimBreakLine(doaDetail.getTitle());
-        holder.mTvTitle.setText(title);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            holder.mFrameLayout.setTransitionName(title);
-        }
-        holder.mFrameLayout.setTag(title);
-        holder.mImageView.setImageResource(mBGPattern.getDrawable());
-
-        // Change the Source Type Tag color.
-        if (mList.get(position).getType() == DoaDetail.SOURCE_TYPE_HADITH) {
-            holder.mTvType.setBackground(mContext.getResources().getDrawable(R.drawable.rounded_corner_h));
-            holder.mTvType.setText("H");
-        } else if (mList.get(position).getType() == DoaDetail.SOURCE_TYPE_QURAN) {
-            holder.mTvType.setBackground(mContext.getResources().getDrawable(R.drawable.rounded_corner_q));
-            holder.mTvType.setText("Q");
-        }
-
+        final DoaDetail doaDetail = mList.get(position);
+        holder.bind(doaDetail);
     }
 
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+    public DoaDetail getItem(int position) {
+        return mList.get(position);
+    }
+
+    private void applyAndAnimateRemovals(List<DoaDetail> newList) {
+        for (int i = mList.size() - 1; i >= 0; i--) {
+            final DoaDetail doaDetail = mList.get(i);
+            if (!newList.contains(doaDetail)) {
+                removeItem(i);
+            }
+        }
+    }
+
+    private void applyAndAnimateAdditions(List<DoaDetail> newList) {
+        for (int i = 0, count = newList.size(); i < count; i++) {
+            final DoaDetail doaDetail = newList.get(i);
+            if (!mList.contains(doaDetail)) {
+                addItem(i, doaDetail);
+            }
+        }
+    }
+
+    private void applyAndAnimateMovedItems(List<DoaDetail> newList) {
+        for (int toPosition = newList.size() - 1; toPosition >= 0; toPosition--) {
+            final DoaDetail doaDetail = newList.get(toPosition);
+            final int fromPosition = mList.indexOf(doaDetail);
+            if (fromPosition >= 0 && fromPosition != toPosition) {
+                moveItem(fromPosition, toPosition);
+            }
+        }
+    }
+
+    public DoaDetail removeItem(int position) {
+        final DoaDetail model = mList.remove(position);
+        notifyItemRemoved(position);
+        return model;
+    }
+
+    public void addItem(int position, DoaDetail doaDetail) {
+        mList.add(position, doaDetail);
+        notifyItemInserted(position);
+    }
+
+    public void moveItem(int fromPosition, int toPosition) {
+        final DoaDetail doaDetail = mList.remove(fromPosition);
+        mList.add(toPosition, doaDetail);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void animateTo(List<DoaDetail> list) {
+        applyAndAnimateRemovals(list);
+        applyAndAnimateAdditions(list);
+        applyAndAnimateMovedItems(list);
     }
 
     /**
@@ -83,6 +129,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         }
     }
 
+    /**
+     * View Holder Class
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         @Nullable
         @Bind(R.id.main_title)
@@ -98,16 +147,26 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
 
-    /**
-     * Direct access to DoaDetail by giving position/index value.
-     *
-     * @param position int Index/Position
-     * @return {@link DoaDetail}
-     */
-    public DoaDetail getItem(int position) {
-        return mList.get(position);
+        public void bind(DoaDetail doaDetail) {
+            final String title = Common.trimBreakLine(doaDetail.getTitle());
+
+            mTvTitle.setText(title);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mFrameLayout.setTransitionName(title);
+            }
+            mFrameLayout.setTag(title);
+            mImageView.setImageResource(mBGPattern.getDrawable());
+
+            // Change the Source Type Tag color.
+            if (doaDetail.getType() == DoaDetail.SOURCE_TYPE_HADITH) {
+                mTvType.setBackground(mContext.getResources().getDrawable(R.drawable.rounded_corner_h));
+                mTvType.setText("H");
+            } else if (doaDetail.getType() == DoaDetail.SOURCE_TYPE_QURAN) {
+                mTvType.setBackground(mContext.getResources().getDrawable(R.drawable.rounded_corner_q));
+                mTvType.setText("Q");
+            }
+        }
     }
 
 

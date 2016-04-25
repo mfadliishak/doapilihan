@@ -11,8 +11,9 @@ public class DoaDetail implements Parcelable {
     public static final int SOURCE_TYPE_HADITH = 2;
     public static final int SOURCE_TYPE_OTHER = 3;
 
-    private String mTitle;
+    private int mId;
     private int mType;
+    private String mTitle;
     private String mDoa;
     private String mReference;
     private String mTranslation;
@@ -23,7 +24,7 @@ public class DoaDetail implements Parcelable {
 
     }
 
-    public DoaDetail(int type, String title, String doa, String reference, String translation, String translationEn, String url) {
+    public DoaDetail(int id, int type, String title, String doa, String reference, String translation, String translationEn, String url) {
         this.mType = type;
         this.mTitle = title;
         this.mDoa = doa;
@@ -31,6 +32,10 @@ public class DoaDetail implements Parcelable {
         this.mTranslation = translation;
         this.mTranslationEn = translationEn;
         this.mUrl = url;
+    }
+
+    public void setId(int id) {
+        mId = id;
     }
 
     public void setType(int type) {
@@ -59,6 +64,10 @@ public class DoaDetail implements Parcelable {
 
     public void setUrl(String url) {
         mUrl = url;
+    }
+
+    public int getId() {
+        return mId;
     }
 
     public int getType() {
@@ -90,6 +99,7 @@ public class DoaDetail implements Parcelable {
     }
 
     protected DoaDetail(Parcel in) {
+        mId = in.readInt();
         mType = in.readInt();
         mTitle = in.readString();
         mDoa = in.readString();
@@ -118,6 +128,7 @@ public class DoaDetail implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
         dest.writeInt(mType);
         dest.writeString(mTitle);
         dest.writeString(mDoa);
@@ -130,6 +141,7 @@ public class DoaDetail implements Parcelable {
     @Override
     public String toString() {
         return "DoaDetail{" +
+                "mId='" + mId + '\'' +
                 "mType='" + mType + '\'' +
                 "mTitle='" + mTitle + '\'' +
                 ", mDoa='" + mDoa + '\'' +

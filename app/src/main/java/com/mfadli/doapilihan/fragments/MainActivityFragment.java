@@ -3,22 +3,26 @@ package com.mfadli.doapilihan.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.activities.MainActivity;
 import com.mfadli.doapilihan.adapter.MainAdapter;
+import com.mfadli.doapilihan.adapter.MainRecyclerClickListener;
+import com.mfadli.doapilihan.adapter.MainRecyclerTouchListener;
 import com.mfadli.doapilihan.data.repo.DoaDataRepo;
 import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
@@ -26,6 +30,7 @@ import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.utils.Common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -35,12 +40,15 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements SearchView.OnQueryTextListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String ARG_DOA_DETAILS = "DoaDetails";
     private MainAdapter mMainAdapter;
     private OnMainFragmentItemClickListener mItemClickListener;
     private RxBus mRxBus;
     private CompositeSubscription mSubscription;
+    private DoaDataRepo mDoaRepo;
+    private List<DoaDetail> mDoaDetailList;
 
     @Bind(R.id.recycler_main_view)
     RecyclerView mRecyclerView;
@@ -66,6 +74,7 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRxBus = ((DoaPilihanApp) DoaPilihanApp.getContext()).getRxBusSingleton();
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -76,11 +85,23 @@ public class MainActivityFragment extends Fragment {
 
         DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
 
-        DoaDataRepo doaDataRepo = new DoaDataRepo();
-        List<DoaDetail> doaDetails = doaDataRepo.getAllDoa();
-        configureRecyclerView(doaDetails, app.getBgPattern());
+        mDoaRepo = new DoaDataRepo();
+        mDoaDetailList = mDoaRepo.getAllDoa();
+
+        configureRecyclerView(app.getBgPattern());
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        //super.onCreateOptionsMenu(menu, inflater);
+
+        final MenuItem menuItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
+
     }
 
     @Override
@@ -108,32 +129,39 @@ public class MainActivityFragment extends Fragment {
         mSubscription.unsubscribe();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
     /**
      * Setup RecyclerView, related adapter and Touch Listener
      *
-     * @param doaDetails List<DoaDetail>
+     * @param bgPatterns BGPattern
      */
-    private void configureRecyclerView(List<DoaDetail> doaDetails, BGPattern bgPatterns) {
-        mMainAdapter = new MainAdapter(getContext(), doaDetails, bgPatterns);
+    private void configureRecyclerView(BGPattern bgPatterns) {
+        mMainAdapter = new MainAdapter(getContext(), mDoaDetailList, bgPatterns);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setHasFixedSize(true);
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mMainAdapter);
-        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRecyclerView, new RecyclerClickListener() {
+        mRecyclerView.addOnItemTouchListener(new MainRecyclerTouchListener(getContext(), mRecyclerView, new MainRecyclerClickListener() {
             @Override
             public void onClick(View view, int position) {
                 FrameLayout titleFrame = (FrameLayout) view.findViewById(R.id.detail_title_frame);
+                DoaDetail doaDetail = mMainAdapter.getItem(position);
 
                 if (mItemClickListener != null) {
-                    mItemClickListener.onMainFragmentItemClick(position, titleFrame);
+                    mItemClickListener.onMainFragmentItemClick(doaDetail.getId() - 1, titleFrame);
                 }
 
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(getContext(), "long click", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "long click", Toast.LENGTH_SHORT).show();
             }
         }));
     }
@@ -155,6 +183,40 @@ public class MainActivityFragment extends Fragment {
         mItemClickListener = null;
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        final List<DoaDetail> filteredList = filter(mDoaDetailList, query);
+        mMainAdapter.animateTo(filteredList);
+        mRecyclerView.scrollToPosition(0);
+
+        return true;
+    }
+
+    /**
+     * Create a filtered list of Doa Details from search query.
+     *
+     * @param list  List<DoaDetail> Original list
+     * @param query String Text query
+     * @return List<DoaDetail> Filtered list
+     */
+    private List<DoaDetail> filter(List<DoaDetail> list, String query) {
+        query = query.toLowerCase();
+
+        final List<DoaDetail> filteredModelList = new ArrayList<>();
+        for (DoaDetail doaDetail : list) {
+            final String text = doaDetail.getTitle().toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(doaDetail);
+            }
+        }
+        return filteredModelList;
+    }
+
     /**
      * To add or remove bottom padding for the ads banner.
      *
@@ -165,60 +227,6 @@ public class MainActivityFragment extends Fragment {
             mLayout.setPadding(0, 0, 0, Common.dpToPixel(50));
         } else {
             mLayout.setPadding(0, 0, 0, 0);
-        }
-    }
-
-    /**
-     * RecyclerClickListener Interface
-     */
-    public interface RecyclerClickListener {
-        void onClick(View view, int position);
-
-        void onLongClick(View view, int position);
-    }
-
-    /**
-     * Recycler OnItemTouchListener class
-     */
-    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-        private GestureDetector mGestureDetector;
-        private RecyclerClickListener mRecyclerClickListener;
-
-        public RecyclerTouchListener(Context context, RecyclerView recyclerView, RecyclerClickListener recyclerClickListener) {
-            mRecyclerClickListener = recyclerClickListener;
-            mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && mRecyclerClickListener != null) {
-                        mRecyclerClickListener.onLongClick(child, recyclerView.getChildPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && mRecyclerClickListener != null && mGestureDetector.onTouchEvent(e)) {
-                mRecyclerClickListener.onClick(child, rv.getChildPosition(child));
-            }
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
         }
     }
 
