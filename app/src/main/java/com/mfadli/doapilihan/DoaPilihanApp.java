@@ -198,6 +198,15 @@ public class DoaPilihanApp extends Application {
     }
 
     /**
+     * Read BG Pattern index from local storage.
+     *
+     * @return int Pattern Index
+     */
+    public int getPatternIndex() {
+        return getPreferences().getInt(BG_PATTERN_PREF, 2);
+    }
+
+    /**
      * Save BGPattern selection into local storage.
      *
      * @param pattern int BGPattern index selected.
@@ -293,7 +302,7 @@ public class DoaPilihanApp extends Application {
      * @return boolean
      */
     public boolean isPremium() {
-        return getPreferences().getBoolean(PREMIUM_PREF, false);
+        return true;//getPreferences().getBoolean(PREMIUM_PREF, false);
     }
 
     /**

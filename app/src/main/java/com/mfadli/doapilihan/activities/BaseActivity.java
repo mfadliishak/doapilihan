@@ -51,14 +51,14 @@ public class BaseActivity extends AppCompatActivity {
      * Show Dialog Alert of BGPattern list.
      */
     private void showPattern() {
-        List<BGPattern> patternList = ((DoaPilihanApp) DoaPilihanApp.getContext()).getBgPatterns();
-
-        ArrayAdapter<BGPattern> adapter = new BGPatternListArrayAdapter(this, patternList);
+        final List<BGPattern> patternList = ((DoaPilihanApp) DoaPilihanApp.getContext()).getBgPatterns();
+        final int patternIndex = ((DoaPilihanApp) DoaPilihanApp.getContext()).getPatternIndex();
+        final ArrayAdapter<BGPattern> adapter = new BGPatternListArrayAdapter(this, patternList);
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle(R.string.dialog_pattern_list_label);
         dialogBuilder.setNegativeButton(R.string.action_cancel, null);
-        dialogBuilder.setAdapter(adapter, (dialog, which) -> {
+        dialogBuilder.setSingleChoiceItems(adapter, patternIndex, (dialog, which) -> {
 
             ((DoaPilihanApp) DoaPilihanApp.getContext()).saveBgPattern(which);
             Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_pattern_list_label), patternList.get(which).getName());
@@ -67,6 +67,7 @@ public class BaseActivity extends AppCompatActivity {
                 mRxBus.send(new GeneralEvent.SuccessSaveBGPattern(patternList.get(which)));
             }
 
+            dialog.dismiss();
         });
         dialogBuilder.create().show();
 

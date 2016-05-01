@@ -287,14 +287,15 @@ public class DetailFragment extends Fragment {
     @OnClick(R.id.img_font_type)
     void onClickFontType(View view) {
 
-        List<Font> fontList = ((DoaPilihanApp) DoaPilihanApp.getContext()).getFonts();
+        final List<Font> fontList = ((DoaPilihanApp) DoaPilihanApp.getContext()).getFonts();
+        final int fontType = ((DoaPilihanApp) DoaPilihanApp.getContext()).getDoaFontType();
+        final ArrayAdapter<Font> adapter = new FontListArrayAdapter(getContext(), fontList);
 
-        ArrayAdapter<Font> adapter = new FontListArrayAdapter(getContext(), fontList);
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         dialogBuilder.setTitle(R.string.dialog_doa_font_type_label);
         dialogBuilder.setNegativeButton(R.string.action_cancel, null);
-        dialogBuilder.setAdapter(adapter, (dialog, which) -> {
+        dialogBuilder.setSingleChoiceItems(adapter, fontType, (dialog, which) -> {
 
             ((DoaPilihanApp) DoaPilihanApp.getContext()).saveDoaFontType(which);
             Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_doa_font_type_label), fontList.get(which).getName());
@@ -302,6 +303,8 @@ public class DetailFragment extends Fragment {
             if (mRxBus.hasObservers()) {
                 mRxBus.send(new GeneralEvent.SuccessSaveFontType(fontList.get(which)));
             }
+
+            dialog.dismiss();
         });
         dialogBuilder.create().show();
     }
