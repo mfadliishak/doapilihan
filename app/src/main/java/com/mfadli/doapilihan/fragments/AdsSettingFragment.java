@@ -213,8 +213,10 @@ public class AdsSettingFragment extends Fragment {
         shouldShowAds(isChecked);
         if (isChecked) {
             mListener.onClickShowAds();
+            Analytic.sendEvent(Analytic.EVENT_BUTTON, "ShowAds", "Show");
         } else {
             mListener.onClickHideAds();
+            Analytic.sendEvent(Analytic.EVENT_BUTTON, "ShowAds", "Hide");
         }
     }
 

@@ -28,6 +28,7 @@ import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.fragments.AboutFragment;
 import com.mfadli.doapilihan.fragments.AdsSettingFragment;
 import com.mfadli.doapilihan.fragments.MainActivityFragment;
+import com.mfadli.utils.Analytic;
 import com.mfadli.utils.iap.IabHelper;
 import com.mfadli.utils.iap.IabResult;
 import com.mfadli.utils.iap.Inventory;
@@ -293,6 +294,8 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
         Log.d(LOG_TAG, "Upgrade button clicked, launching purchase flow for upgrade.");
         setWaitScreen(true);
 
+        Analytic.sendEvent(Analytic.EVENT_BUTTON, "InApps", "Click");
+
         launchInAppPurchaseFlow();
     }
 
@@ -431,6 +434,8 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
      */
     private void onIabPurchaseFailed(int errorNum) {
         if (errorNum != 0) setWaitScreen(false);
+
+        Analytic.sendEvent(Analytic.EVENT_BUTTON, "InApps", "Failed");
     }
 
     /**
@@ -460,6 +465,8 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
                 if (mRxBus.hasObservers()) {
                     mRxBus.send(new GeneralEvent.SuccessPurchased(true, true));
                 }
+
+                Analytic.sendEvent(Analytic.EVENT_BUTTON, "InApps", "Success");
 
             } else {
                 complain("Error while provisioning premium item: " + result);
