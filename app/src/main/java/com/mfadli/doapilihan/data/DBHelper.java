@@ -25,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Version number to upgrade database version
     // each time if Add/Edit table, need
     // to change the version number.
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 2;
     // Database Name
     private static final String DATABASE_NAME = "doa.db";
     // Migration Folder

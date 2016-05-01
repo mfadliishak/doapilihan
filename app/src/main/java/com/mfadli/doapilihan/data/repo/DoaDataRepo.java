@@ -25,6 +25,7 @@ public class DoaDataRepo {
     public static String createTable() {
         return "CREATE TABLE " + DoaData.TABLE + " ( " +
                 DoaData.KEY_ID + " PRIMARY KEY ," +
+                DoaData.KEY_TYPE + " TEXT ," +
                 DoaData.KEY_TITLE + " TEXT 	," +
                 DoaData.KEY_REFERENCE + " TEXT 	," +
                 DoaData.KEY_URL + " TEXT 	," +
