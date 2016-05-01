@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.mfadli.doapilihan.data.DBHelper;
@@ -18,6 +19,8 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by mfad on 24/03/2016.
@@ -56,6 +59,7 @@ public class DoaPilihanApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         sContext = getApplicationContext();
         sDBHelper = new DBHelper();
         DBManager.initializeInstance(sDBHelper);
