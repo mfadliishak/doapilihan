@@ -111,8 +111,8 @@ public class DoaPilihanApp extends Application {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
             Tracker t = (trackerId == TrackerName.APP_TRACKER) ? analytics.newTracker(PROPERTY_ID)
                     : analytics.newTracker(R.xml.global_tracker);
+            t.enableAdvertisingIdCollection(true);// Enable Display Features.
             mTrackers.put(trackerId, t);
-
         }
         return mTrackers.get(trackerId);
     }
