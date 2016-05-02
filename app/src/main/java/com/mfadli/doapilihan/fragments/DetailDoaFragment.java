@@ -221,7 +221,7 @@ public class DetailDoaFragment extends Fragment {
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             ((DoaPilihanApp) getActivity().getApplication()).saveDoaFontSize(mCurrentProgress);
-            Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_doa_font_label), "", (long) mOriginalSize);
+            Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_doa_font_label), Float.toString(mOriginalSize));
 
             // Broadcast SuccessSaveFontSize
             if (mRxBus.hasObservers()) {
@@ -292,7 +292,7 @@ public class DetailDoaFragment extends Fragment {
 
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             ((DoaPilihanApp) getActivity().getApplication()).saveDoaLineSpacingSize(mCurrentProgress);
-            Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_doa_line_spacing_label), "", (long) mOriginalLineSpacingSize);
+            Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_doa_line_spacing_label), Float.toString(mOriginalLineSpacingSize));
 
             // Broadcast SuccessSaveFontSize
             if (mRxBus.hasObservers()) {

@@ -13,14 +13,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.mfadli.doapilihan.BuildConfig;
 import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
@@ -261,17 +256,21 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
         super.onActivityResult(requestCode, resultCode, data);
 
         mReenterState = new Bundle(data.getExtras());
-        int originalPosition = mReenterState.getInt(DetailActivity.EXTRA_ORIGINAL_POSITION);
-        int currentPosition = mReenterState.getInt(DetailActivity.EXTRA_CURRENT_POSITION);
 
-        if (originalPosition != currentPosition) {
-            ((MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.main_content))
-                    .scrollToPosition(currentPosition);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_content);
+
+        // refresh list layout if the screen is at main home screen
+        if (fragment != null && fragment instanceof MainActivityFragment) {
+
+            int originalPosition = mReenterState.getInt(DetailActivity.EXTRA_ORIGINAL_POSITION);
+            int currentPosition = mReenterState.getInt(DetailActivity.EXTRA_CURRENT_POSITION);
+
+            if (originalPosition != currentPosition) {
+                ((MainActivityFragment) fragment).scrollToPosition(currentPosition);
+            }
+
+            ((MainActivityFragment) fragment).refresh();
         }
-
-        // refresh list layout
-        ((MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.main_content))
-                .refresh();
     }
 
     @Override
@@ -280,28 +279,13 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     }
 
     @Override
-    public void onClickShowAds() {
-        shouldShowAds(true);
-    }
-
-    @Override
-    public void onClickHideAds() {
-        shouldShowAds(false);
-    }
-
-    @Override
     public void onClickUpgrade() {
         Log.d(LOG_TAG, "Upgrade button clicked, launching purchase flow for upgrade.");
         setWaitScreen(true);
 
-        Analytic.sendEvent(Analytic.EVENT_BUTTON, "InApps", "Click");
+        Analytic.sendEvent(Analytic.EVENT_IAP, "ClickUpgrade", "Begin");
 
         launchInAppPurchaseFlow();
-    }
-
-    @Override
-    public void onClickRestore() {
-
     }
 
     /**
@@ -417,8 +401,6 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
             }
         }
 
-        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
-
         // IAB success event broadcast
         if (mRxBus.hasObservers()) {
             mRxBus.send(new GeneralEvent.SuccessIabSetup(mIsPremium));
@@ -435,7 +417,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     private void onIabPurchaseFailed(int errorNum) {
         if (errorNum != 0) setWaitScreen(false);
 
-        Analytic.sendEvent(Analytic.EVENT_BUTTON, "InApps", "Failed");
+        Analytic.sendEvent(Analytic.EVENT_IAP, "ClickUpgrade", "Failed");
     }
 
     /**
@@ -466,7 +448,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
                     mRxBus.send(new GeneralEvent.SuccessPurchased(true, true));
                 }
 
-                Analytic.sendEvent(Analytic.EVENT_BUTTON, "InApps", "Success");
+                Analytic.sendEvent(Analytic.EVENT_IAP, "ClickUpgrade", "Success");
 
             } else {
                 complain("Error while provisioning premium item: " + result);
@@ -477,7 +459,6 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
         if (mRxBus.hasObservers()) {
             boolean isPremium = ((DoaPilihanApp) DoaPilihanApp.getContext()).isPremium();
             mRxBus.send(new GeneralEvent.SuccessPurchased(result.isSuccess(), isPremium));
-            shouldShowAds(!isPremium);
         }
     }
 
@@ -571,59 +552,6 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
             Log.d(LOG_TAG, "Wait Screen.... open");
         else
             Log.d(LOG_TAG, "Wait Screen.... close");
-    }
-
-    /**
-     * To add or remove the actual ads view container and disable/enable the ads.
-     *
-     * @param display boolean True to display ads.
-     */
-    private void shouldShowAds(boolean display) {
-        Log.d(LOG_TAG, "shouldShowAds: " + display);
-
-        if (display) {
-//            AdRequest adRequest = new AdRequest.Builder()
-//                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-//                    .addTestDevice("ABC1234567890ABC1234567890")
-//                    .build();
-
-            RelativeLayout adsContainer = (RelativeLayout) findViewById(R.id.main_layout);
-
-            // Remove existing, to manually create a new one
-            if (this.findViewById(R.id.adView) != null) {
-                AdView adMobAds = (AdView) this.findViewById(R.id.adView);
-                adsContainer.removeView(adMobAds);
-            }
-
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-            lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
-
-            AdView mAdView = new AdView(this);
-            mAdView.setId(R.id.adView);
-            mAdView.setAdSize(AdSize.BANNER);
-            mAdView.setAdUnitId(getString(R.string.banner_ad_unit_id));
-            mAdView.setLayoutParams(lp);
-
-            adsContainer.addView(mAdView);
-
-            AdRequest adRequest = new AdRequest
-                    .Builder()
-                    .addTestDevice("AABA3F9975AC4BBE5AB069468B4BFD7D")
-                    .build();
-            mAdView.loadAd(adRequest);
-
-
-        } else {
-            RelativeLayout adsContainer = (RelativeLayout) findViewById(R.id.main_layout);
-
-            AdView adMobAds = (AdView) this.findViewById(R.id.adView);
-            adsContainer.removeView(adMobAds);
-
-        }
-
     }
 
     /**

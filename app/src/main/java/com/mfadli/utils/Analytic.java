@@ -13,6 +13,8 @@ public class Analytic {
             .getTracker(DoaPilihanApp.TrackerName.APP_TRACKER);
 
     public static final String EVENT_BUTTON = "Button";
+    public static final String EVENT_IAP = "IAP";
+    public static final String EVENT_DOA = "Doa";
 
     public static void sendScreen(String name) {
         mTracker.setScreenName(name);
