@@ -99,7 +99,7 @@ public class DetailFragment extends Fragment {
                     .commit();
         }
 
-        mTitle.setText(Common.trimBreakLine(mDoaDetail.getTitle()));
+        mTitle.setText(mDoaDetail.getId() + ". " + Common.trimBreakLine(mDoaDetail.getTitle()));
 
         // Color the translation icon accordingly
         DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();

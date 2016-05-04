@@ -149,7 +149,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         }
 
         public void bind(DoaDetail doaDetail) {
-            final String title = Common.trimBreakLine(doaDetail.getTitle());
+            final String title = doaDetail.getId() + ". " + Common.trimBreakLine(doaDetail.getTitle());
 
             mTvTitle.setText(title);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
