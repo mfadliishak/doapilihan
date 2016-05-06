@@ -2,7 +2,6 @@ package com.mfadli.doapilihan.fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
@@ -23,6 +22,7 @@ import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.utils.Analytic;
+import com.mfadli.utils.BitmapCacher;
 import com.mfadli.utils.Common;
 
 import butterknife.Bind;
@@ -140,7 +140,7 @@ public class AdsSettingFragment extends Fragment {
      * @param bgPattern {@link BGPattern}
      */
     private void configureBackground(BGPattern bgPattern) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), bgPattern.getDrawable());
+        Bitmap bitmap = BitmapCacher.getCacheBitmap(bgPattern.getName());
         BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
         bitmapDrawable.setTileModeY(Shader.TileMode.REPEAT);
 

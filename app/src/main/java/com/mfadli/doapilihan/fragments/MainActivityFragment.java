@@ -1,6 +1,7 @@
 package com.mfadli.doapilihan.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -28,6 +29,7 @@ import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.DoaDetail;
+import com.mfadli.utils.BitmapCacher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,12 +136,20 @@ public class MainActivityFragment extends Fragment implements SearchView.OnQuery
     }
 
     /**
-     * Setup RecyclerView, related adapter and Touch Listener
+     * Setup RecyclerView, related adapter and Touch Listener.
+     * First time check if pattern image is cached or not, if not yet,
+     * Cache it tu {@link BitmapCacher}
      *
-     * @param bgPatterns BGPattern
+     * @param bgPattern BGPattern
      */
-    private void configureRecyclerView(BGPattern bgPatterns) {
-        mMainAdapter = new MainAdapter(getContext(), mDoaDetailList, bgPatterns);
+    private void configureRecyclerView(BGPattern bgPattern) {
+
+        Bitmap bitmap = BitmapCacher.getCacheBitmap(bgPattern.getName());
+        if (bitmap == null) {
+            BitmapCacher.cacheBitmap(bgPattern.getDrawable(), bgPattern.getName());
+        }
+
+        mMainAdapter = new MainAdapter(getContext(), mDoaDetailList, bgPattern);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());

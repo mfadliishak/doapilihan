@@ -13,6 +13,7 @@ import com.mfadli.doapilihan.event.GeneralEvent;
 import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.utils.Analytic;
+import com.mfadli.utils.BitmapCacher;
 
 import java.util.List;
 
@@ -61,7 +62,11 @@ public class BaseActivity extends AppCompatActivity {
         dialogBuilder.setSingleChoiceItems(adapter, patternIndex, (dialog, which) -> {
 
             ((DoaPilihanApp) DoaPilihanApp.getContext()).saveBgPattern(which);
-            Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_pattern_list_label), patternList.get(which).getName());
+            BGPattern bgPattern = patternList.get(which);
+            Analytic.sendEvent(Analytic.EVENT_BUTTON, getString(R.string.dialog_pattern_list_label), bgPattern.getName());
+
+            // Cache the pattern
+            BitmapCacher.cacheBitmap(bgPattern.getDrawable(), bgPattern.getName());
 
             if (mRxBus.hasObservers()) {
                 mRxBus.send(new GeneralEvent.SuccessSaveBGPattern(patternList.get(which)));

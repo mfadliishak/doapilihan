@@ -1,6 +1,7 @@
 package com.mfadli.doapilihan.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.DoaDetail;
+import com.mfadli.utils.BitmapCacher;
 import com.mfadli.utils.Common;
 
 import java.util.ArrayList;
@@ -156,7 +158,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 mFrameLayout.setTransitionName(title);
             }
             mFrameLayout.setTag(title);
-            mImageView.setImageResource(mBGPattern.getDrawable());
+            Bitmap bitmap = BitmapCacher.getCacheBitmap(mBGPattern.getName());
+            mImageView.setImageBitmap(bitmap);
 
             // Change the Source Type Tag color.
             if (doaDetail.getType() == DoaDetail.SOURCE_TYPE_HADITH) {

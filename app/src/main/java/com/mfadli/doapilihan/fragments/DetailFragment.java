@@ -2,7 +2,6 @@ package com.mfadli.doapilihan.fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -26,6 +25,7 @@ import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.doapilihan.model.Font;
 import com.mfadli.utils.Analytic;
+import com.mfadli.utils.BitmapCacher;
 import com.mfadli.utils.Common;
 import com.mikepenz.iconics.view.IconicsImageView;
 
@@ -164,7 +164,7 @@ public class DetailFragment extends Fragment {
      * @param bgPattern {@link BGPattern}
      */
     private void configureBackground(BGPattern bgPattern) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), bgPattern.getDrawable());
+        Bitmap bitmap = BitmapCacher.getCacheBitmap(bgPattern.getName());
         BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
         bitmapDrawable.setTileModeY(Shader.TileMode.REPEAT);
 
