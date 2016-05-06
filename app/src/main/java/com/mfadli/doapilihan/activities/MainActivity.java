@@ -57,6 +57,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     private static IabHelper mHelper;
     private boolean mIsPremium = false;
     private boolean mDestroyed = false;
+    private boolean mIabSetupDone = false;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -261,7 +262,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
         super.onActivityResult(requestCode, resultCode, data);
 
         mReenterState = new Bundle(data.getExtras());
-        
+
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_content);
 
         // refresh list layout if the screen is at main home screen
@@ -297,12 +298,18 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
 
     @Override
     public void onClickUpgrade() {
-        Log.d(LOG_TAG, "Upgrade button clicked, launching purchase flow for upgrade.");
-        setWaitScreen(true);
 
-        Analytic.sendEvent(Analytic.EVENT_IAP, "ClickUpgrade", "Begin");
+        if (mIabSetupDone) {
+            Log.d(LOG_TAG, "Upgrade button clicked, launching purchase flow for upgrade.");
+            setWaitScreen(true);
 
-        launchInAppPurchaseFlow();
+            Analytic.sendEvent(Analytic.EVENT_IAP, "ClickUpgrade", "Begin");
+
+            launchInAppPurchaseFlow();
+        }
+        else {
+            alert("Billing Service is not available at the moment. Please try again later.");
+        }
     }
 
     /**
@@ -394,6 +401,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
      */
     void onIabSetupFailed() {
         setWaitScreen(false);
+        mIabSetupDone = false;
     }
 
     /**
@@ -424,6 +432,8 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
         if (mRxBus.hasObservers()) {
             mRxBus.send(new GeneralEvent.SuccessIabSetup(mIsPremium));
         }
+
+        mIabSetupDone = true;
 
         setWaitScreen(false);
     }
@@ -471,6 +481,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
 
             } else {
                 complain("Error while provisioning premium item: " + result);
+                Analytic.sendEvent(Analytic.EVENT_IAP, "Failed", result.toString());
             }
         }
 
@@ -558,6 +569,11 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
             mHelper.launchPurchaseFlow(this, SKU_PREMIUM, PURCHASE_REQUEST, mPurchaseFinishedListener, payload);
         } catch (IabHelper.IabAsyncInProgressException ex) {
             complain("Exception while purchasing: " + ex.toString());
+            Analytic.sendEvent(Analytic.EVENT_IAP, "Failed", ex.toString());
+            setWaitScreen(false);
+        } catch (Exception ex) {
+            complain("Exception while purchasing: " + ex.toString());
+            Analytic.sendEvent(Analytic.EVENT_IAP, "Failed", ex.toString());
             setWaitScreen(false);
         }
     }
