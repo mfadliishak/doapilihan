@@ -94,6 +94,7 @@ dependencies {
     compile 'com.mikepenz:fontawesome-typeface:4.5.0.1@aar'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.google.android.gms:play-services-analytics:8.3.0'
+    compile 'com.google.android.gms:play-services-ads:8.3.0'
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;

@@ -12,8 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mfadli.doapilihan.BuildConfig;
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.utils.Analytic;
+import com.mfadli.utils.Common;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -65,7 +67,22 @@ public class AboutFragment extends Fragment {
 
         mVersion.setText("Version " + BuildConfig.VERSION_NAME);
 
+        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
+
         return view;
+    }
+
+    /**
+     * To add or remove bottom padding for the ads banner.
+     *
+     * @param display boolean True to display ads.
+     */
+    private void shouldShowAds(boolean display) {
+        if (display) {
+            mLayout.setPadding(0, 0, 0, Common.dpToPixel(50));
+        } else {
+            mLayout.setPadding(0, 0, 0, 0);
+        }
     }
 
     /**

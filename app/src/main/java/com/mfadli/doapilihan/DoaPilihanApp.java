@@ -32,6 +32,7 @@ public class DoaPilihanApp extends Application {
     private static final String TRANSLATION_EN_PREF = "TranslationEn";
     private static final String DOA_LINE_SPACING_SIZE_PREF = "LineSpacingSize";
     private static final String DOA_FONT_TYPE_PREF = "DoaFontType";
+    private static final String SHOULD_SHOW_ADS_PREF = "ShouldShowAds";
     private static final String PREMIUM_PREF = "PremiumPref";
     private static final String BG_PATTERN_PREF = "BGPatternPref";
     private static List<Font> sFontList = new ArrayList<>();
@@ -72,6 +73,19 @@ public class DoaPilihanApp extends Application {
         }
         mSecurePreferences = new SecurePreferences(getContext(), myKeys, "com.mfadli.doapilihan.pref");
 
+        checkAds();
+    }
+
+    /**
+     * First run will check if ads is turned off. Turn in back on.
+     */
+    private void checkAds() {
+        boolean showAds = shouldShowAds();
+        boolean isPremium = isPremium();
+
+        if (!isPremium && !showAds) {
+            saveShouldShowAds(true);
+        }
     }
 
     public static Context getContext() {
@@ -291,4 +305,24 @@ public class DoaPilihanApp extends Application {
         return getPreferences().getBoolean(PREMIUM_PREF, false);
     }
 
+    /**
+     * Save ads to show selection into local storage.
+     *
+     * @param display boolean Is To show ads selected
+     */
+    public void saveShouldShowAds(boolean display) {
+        SharedPreferences.Editor editor = getPreferences().edit();
+        editor.putBoolean(SHOULD_SHOW_ADS_PREF, display);
+        editor.commit();
+    }
+
+    /**
+     * Read is showing ads from local storage.
+     * If premium user, return false.
+     *
+     * @return boolean
+     */
+    public boolean shouldShowAds() {
+        return isPremium() ? false : getPreferences().getBoolean(SHOULD_SHOW_ADS_PREF, true);
+    }
 }

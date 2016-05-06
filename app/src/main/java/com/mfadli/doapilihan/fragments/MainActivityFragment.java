@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +31,7 @@ import com.mfadli.doapilihan.event.RxBus;
 import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.utils.BitmapCacher;
+import com.mfadli.utils.Common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +91,8 @@ public class MainActivityFragment extends Fragment implements SearchView.OnQuery
         mDoaRepo = new DoaDataRepo();
         mDoaDetailList = mDoaRepo.getAllDoa();
 
+        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
+
         configureRecyclerView(app.getBgPattern());
 
         return view;
@@ -116,7 +120,7 @@ public class MainActivityFragment extends Fragment implements SearchView.OnQuery
                         .subscribe(event -> {
                             if (event instanceof GeneralEvent.SuccessIabSetup) {
                                 GeneralEvent.SuccessIabSetup ev = (GeneralEvent.SuccessIabSetup) event;
-
+                                shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
                             } else if (event instanceof GeneralEvent.SuccessSaveBGPattern) {
                                 GeneralEvent.SuccessSaveBGPattern ev = (GeneralEvent.SuccessSaveBGPattern) event;
                                 mMainAdapter.setBgPattern(ev.getBgPattern());
@@ -224,6 +228,20 @@ public class MainActivityFragment extends Fragment implements SearchView.OnQuery
             }
         }
         return filteredModelList;
+    }
+
+    /**
+     * To add or remove bottom padding for the ads banner.
+     *
+     * @param display boolean True to display ads.
+     */
+    private void shouldShowAds(boolean display) {
+        Log.d(LOG_TAG, "shouldShowAds: " + display);
+        if (display) {
+            mLayout.setPadding(0, 0, 0, Common.dpToPixel(50));
+        } else {
+            mLayout.setPadding(0, 0, 0, 0);
+        }
     }
 
     /**

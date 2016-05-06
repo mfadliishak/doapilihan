@@ -12,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.mfadli.doapilihan.DoaPilihanApp;
@@ -27,6 +29,7 @@ import com.mfadli.utils.Common;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import rx.subscriptions.CompositeSubscription;
 
@@ -42,8 +45,12 @@ public class AdsSettingFragment extends Fragment {
 
     @Bind(R.id.fragment_ads_setting)
     RelativeLayout mLayout;
+    @Bind(R.id.ads_switch)
+    Switch mSwitch;
     @Bind(R.id.button_upgrade)
     Button mBtnUpgrade;
+    @Bind(R.id.cardview_ads_manual)
+    CardView mCardManual;
     @Bind(R.id.cardview_ads_upgrade)
     CardView mCardUpgrade;
     @Bind(R.id.cardview_ads_premium)
@@ -157,6 +164,7 @@ public class AdsSettingFragment extends Fragment {
         if (isPremium) {
             DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
 
+            mCardManual.setVisibility(View.GONE);
             mCardUpgrade.setVisibility(View.GONE);
             mCardPremium.setVisibility(View.VISIBLE);
 
@@ -168,9 +176,44 @@ public class AdsSettingFragment extends Fragment {
 
         } else {
             mCardPremium.setVisibility(View.GONE);
+            mCardManual.setVisibility(View.VISIBLE);
             mCardUpgrade.setVisibility(View.VISIBLE);
 
             mBtnUpgrade.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+        }
+
+        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
+    }
+
+    /**
+     * To add or remove bottom padding for the ads banner.
+     *
+     * @param display boolean True to display ads.
+     */
+    private void shouldShowAds(boolean display) {
+        mSwitch.setChecked(display);
+        if (display) {
+            mLayout.setPadding(0, 0, 0, Common.dpToPixel(50));
+        } else {
+            mLayout.setPadding(0, 0, 0, 0);
+        }
+    }
+
+    /**
+     * Callback for switch button
+     *
+     * @see android.widget.CompoundButton.OnCheckedChangeListener
+     */
+    @OnCheckedChanged(R.id.ads_switch)
+    void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        ((DoaPilihanApp) DoaPilihanApp.getContext()).saveShouldShowAds(isChecked);
+        shouldShowAds(isChecked);
+        if (isChecked) {
+            mListener.onClickShowAds();
+            Analytic.sendEvent(Analytic.EVENT_BUTTON, "ShowAds", "Show");
+        } else {
+            mListener.onClickHideAds();
+            Analytic.sendEvent(Analytic.EVENT_BUTTON, "ShowAds", "Hide");
         }
     }
 
@@ -188,6 +231,11 @@ public class AdsSettingFragment extends Fragment {
      * Callback interface to communicate with Main Activity
      */
     public interface OnAdsSettingFragmentListener {
+        void onClickShowAds();
+
+        void onClickHideAds();
+
         void onClickUpgrade();
+
     }
 }
