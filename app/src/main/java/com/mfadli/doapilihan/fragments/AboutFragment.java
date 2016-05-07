@@ -127,6 +127,16 @@ public class AboutFragment extends Fragment {
         openUrl(getString(R.string.library_url_3));
     }
 
+    @OnClick(R.id.library_4)
+    void onClickLibrary4(View view) {
+        openUrl(getString(R.string.library_url_4));
+    }
+
+    @OnClick(R.id.library_5)
+    void onClickLibrary5(View view) {
+        openUrl(getString(R.string.library_url_5));
+    }
+
     @OnClick(R.id.reference_1)
     void onClickReference1(View view) {
         openUrl(getString(R.string.reference_url_1));

@@ -134,6 +134,16 @@
                 android:text="@string/library_name_4"
                 android:textColor="?attr/themedTextColorStyle"/>
 
+            <TextView
+                android:id="@+id/library_5"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:text="@string/library_name_5"
+                android:textColor="?attr/themedTextColorStyle"/>
+
             <!-- References section -->
             <TextView
                 android:layout_width="wrap_content"

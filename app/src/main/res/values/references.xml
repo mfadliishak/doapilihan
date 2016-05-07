@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reference_name_1">Tanzil.net</string>
+    <string name="reference_url_1">http://tanzil.net/</string>
+
+    <string name="reference_name_2">Quran.com</string>
+    <string name="reference_url_2">http://quran.com/</string>
+
+    <string name="reference_name_3">Muslihun.com</string>
+    <string name="reference_url_3">https://muflihun.com/</string>
+
+    <string name="reference_name_4">Sunnah.com</string>
+    <string name="reference_url_4">http://sunnah.com/</string>
+
+    <string name="reference_name_5">QaalaRasulAllah.com</string>
+    <string name="reference_url_5">http://qaalarasulallah.com/</string>
+
+    <string name="reference_name_6">Islam in Quran</string>
+    <string name="reference_url_6">http://www.islaminquran.com/</string>
+</resources>

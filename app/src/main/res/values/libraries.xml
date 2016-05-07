@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="library_name_1">Butter Knife</string>
+    <string name="library_url_1">http://jakewharton.github.io/butterknife/</string>
+
+    <string name="library_name_2">Android-Iconics</string>
+    <string name="library_url_2">https://github.com/mikepenz/Android-Iconics</string>
+
+    <string name="library_name_3">Calligraphy</string>
+    <string name="library_url_3">https://github.com/chrisjenx/Calligraphy</string>
+
+    <string name="library_name_4">RxAndroid</string>
+    <string name="library_url_4">https://github.com/ReactiveX/RxAndroid</string>
+
+    <string name="library_name_5">Islamic Arabesque Brushes</string>
+    <string name="library_url_5">http://hillllallll.deviantart.com/art/70-Islamic-arabesque-brushes-Set-1-HQ-327879890</string>
+</resources>
