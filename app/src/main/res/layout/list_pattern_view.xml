@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="text"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="?attr/themedPatternDialogTextColorStyle"/>
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>

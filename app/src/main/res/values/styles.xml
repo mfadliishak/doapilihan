@@ -20,6 +20,7 @@
         <item name="themedTextColorStyle">@color/md_grey_300</item>
         <item name="themedDoaColorStyle">@color/md_white_1000</item>
         <item name="themedPatternColorStyle">@color/md_amber_50</item>
+        <item name="themedPatternDialogTextColorStyle">@color/md_green_A400</item>
     </style>
 
     <!-- Light Theme -->
@@ -34,6 +35,7 @@
         <item name="themedTextColorStyle">@color/md_grey_500</item>
         <item name="themedDoaColorStyle">@color/md_black_1000</item>
         <item name="themedPatternColorStyle">@color/colorPattern</item>
+        <item name="themedPatternDialogTextColorStyle">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">

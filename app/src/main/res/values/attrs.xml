@@ -4,4 +4,5 @@
     <attr name="themedTextColorStyle" format="reference|color" />
     <attr name="themedDoaColorStyle" format="reference|color" />
     <attr name="themedPatternColorStyle" format="reference|color" />
+    <attr name="themedPatternDialogTextColorStyle" format="reference|color" />
 </resources>

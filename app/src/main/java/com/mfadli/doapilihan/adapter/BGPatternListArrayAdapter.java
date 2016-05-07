@@ -8,8 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.model.BGPattern;
+import com.mfadli.utils.Common;
 
 import java.util.List;
 
@@ -17,13 +19,13 @@ import java.util.List;
  * Created by mfad on 24/04/2016.
  */
 public class BGPatternListArrayAdapter extends ArrayAdapter<BGPattern> {
-private final List<BGPattern> mBgPatternList;
-private Context mContext;
+    private final List<BGPattern> mBgPatternList;
+    private Context mContext;
 
-static class ViewHolder {
-    protected ImageView mImageView;
-    protected TextView mTextView;
-}
+    static class ViewHolder {
+        protected ImageView mImageView;
+        protected TextView mTextView;
+    }
 
     public BGPatternListArrayAdapter(Context context, List<BGPattern> bgPatternList) {
         super(context, R.layout.list_font_type_view, bgPatternList);
@@ -34,6 +36,7 @@ static class ViewHolder {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = null;
+        BGPattern bgPattern = mBgPatternList.get(position);
 
         if (convertView == null) {
             LayoutInflater inflator = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -46,11 +49,21 @@ static class ViewHolder {
             view = convertView;
         }
 
-        if (mBgPatternList.get(position).getDrawable() > 0) {
-            ViewHolder holder = (ViewHolder) view.getTag();
-            holder.mImageView.setImageResource(mBgPatternList.get(position).getDrawableDialog());
-            holder.mTextView.setText(mBgPatternList.get(position).getName());
+        ViewHolder holder = (ViewHolder) view.getTag();
+
+        holder.mTextView.setText(bgPattern.getName());
+
+        // Change the pattern according to theme.
+        if (((DoaPilihanApp) DoaPilihanApp.getContext()).isBgPatternNormal(bgPattern)) {
+            holder.mImageView.setImageResource(android.R.color.transparent);
+        } else {
+
+            int color = Common.getColorFromThemeAttribute(getContext(), R.attr.themedPatternColorStyle);
+
+            holder.mImageView.setImageResource(bgPattern.getDrawableDialog());
+            holder.mImageView.setColorFilter(color);
         }
+
 
         return view;
     }
