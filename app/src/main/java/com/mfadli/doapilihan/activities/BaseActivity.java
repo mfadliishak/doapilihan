@@ -37,8 +37,12 @@ public class BaseActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean isDarkTheme = ((DoaPilihanApp) DoaPilihanApp.getContext()).isDarkTheme();
 
-        // change Mode Label according to theme.
-        menu.findItem(R.id.action_change_mode).setTitle(isDarkTheme ? R.string.menu_label_light_mode : R.string.menu_label_dark_mode);
+        MenuItem menuItem = menu.findItem(R.id.action_change_mode);
+
+        if (menuItem != null) {
+            // change Mode Label according to theme.
+            menuItem.setTitle(isDarkTheme ? R.string.menu_label_light_mode : R.string.menu_label_dark_mode);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
