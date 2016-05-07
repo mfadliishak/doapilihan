@@ -21,6 +21,10 @@
         <item name="themedDoaColorStyle">@color/md_white_1000</item>
         <item name="themedPatternColorStyle">@color/md_amber_50</item>
         <item name="themedPatternDialogTextColorStyle">@color/md_green_A400</item>
+
+        <!-- Menu -->
+        <item name="actionOverflowMenuStyle">@style/OptionsMenu</item>
+        <item name="android:itemTextAppearance">@style/ActionBarTitle</item>
     </style>
 
     <!-- Light Theme -->
@@ -36,6 +40,19 @@
         <item name="themedDoaColorStyle">@color/md_black_1000</item>
         <item name="themedPatternColorStyle">@color/colorPattern</item>
         <item name="themedPatternDialogTextColorStyle">@color/colorPrimaryDark</item>
+
+        <!-- Menu -->
+        <item name="actionOverflowMenuStyle">@style/OptionsMenu</item>
+        <item name="android:itemTextAppearance">@style/ActionBarTitle</item>
+    </style>
+
+    <style name="OptionsMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="ActionBarTitle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/md_white_1000</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
     <style name="AppTheme.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
