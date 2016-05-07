@@ -168,6 +168,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(((DoaPilihanApp) DoaPilihanApp.getContext()).isDarkTheme() ? R.style.AppTheme_NoActionBar : R.style.AppTheme_NoActionBar_Light);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -214,6 +215,24 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_change_mode:
+                changeMode();
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 
@@ -222,6 +241,7 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
                 mHelper.dispose();
             } catch (IabHelper.IabAsyncInProgressException e) {
                 e.printStackTrace();
+            } finally {
             }
         }
         mHelper = null;
@@ -306,10 +326,21 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
             Analytic.sendEvent(Analytic.EVENT_IAP, "ClickUpgrade", "Begin");
 
             launchInAppPurchaseFlow();
-        }
-        else {
+        } else {
             alert("Billing Service is not available at the moment. Please try again later.");
         }
+    }
+
+    /**
+     * Change Theme from Menu pop up. Restart current Activity.
+     */
+    private void changeMode() {
+        DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
+        boolean isDarkTheme = app.isDarkTheme();
+        app.setIsDarkTheme(!isDarkTheme);
+
+        MainActivity.start(this);
+        finish();
     }
 
     /**

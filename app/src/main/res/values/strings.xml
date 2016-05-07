@@ -27,4 +27,9 @@
     <string name="ads_setting_upgraded_text_2">جَزَاكُمُ اللهُ خَيْرًا كَثِيْرًا</string>
     <string name="ads_setting_upgraded_text_3">وَجَزَاكُمُ اللهُ اَحْسَنَ الْجَزَاء</string>
 
+    <string name="menu_label_pattern">Pattern</string>
+    <string name="menu_label_light_mode">Normal Mode</string>
+    <string name="menu_label_dark_mode">Dark Mode</string>
+    <string name="menu_label_search">Search</string>
+
 </resources>

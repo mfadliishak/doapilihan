@@ -35,6 +35,7 @@ public class DoaPilihanApp extends Application {
     private static final String SHOULD_SHOW_ADS_PREF = "ShouldShowAds";
     private static final String PREMIUM_PREF = "PremiumPref";
     private static final String BG_PATTERN_PREF = "BGPatternPref";
+    private static final String IS_DARK_THEME_PREF = "IsDarkTheme";
     private static List<Font> sFontList = new ArrayList<>();
     private static List<BGPattern> sBgPatternList = new ArrayList<>();
 
@@ -334,5 +335,25 @@ public class DoaPilihanApp extends Application {
      */
     public boolean isBgPatternNormal(BGPattern bgPattern) {
         return bgPattern.getName().equalsIgnoreCase("Normal");
+    }
+
+    /**
+     * Save is dark theme is selected into local storage.
+     *
+     * @param isDarkTheme boolean true if dark theme is selected.
+     */
+    public void setIsDarkTheme(boolean isDarkTheme) {
+        SharedPreferences.Editor editor = getPreferences().edit();
+        editor.putBoolean(IS_DARK_THEME_PREF, isDarkTheme);
+        editor.commit();
+    }
+
+    /**
+     * Read is dark theme is chosen previously from local storage.
+     *
+     * @return boolean true if dark theme is selected.
+     */
+    public boolean isDarkTheme() {
+        return getPreferences().getBoolean(IS_DARK_THEME_PREF, false);
     }
 }

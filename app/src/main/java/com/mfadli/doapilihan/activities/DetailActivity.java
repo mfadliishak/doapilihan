@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.adapter.DetailPagerAdapter;
 import com.mfadli.doapilihan.data.repo.DoaDataRepo;
@@ -38,6 +39,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(((DoaPilihanApp) DoaPilihanApp.getContext()).isDarkTheme() ? R.style.AppTheme_NoActionBar : R.style.AppTheme_NoActionBar_Light);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
@@ -122,6 +124,11 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
                 finishWithResult();
                 onBackPressed();
                 return true;
+            case R.id.action_change_mode:
+                changeMode();
+                break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -146,6 +153,21 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
     @Override
     public void onDetailFragmentRightClick() {
         mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+    }
+
+    /**
+     * Change Theme from Menu pop up.
+     * Restart MainActivity manually with flags and close this activity
+     */
+    private void changeMode() {
+        DoaPilihanApp app = (DoaPilihanApp) DoaPilihanApp.getContext();
+        boolean isDarkTheme = app.isDarkTheme();
+        app.setIsDarkTheme(!isDarkTheme);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     /**

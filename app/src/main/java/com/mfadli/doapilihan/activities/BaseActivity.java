@@ -3,6 +3,7 @@ package com.mfadli.doapilihan.activities;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
@@ -33,16 +34,27 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean isDarkTheme = ((DoaPilihanApp) DoaPilihanApp.getContext()).isDarkTheme();
+
+        // change Mode Label according to theme.
+        menu.findItem(R.id.action_change_mode).setTitle(isDarkTheme ? R.string.menu_label_light_mode : R.string.menu_label_dark_mode);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_change_background) {
-            showPattern();
-            return true;
+        switch (id) {
+            case R.id.action_change_background:
+                showPattern();
+                break;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
