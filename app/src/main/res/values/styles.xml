@@ -8,20 +8,32 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Dark Theme -->
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="themedLayoutColorStyle">@color/md_grey_800</item>
+        <item name="themedTextColorStyle">@color/md_grey_300</item>
+        <item name="themedDoaColorStyle">@color/md_white_1000</item>
+        <item name="themedPatternColorStyle">@color/md_amber_50</item>
     </style>
 
+    <!-- Light Theme -->
     <style name="AppTheme.NoActionBar.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="themedLayoutColorStyle">@color/md_white_1000</item>
+        <item name="themedTextColorStyle">@color/md_grey_500</item>
+        <item name="themedDoaColorStyle">@color/md_black_1000</item>
+        <item name="themedPatternColorStyle">@color/colorPattern</item>
     </style>
 
     <style name="AppTheme.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
@@ -34,6 +46,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Splash Screen Theme -->
     <style name="AppTheme.BrandedLaunch" parent="AppTheme">
         <item name="android:windowBackground">@drawable/green_gradient</item>
     </style>

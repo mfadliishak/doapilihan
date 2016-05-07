@@ -52,7 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Version"/>
+                android:text="Version"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <!-- Email Support -->
             <RelativeLayout
@@ -75,7 +76,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
                     android:gravity="left|center_vertical"
-                    android:text="Get Support and report bugs"/>
+                    android:text="Get Support and report bugs"
+                    android:textColor="?attr/themedTextColorStyle"/>
 
             </RelativeLayout>
 
@@ -99,7 +101,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="@string/library_name_1"/>
+                android:text="@string/library_name_1"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <TextView
                 android:id="@+id/library_2"
@@ -108,7 +111,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="@string/library_name_2"/>
+                android:text="@string/library_name_2"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <TextView
                 android:id="@+id/library_3"
@@ -117,7 +121,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="@string/library_name_3"/>
+                android:text="@string/library_name_3"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <TextView
                 android:id="@+id/library_4"
@@ -126,7 +131,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="@string/library_name_4"/>
+                android:text="@string/library_name_4"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <!-- References section -->
             <TextView
@@ -148,7 +154,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="@string/reference_name_1"/>
+                android:text="@string/reference_name_1"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <TextView
                 android:id="@+id/reference_2"
@@ -157,7 +164,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="@string/reference_name_2"/>
+                android:text="@string/reference_name_2"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <TextView
                 android:id="@+id/reference_3"
@@ -166,7 +174,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="@string/reference_name_3"/>
+                android:text="@string/reference_name_3"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <TextView
                 android:id="@+id/reference_4"
@@ -175,7 +184,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="@string/reference_name_4"/>
+                android:text="@string/reference_name_4"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <TextView
                 android:id="@+id/reference_5"
@@ -184,7 +194,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="@string/reference_name_5"/>
+                android:text="@string/reference_name_5"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <TextView
                 android:id="@+id/reference_6"
@@ -193,7 +204,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="@string/reference_name_6"/>
+                android:text="@string/reference_name_6"
+                android:textColor="?attr/themedTextColorStyle"/>
 
             <!-- Developer section -->
             <TextView
@@ -214,7 +226,8 @@
                 android:layout_marginTop="10dp"
                 android:clickable="true"
                 android:gravity="center_vertical"
-                android:text="Muhamad Fadli bin Ishak"/>
+                android:text="Muhamad Fadli bin Ishak"
+                android:textColor="?attr/themedTextColorStyle"/>
 
         </LinearLayout>
 

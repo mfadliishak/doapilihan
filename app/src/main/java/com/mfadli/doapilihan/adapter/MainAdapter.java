@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.model.BGPattern;
 import com.mfadli.doapilihan.model.DoaDetail;
@@ -26,9 +27,8 @@ import butterknife.ButterKnife;
 
 /**
  * Created by mfad on 22/03/2016.
- *
+ * <p>
  * Animate filter is from https://github.com/Wrdlbrnft/Searchable-RecyclerView-Demo
- *
  */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private static final String LOG_TAG = MainAdapter.class.getSimpleName();
@@ -158,8 +158,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 mFrameLayout.setTransitionName(title);
             }
             mFrameLayout.setTag(title);
-            Bitmap bitmap = BitmapCacher.getCacheBitmap(mBGPattern.getName());
-            mImageView.setImageBitmap(bitmap);
+
+            // Change Pattern background
+            if (((DoaPilihanApp) DoaPilihanApp.getContext()).isBgPatternNormal(mBGPattern)) {
+                mImageView.setImageResource(android.R.color.transparent);
+            } else {
+                Bitmap bitmap = BitmapCacher.getCacheBitmap(mBGPattern.getName());
+                int color = Common.getColorFromThemeAttribute(mContext, R.attr.themedPatternColorStyle);
+
+                mImageView.setImageBitmap(bitmap);
+                mImageView.setColorFilter(color);
+            }
 
             // Change the Source Type Tag color.
             if (doaDetail.getType() == DoaDetail.SOURCE_TYPE_HADITH) {

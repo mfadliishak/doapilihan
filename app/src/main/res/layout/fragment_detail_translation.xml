@@ -10,12 +10,14 @@
         android:id="@+id/detail_translation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="translation"/>
+        android:text="translation"
+        android:textColor="?attr/themedTextColorStyle"/>
 
     <TextView
         android:id="@+id/detail_translation_en"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="translationEn"
+        android:textColor="?attr/themedTextColorStyle"
         android:visibility="invisible"/>
 </FrameLayout>

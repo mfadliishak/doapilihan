@@ -7,4 +7,5 @@
     <color name="colorDetailIconEnabled">@color/md_light_green_700</color>
     <color name="colorTranslationEnabled">@color/md_light_green_700</color>
     <color name="colorTranslationDisabled">@color/md_grey_400</color>
+    <color name="colorPattern">#0b803f</color>
 </resources>

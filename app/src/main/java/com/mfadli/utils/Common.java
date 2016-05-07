@@ -1,10 +1,12 @@
 package com.mfadli.utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.util.TypedValue;
 
 import com.mfadli.doapilihan.DoaPilihanApp;
 
@@ -95,5 +97,28 @@ public class Common {
         int size = (int) (sizeInDp * scale + 0.5f);
 
         return size;
+    }
+
+    /**
+     * Get color from attrs style theme reference in RGB
+     *
+     * @param context Context
+     * @param resId   int
+     * @return int ColorInt
+     */
+    public static int getColorFromThemeAttribute(Context context, int resId) {
+        TypedValue value = new TypedValue();
+
+        context.getTheme().resolveAttribute(resId, value, true);
+
+        int color = value.data;
+
+        int colorR = Color.parseColor("#" + Integer.toHexString(Color.argb(
+                Color.alpha(color),
+                Color.red(color),
+                Color.green(color),
+                Color.blue(color))));
+
+        return colorR;
     }
 }

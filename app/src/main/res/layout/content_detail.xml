@@ -10,13 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.3"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        style="?attr/themedPatternColorStyle"/>
 
     <RelativeLayout
         android:id="@+id/detail_title_action_box"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/md_white_1000"
+        android:background="?attr/themedLayoutColorStyle"
         android:elevation="2dp">
 
         <FrameLayout
@@ -44,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center|center_vertical"
+                android:textColor="?attr/themedTextColorStyle"
                 android:text="title"/>
 
         </FrameLayout>

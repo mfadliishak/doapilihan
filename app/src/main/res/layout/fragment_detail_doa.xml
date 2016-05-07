@@ -19,7 +19,7 @@
             android:lineSpacingExtra="5dp"
             android:text="doa"
             android:textSize="18dp"
-            android:textColor="@color/md_black_1000"/>
+            android:textColor="?attr/themedDoaColorStyle"/>
 
     </FrameLayout>
 

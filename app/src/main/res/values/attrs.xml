@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="themedLayoutColorStyle" format="reference|color" />
+    <attr name="themedTextColorStyle" format="reference|color" />
+    <attr name="themedDoaColorStyle" format="reference|color" />
+    <attr name="themedPatternColorStyle" format="reference|color" />
+</resources>

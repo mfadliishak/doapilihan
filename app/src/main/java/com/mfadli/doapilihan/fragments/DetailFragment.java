@@ -164,11 +164,20 @@ public class DetailFragment extends Fragment {
      * @param bgPattern {@link BGPattern}
      */
     private void configureBackground(BGPattern bgPattern) {
-        Bitmap bitmap = BitmapCacher.getCacheBitmap(bgPattern.getName());
-        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-        bitmapDrawable.setTileModeY(Shader.TileMode.REPEAT);
 
-        mBackground.setBackground(bitmapDrawable);
+        if (((DoaPilihanApp) DoaPilihanApp.getContext()).isBgPatternNormal(bgPattern)) {
+            mBackground.setImageResource(android.R.color.transparent);
+        } else {
+            Bitmap bitmap = BitmapCacher.getCacheBitmap(bgPattern.getName());
+
+            BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+            bitmapDrawable.setTileModeY(Shader.TileMode.REPEAT);
+
+            int color = Common.getColorFromThemeAttribute(getContext(), R.attr.themedPatternColorStyle);
+
+            mBackground.setImageDrawable(bitmapDrawable);
+            mBackground.setColorFilter(color);
+        }
     }
 
     /**

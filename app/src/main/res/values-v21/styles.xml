@@ -1,5 +1,6 @@
 <resources>>
 
+    <!-- Dark Theme -->
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -10,8 +11,14 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowTranslucentStatus">true</item>
+
+        <item name="themedLayoutColorStyle">@color/md_grey_800</item>
+        <item name="themedTextColorStyle">@color/md_grey_300</item>
+        <item name="themedDoaColorStyle">@color/md_white_1000</item>
+        <item name="themedPatternColorStyle">@color/md_amber_50</item>
     </style>
 
+    <!-- Light Theme -->
     <style name="AppTheme.NoActionBar.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -21,6 +28,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowContentTransitions">true</item>
+
+        <item name="themedLayoutColorStyle">@color/md_white_1000</item>
+        <item name="themedTextColorStyle">@color/md_grey_800</item>
+        <item name="themedDoaColorStyle">@color/md_grey_800</item>
+        <item name="themedPatternColorStyle">@color/colorPattern</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -30,4 +42,5 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
+
 </resources>

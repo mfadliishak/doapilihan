@@ -264,13 +264,13 @@ public class DoaPilihanApp extends Application {
     public List<BGPattern> getBgPatterns() {
         sBgPatternList.clear();
         sBgPatternList.add(new BGPattern("Normal", R.drawable.bg_0, R.drawable.d_bg_0));
-        sBgPatternList.add(new BGPattern("BG 1", R.drawable.bg_1, R.drawable.bg_1));
-        sBgPatternList.add(new BGPattern("BG 2", R.drawable.bg_2, R.drawable.bg_2));
+        sBgPatternList.add(new BGPattern("BG 1", R.drawable.bg_1, R.drawable.d_bg_1));
+        sBgPatternList.add(new BGPattern("BG 2", R.drawable.bg_2, R.drawable.d_bg_2));
 
         if (isPremium()) {
-            sBgPatternList.add(new BGPattern("BG 3", R.drawable.bg_3, R.drawable.bg_3));
-            sBgPatternList.add(new BGPattern("BG 4", R.drawable.bg_4, R.drawable.bg_4));
-            sBgPatternList.add(new BGPattern("BG 5", R.drawable.bg_5, R.drawable.bg_5));
+            sBgPatternList.add(new BGPattern("BG 3", R.drawable.bg_3, R.drawable.d_bg_3));
+            sBgPatternList.add(new BGPattern("BG 4", R.drawable.bg_4, R.drawable.d_bg_4));
+            sBgPatternList.add(new BGPattern("BG 5", R.drawable.bg_5, R.drawable.d_bg_5));
         }
 
         return sBgPatternList;
@@ -324,5 +324,15 @@ public class DoaPilihanApp extends Application {
      */
     public boolean shouldShowAds() {
         return isPremium() ? false : getPreferences().getBoolean(SHOULD_SHOW_ADS_PREF, true);
+    }
+
+    /**
+     * Check if BGPattern given is a normal Pattern.
+     *
+     * @param bgPattern BGPattern
+     * @return boolean true if normal
+     */
+    public boolean isBgPatternNormal(BGPattern bgPattern) {
+        return bgPattern.getName().equalsIgnoreCase("Normal");
     }
 }
