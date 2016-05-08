@@ -153,7 +153,7 @@ public class AdsSettingFragment extends Fragment {
             Bitmap bitmap = BitmapCacher.getCacheBitmap(bgPattern.getName());
 
             BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-            bitmapDrawable.setTileModeY(Shader.TileMode.REPEAT);
+            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 
             int color = Common.getColorFromThemeAttribute(getContext(), R.attr.themedPatternColorStyle);
 
