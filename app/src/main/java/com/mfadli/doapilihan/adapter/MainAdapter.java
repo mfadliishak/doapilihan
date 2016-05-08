@@ -2,6 +2,8 @@ package com.mfadli.doapilihan.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -164,9 +166,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 mImageView.setImageResource(android.R.color.transparent);
             } else {
                 Bitmap bitmap = BitmapCacher.getCacheBitmap(mBGPattern.getName());
+
+                BitmapDrawable bitmapDrawable = new BitmapDrawable(mContext.getResources(), bitmap);
+                bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+
                 int color = Common.getColorFromThemeAttribute(mContext, R.attr.themedPatternColorStyle);
 
-                mImageView.setImageBitmap(bitmap);
+                mImageView.setImageDrawable(bitmapDrawable);
                 mImageView.setColorFilter(color);
             }
 

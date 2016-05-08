@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0.3"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/bg_1"/>
 
         <!-- Title Box -->

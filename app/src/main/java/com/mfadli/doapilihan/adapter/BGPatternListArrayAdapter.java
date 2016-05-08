@@ -1,6 +1,9 @@
 package com.mfadli.doapilihan.adapter;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +61,13 @@ public class BGPatternListArrayAdapter extends ArrayAdapter<BGPattern> {
             holder.mImageView.setImageResource(android.R.color.transparent);
         } else {
 
+            BitmapDrawable bitmapDrawable = new BitmapDrawable(DoaPilihanApp.getContext().getResources(),
+                    BitmapFactory.decodeResource(DoaPilihanApp.getContext().getResources(), bgPattern.getDrawableDialog()));
+            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+
             int color = Common.getColorFromThemeAttribute(getContext(), R.attr.themedPatternColorStyle);
 
-            holder.mImageView.setImageResource(bgPattern.getDrawableDialog());
+            holder.mImageView.setImageDrawable(bitmapDrawable);
             holder.mImageView.setColorFilter(color);
         }
 
