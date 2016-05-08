@@ -108,6 +108,16 @@ public class AboutFragment extends Fragment {
     }
 
     /**
+     * Email support callback
+     *
+     * @see View.OnClickListener
+     */
+    @OnClick(R.id.rate_app)
+    void onClickRateApp(View view) {
+        openUrl("https://play.google.com/store/apps/details?id=com.mfadli.doapilihan");
+    }
+
+    /**
      * Open URL for library 1
      *
      * @see View.OnClickListener

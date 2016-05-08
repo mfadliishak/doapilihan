@@ -68,7 +68,7 @@
                     android:layout_height="25dp"
                     android:layout_marginRight="40dp"
                     android:clickable="true"
-                    app:iiv_color="@color/md_grey_400"
+                    app:iiv_color="?attr/themedTextColorStyle"
                     app:iiv_icon="gmd-email"/>
 
                 <TextView
@@ -77,6 +77,32 @@
                     android:layout_marginLeft="30dp"
                     android:gravity="left|center_vertical"
                     android:text="Get Support and report bugs"
+                    android:textColor="?attr/themedTextColorStyle"/>
+
+            </RelativeLayout>
+
+            <!-- Rate App -->
+            <RelativeLayout
+                android:id="@+id/rate_app"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="40dp"
+                    android:clickable="true"
+                    app:iiv_color="?attr/themedTextColorStyle"
+                    app:iiv_icon="gmd-star-border"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="left|center_vertical"
+                    android:text="Rate this app"
                     android:textColor="?attr/themedTextColorStyle"/>
 
             </RelativeLayout>
