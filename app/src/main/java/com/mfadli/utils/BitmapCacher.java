@@ -37,6 +37,7 @@ public class BitmapCacher {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         Bitmap bitmap = BitmapFactory.decodeResource(DoaPilihanApp.getContext().getResources(), drawable, options);
+        BitmapCacher.getInstance().getLruCache().evictAll();
         BitmapCacher.getInstance().getLruCache().put(key, bitmap);
     }
 
