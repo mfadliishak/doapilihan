@@ -5,11 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.mfadli.doapilihan.DoaPilihanApp;
 import com.mfadli.doapilihan.R;
 import com.mfadli.doapilihan.adapter.DetailPagerAdapter;
@@ -17,6 +23,7 @@ import com.mfadli.doapilihan.data.repo.DoaDataRepo;
 import com.mfadli.doapilihan.fragments.DetailFragment;
 import com.mfadli.doapilihan.model.DoaDetail;
 import com.mfadli.utils.Analytic;
+import com.mfadli.utils.Common;
 
 import java.util.List;
 
@@ -89,7 +96,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
             }
         });
 
-
+        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
     }
 
     /**
@@ -180,6 +187,61 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
         data.putExtra(EXTRA_ORIGINAL_POSITION, mOriginalPosition);
         data.putExtra(EXTRA_CURRENT_POSITION, mCurrentPosition);
         setResult(RESULT_OK, data);
+    }
+
+    /**
+     * To add or remove the actual ads view container and disable/enable the ads.
+     *
+     * @param display boolean True to display ads.
+     */
+    private void shouldShowAds(boolean display) {
+        Log.d(LOG_TAG, "shouldShowAds: " + display);
+
+        if (display) {
+//            AdRequest adRequest = new AdRequest.Builder()
+//                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+//                    .addTestDevice("ABC1234567890ABC1234567890")
+//                    .build();
+
+            RelativeLayout adsContainer = (RelativeLayout) findViewById(R.id.detail_layout);
+
+            // Remove existing, to manually create a new one
+            if (this.findViewById(R.id.adView) != null) {
+                AdView adMobAds = (AdView) this.findViewById(R.id.adView);
+                adsContainer.removeView(adMobAds);
+            }
+
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+            AdView mAdView = new AdView(this);
+            mAdView.setId(R.id.adView);
+            mAdView.setAdSize(AdSize.BANNER);
+            mAdView.setAdUnitId(getString(R.string.banner_ad_unit_id));
+            mAdView.setLayoutParams(lp);
+
+            adsContainer.addView(mAdView);
+
+            AdRequest adRequest = new AdRequest
+                    .Builder()
+                    .addTestDevice("AABA3F9975AC4BBE5AB069468B4BFD7D")
+                    .build();
+            mAdView.loadAd(adRequest);
+
+            mViewPager.setPadding(0, 0, 0, Common.dpToPixel(50));
+
+        } else {
+            RelativeLayout adsContainer = (RelativeLayout) findViewById(R.id.detail_layout);
+
+            AdView adMobAds = (AdView) this.findViewById(R.id.adView);
+            adsContainer.removeView(adMobAds);
+
+            mViewPager.setPadding(0, 0, 0, 0);
+        }
+
     }
 
     /**

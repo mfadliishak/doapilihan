@@ -205,6 +205,8 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
             return true;
         });
 
+        shouldShowAds(((DoaPilihanApp) DoaPilihanApp.getContext()).shouldShowAds());
+
         setupIabHelper(true, true);
 
     }
@@ -627,7 +629,6 @@ public class MainActivity extends BaseActivity implements MainActivityFragment.O
      * @param display boolean True to display ads.
      */
     private void shouldShowAds(boolean display) {
-        Log.d(LOG_TAG, "shouldShowAds: " + display);
 
         if (display) {
 //            AdRequest adRequest = new AdRequest.Builder()
