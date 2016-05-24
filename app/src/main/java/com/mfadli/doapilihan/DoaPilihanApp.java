@@ -36,6 +36,7 @@ public class DoaPilihanApp extends Application {
     private static final String PREMIUM_PREF = "PremiumPref";
     private static final String BG_PATTERN_PREF = "BGPatternPref";
     private static final String IS_DARK_THEME_PREF = "IsDarkTheme";
+    private static final int PREMIUM_INDEX = 3;
     private static List<Font> sFontList = new ArrayList<>();
     private static List<BGPattern> sBgPatternList = new ArrayList<>();
 
@@ -170,50 +171,90 @@ public class DoaPilihanApp extends Application {
 
     /**
      * Read Doa Font Type from local storage.
+     * Handle case where not premium but have font premium index.
      *
      * @return int Font Type
      */
     public int getDoaFontType() {
-        return getPreferences().getInt(DOA_FONT_TYPE_PREF, 0);
+        int index = getPreferences().getInt(DOA_FONT_TYPE_PREF, 0);
+
+        if (!isPremium() && index >= PREMIUM_INDEX) {
+            saveDoaFontType(0);
+            return 0;
+        }
+
+        return index;
     }
 
     /**
      * Save Doa Font Type selection into local storage.
+     * Handle case where saving index font larger than font list.
      *
      * @param type int Font Type
      */
     public void saveDoaFontType(int type) {
+        List<Font> fonts = getFonts();
         SharedPreferences.Editor editor = getPreferences().edit();
-        editor.putInt(DOA_FONT_TYPE_PREF, type);
+
+        if (fonts.size() <= type) {
+            editor.putInt(DOA_FONT_TYPE_PREF, 0);
+        }
+        else {
+            editor.putInt(DOA_FONT_TYPE_PREF, type);
+        }
         editor.commit();
     }
 
     /**
      * Read BG Pattern index from local storage and return the BGPattern object.
+     * Handle case where not premium but have premium index pattern.
      *
      * @return BGPattern
      */
     public BGPattern getBgPattern() {
         int index = getPreferences().getInt(BG_PATTERN_PREF, 2);
+
+        if (!isPremium() && index >= PREMIUM_INDEX) {
+            saveBgPattern(1);
+            index = 1;
+        }
         return getBgPatterns().get(index);
     }
 
     /**
      * Read BG Pattern index from local storage.
+     * Handle if not premium but have premium pattern index, reset it.
      *
      * @return int Pattern Index
      */
     public int getPatternIndex() {
-        return getPreferences().getInt(BG_PATTERN_PREF, 2);
+        int index = getPreferences().getInt(BG_PATTERN_PREF, 2);
+
+        if (!isPremium() && index >= PREMIUM_INDEX) {
+            saveBgPattern(1);
+            return 1;
+        }
+
+        return index;
     }
 
     /**
      * Save BGPattern selection into local storage.
+     * Handle cases where index is larger than we have.
      *
      * @param pattern int BGPattern index selected.
      */
     public void saveBgPattern(int pattern) {
+        List<BGPattern> patterns = getBgPatterns();
         SharedPreferences.Editor editor = getPreferences().edit();
+
+        if (patterns.size() <= pattern) {
+            editor.putInt(BG_PATTERN_PREF, 1);
+        }
+        else {
+            editor.putInt(BG_PATTERN_PREF, pattern);
+        }
+
         editor.putInt(BG_PATTERN_PREF, pattern);
         editor.commit();
     }
