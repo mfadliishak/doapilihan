@@ -1,0 +1,1 @@
+UPDATE `DoaData` SET url='http://quran.com/18/10' WHERE `id` = '5';
