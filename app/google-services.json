@@ -1,22 +1,33 @@
 {
   "project_info": {
-    "project_id": "doa-pilihan",
     "project_number": "49091261102",
-    "name": "Doa Pilihan"
+    "firebase_url": "https://doa-pilihan.firebaseio.com",
+    "project_id": "doa-pilihan",
+    "storage_bucket": "doa-pilihan.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:49091261102:android:024e17768083251b",
-        "client_id": "android:com.mfadli.doapilihan",
-        "client_type": 1,
         "android_client_info": {
-          "package_name": "com.mfadli.doapilihan",
-          "certificate_hash": []
+          "package_name": "com.mfadli.doapilihan"
         }
       },
-      "oauth_client": [],
-      "api_key": [],
+      "oauth_client": [
+        {
+          "client_id": "49091261102-hhg5a3fun8ujnh82i1epjrscmeq3bfri.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "49091261102-2743q0se6r5s4k483s0ojq4djj8ecmmt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWR7R2nXhwnkax0xAx9DxJEl8iKyOwF2o"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 2,
@@ -24,23 +35,15 @@
             "tracking_id": "UA-75852856-1"
           }
         },
-        "cloud_messaging_service": {
-          "status": 1,
-          "apns_config": []
-        },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
         },
-        "google_signin_service": {
-          "status": 1
-        },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
   ],
-  "client_info": [],
-  "ARTIFACT_VERSION": "1"
+  "configuration_version": "1"
 }

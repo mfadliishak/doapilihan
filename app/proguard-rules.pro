@@ -16,6 +16,9 @@
 #   public *;
 #}
 
+-renamesourcefileattribute MFI
+-keepattributes SourceFile,LineNumberTable
+
 -keep class .R
 -keep class **.R$* {
     <fields>;

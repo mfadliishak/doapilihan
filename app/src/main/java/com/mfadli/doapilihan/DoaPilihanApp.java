@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mfadli.doapilihan.data.DBHelper;
 import com.mfadli.doapilihan.data.DBManager;
 import com.mfadli.doapilihan.event.RxBus;
@@ -45,6 +47,7 @@ public class DoaPilihanApp extends Application {
     private static SecurePreferences mSecurePreferences;
     private RxBus mRxBus = null;
     HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     /**
      * Enum used to identify the tracker that needs to be used for tracking.
@@ -61,10 +64,16 @@ public class DoaPilihanApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // Obtain the FirebaseAnalytics instance.
+
         Fabric.with(this, new Crashlytics());
         sContext = getApplicationContext();
         sDBHelper = new DBHelper();
         DBManager.initializeInstance(sDBHelper);
+
+        if (!FirebaseApp.getApps(this).isEmpty()) {
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        }
 
         AesCbcWithIntegrity.SecretKeys myKeys = null;
         try {
@@ -198,8 +207,7 @@ public class DoaPilihanApp extends Application {
 
         if (fonts.size() <= type) {
             editor.putInt(DOA_FONT_TYPE_PREF, 0);
-        }
-        else {
+        } else {
             editor.putInt(DOA_FONT_TYPE_PREF, type);
         }
         editor.commit();
@@ -250,8 +258,7 @@ public class DoaPilihanApp extends Application {
 
         if (patterns.size() <= pattern) {
             editor.putInt(BG_PATTERN_PREF, 1);
-        }
-        else {
+        } else {
             editor.putInt(BG_PATTERN_PREF, pattern);
         }
 

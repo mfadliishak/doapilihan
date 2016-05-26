@@ -63,7 +63,7 @@ android {
             resValue 'string', 'skuPremium1', skuPremium1.toString()
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue 'string', 'license', license.toString()
             resValue 'string', 'passwd', passwd.toString()
@@ -93,10 +93,15 @@ dependencies {
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
     compile 'com.mikepenz:fontawesome-typeface:4.5.0.1@aar'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
-    compile 'com.google.android.gms:play-services-analytics:8.3.0'
-    compile 'com.google.android.gms:play-services-ads:8.3.0'
+    compile 'com.google.android.gms:play-services-analytics:9.0.0'
+    compile 'com.google.firebase:firebase-core:9.0.0'
+    compile "com.google.firebase:firebase-ads:9.0.0"
+    compile "com.google.firebase:firebase-invites:9.0.0"
+    compile "com.google.firebase:firebase-crash:9.0.0"
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
 }
+
+apply plugin: 'com.google.gms.google-services'
