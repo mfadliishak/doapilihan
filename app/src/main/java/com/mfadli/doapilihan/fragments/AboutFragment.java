@@ -102,7 +102,7 @@ public class AboutFragment extends Fragment {
      */
     @OnClick(R.id.email_support)
     void onClickEmailSupport(View view) {
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "fadliishak@gmail.com"));
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "support@fadliishak.com"));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_helpdesk));
         startActivity(Intent.createChooser(emailIntent, getString(R.string.email_intent_title)));
     }
