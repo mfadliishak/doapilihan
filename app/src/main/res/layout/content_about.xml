@@ -55,6 +55,17 @@
                 android:text="Version"
                 android:textColor="?attr/themedTextColorStyle"/>
 
+            <!-- privacy policy -->
+            <TextView
+                android:id="@+id/about_privacy"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:text="@string/about_privacy"
+                android:textColor="?attr/themedTextColorStyle"/>
+
             <!-- Email Support -->
             <RelativeLayout
                 android:id="@+id/email_support"

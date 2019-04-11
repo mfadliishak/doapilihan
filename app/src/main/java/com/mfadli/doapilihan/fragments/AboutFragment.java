@@ -177,4 +177,6 @@ public class AboutFragment extends Fragment {
         openUrl(getString(R.string.reference_url_6));
     }
 
+    @OnClick(R.id.about_privacy)
+    void onClickAboutPrivacy(View view) { openUrl("https://mfadliishak.github.io/doapilihan/privacy.html"); }
 }

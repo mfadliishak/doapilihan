@@ -31,5 +31,6 @@
     <string name="menu_label_light_mode">Normal Mode</string>
     <string name="menu_label_dark_mode">Dark Mode</string>
     <string name="menu_label_search">Search</string>
+    <string name="about_privacy">Privacy Policy</string>
 
 </resources>
