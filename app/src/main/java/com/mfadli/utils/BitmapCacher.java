@@ -2,7 +2,7 @@ package com.mfadli.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 import android.util.LruCache;
 
 import com.mfadli.doapilihan.DoaPilihanApp;

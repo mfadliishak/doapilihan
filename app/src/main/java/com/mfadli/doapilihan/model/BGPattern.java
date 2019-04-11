@@ -1,6 +1,6 @@
 package com.mfadli.doapilihan.model;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 /**
  * Created by mfad on 24/04/2016.

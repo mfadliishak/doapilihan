@@ -1,8 +1,8 @@
 package com.mfadli.doapilihan.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +18,7 @@ import com.mfadli.doapilihan.model.Font;
 import com.mfadli.utils.Analytic;
 import com.mfadli.utils.Common;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.subscriptions.CompositeSubscription;
 
@@ -37,7 +37,7 @@ public class DetailDoaFragment extends Fragment {
     private RxBus mRxBus;
     private CompositeSubscription mSubscription;
 
-    @Bind(R.id.detail_doa)
+    @BindView(R.id.detail_doa)
     TextView mTvDoa;
 
     public DetailDoaFragment() {

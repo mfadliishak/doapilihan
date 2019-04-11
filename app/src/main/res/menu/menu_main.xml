@@ -13,7 +13,7 @@
         android:id="@+id/action_change_mode"
         android:orderInCategory="2"
         android:title="@string/menu_label_dark_mode"
-        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="never"/>
 
     <item
@@ -21,7 +21,7 @@
         android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="3"
         android:title="@string/menu_label_search"
-        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always|collapseActionView"/>
 
 </menu>

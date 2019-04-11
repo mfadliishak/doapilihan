@@ -1,8 +1,8 @@
 package com.mfadli.doapilihan.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.mfadli.doapilihan.fragments.DetailFragment;
 import com.mfadli.doapilihan.model.DoaDetail;

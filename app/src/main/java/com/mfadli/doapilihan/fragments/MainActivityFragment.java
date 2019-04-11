@@ -3,12 +3,12 @@ package com.mfadli.doapilihan.fragments;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,7 +36,7 @@ import com.mfadli.utils.Common;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.subscriptions.CompositeSubscription;
 
@@ -53,9 +53,9 @@ public class MainActivityFragment extends Fragment implements SearchView.OnQuery
     private DoaDataRepo mDoaRepo;
     private List<DoaDetail> mDoaDetailList;
 
-    @Bind(R.id.recycler_main_view)
+    @BindView(R.id.recycler_main_view)
     RecyclerView mRecyclerView;
-    @Bind(R.id.fragment_main)
+    @BindView(R.id.fragment_main)
     RelativeLayout mLayout;
 
     public MainActivityFragment() {

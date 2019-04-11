@@ -4,7 +4,7 @@ package com.mfadli.doapilihan.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,7 @@ import com.mfadli.doapilihan.R;
 import com.mfadli.utils.Analytic;
 import com.mfadli.utils.Common;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -30,9 +30,9 @@ import butterknife.OnClick;
 public class AboutFragment extends Fragment {
     private static final String LOG_TAG = AboutFragment.class.getSimpleName();
 
-    @Bind(R.id.about_version)
+    @BindView(R.id.about_version)
     TextView mVersion;
-    @Bind(R.id.fragment_about)
+    @BindView(R.id.fragment_about)
     RelativeLayout mLayout;
 
     public AboutFragment() {

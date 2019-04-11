@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +24,7 @@ import com.mfadli.utils.Common;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -138,13 +138,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         @Nullable
-        @Bind(R.id.main_title)
+        @BindView(R.id.main_title)
         TextView mTvTitle;
-        @Bind(R.id.detail_title_frame)
+        @BindView(R.id.detail_title_frame)
         FrameLayout mFrameLayout;
-        @Bind(R.id.detail_pattern)
+        @BindView(R.id.detail_pattern)
         ImageView mImageView;
-        @Bind(R.id.main_type)
+        @BindView(R.id.main_type)
         TextView mTvType;
 
         public ViewHolder(View itemView) {

@@ -3,7 +3,7 @@ package com.mfadli.doapilihan.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +17,7 @@ import com.mfadli.utils.Analytic;
 
 import java.text.Bidi;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -33,9 +33,9 @@ public class DetailReferenceFragment extends Fragment {
     private String mUrl;
     private int mType;
 
-    @Bind(R.id.detail_reference)
+    @BindView(R.id.detail_reference)
     TextView mTvReference;
-    @Bind(R.id.detail_type)
+    @BindView(R.id.detail_type)
     FrameLayout mLayoutType;
 
     public DetailReferenceFragment() {

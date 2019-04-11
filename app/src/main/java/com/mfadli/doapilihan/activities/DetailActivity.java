@@ -3,8 +3,8 @@ package com.mfadli.doapilihan.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +27,7 @@ import com.mfadli.utils.Common;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -41,7 +41,7 @@ public class DetailActivity extends BaseActivity implements DetailFragment.OnDet
     private int mCurrentPosition;
     private DetailPagerAdapter mPagerAdapter;
 
-    @Bind(R.id.detail_view_pager)
+    @BindView(R.id.detail_view_pager)
     ViewPager mViewPager;
 
     @Override

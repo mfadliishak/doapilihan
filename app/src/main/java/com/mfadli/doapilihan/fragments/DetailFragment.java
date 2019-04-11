@@ -5,9 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +31,7 @@ import com.mikepenz.iconics.view.IconicsImageView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.subscriptions.CompositeSubscription;
@@ -48,17 +48,17 @@ public class DetailFragment extends Fragment {
     private RxBus mRxBus;
     private CompositeSubscription mSubscription;
 
-    @Bind(R.id.detail_title)
+    @BindView(R.id.detail_title)
     TextView mTitle;
-    @Bind(R.id.detail_title_frame)
+    @BindView(R.id.detail_title_frame)
     FrameLayout mFrameLayout;
-    @Bind(R.id.img_translate_icon)
+    @BindView(R.id.img_translate_icon)
     IconicsImageView mImgTranslate;
-    @Bind(R.id.detail_left_icon)
+    @BindView(R.id.detail_left_icon)
     com.mikepenz.iconics.view.IconicsImageView mLeftIcon;
-    @Bind(R.id.detail_right_icon)
+    @BindView(R.id.detail_right_icon)
     com.mikepenz.iconics.view.IconicsImageView mRightIcon;
-    @Bind(R.id.detail_background)
+    @BindView(R.id.detail_background)
     ImageView mBackground;
 
     public DetailFragment() {

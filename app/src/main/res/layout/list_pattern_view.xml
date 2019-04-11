@@ -6,7 +6,7 @@
     android:background="@drawable/item_selector"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="5dp"
@@ -28,6 +28,6 @@
             android:layout_margin="5dp"
             android:text="text"
             android:textColor="?attr/themedPatternDialogTextColorStyle"/>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

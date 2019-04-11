@@ -2,8 +2,8 @@ package com.mfadli.utils;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.ArrayRes;
-import android.support.annotation.NonNull;
+import androidx.annotation.ArrayRes;
+import androidx.annotation.NonNull;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.util.TypedValue;

@@ -6,8 +6,8 @@ import android.graphics.PorterDuff;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.cardview.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +27,7 @@ import com.mfadli.utils.Analytic;
 import com.mfadli.utils.BitmapCacher;
 import com.mfadli.utils.Common;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
@@ -43,19 +43,19 @@ public class AdsSettingFragment extends Fragment {
     private RxBus mRxBus;
     private CompositeSubscription mSubscription;
 
-    @Bind(R.id.fragment_ads_setting)
+    @BindView(R.id.fragment_ads_setting)
     RelativeLayout mLayout;
-    @Bind(R.id.ads_switch)
+    @BindView(R.id.ads_switch)
     Switch mSwitch;
-    @Bind(R.id.button_upgrade)
+    @BindView(R.id.button_upgrade)
     Button mBtnUpgrade;
-    @Bind(R.id.cardview_ads_manual)
+    @BindView(R.id.cardview_ads_manual)
     CardView mCardManual;
-    @Bind(R.id.cardview_ads_upgrade)
+    @BindView(R.id.cardview_ads_upgrade)
     CardView mCardUpgrade;
-    @Bind(R.id.cardview_ads_premium)
+    @BindView(R.id.cardview_ads_premium)
     CardView mCardPremium;
-    @Bind(R.id.ads_background)
+    @BindView(R.id.ads_background)
     ImageView mBackground;
 
     public AdsSettingFragment() {
