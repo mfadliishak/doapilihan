@@ -74,6 +74,9 @@
             android:name="io.fabric.ApiKey"
             android:value="56745db8f6afee3cdac4562aa1bf7bb166c92899" />
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3170039990203086~2501913255"/>
     </application>
 
 </manifest>
